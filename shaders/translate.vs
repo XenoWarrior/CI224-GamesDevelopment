@@ -32,5 +32,16 @@ void main() {
       gl_Position = projection(radians(45.0), 4.0/3.0, -0.1, -1000.0)
                       * translate(0.0, 0.0, -5.0)
                       * vec4(position, 1.0f);
-      frag_color = vec3(1.0, 1.0, 1.0); // white
+
+      vec3 COLOR_MASKS[8];
+      COLOR_MASKS[0] = vec3(0.0, 0.0, 0.0);
+      COLOR_MASKS[1] = vec3(0.5, 0.5, 0.5);
+      COLOR_MASKS[2] = vec3(1.0, 0.5, 0.5);
+      COLOR_MASKS[3] = vec3(0.5, 1.0, 0.5);
+      COLOR_MASKS[4] = vec3(0.5, 0.5, 1.0);
+      COLOR_MASKS[5] = vec3(0.5, 1.0, 1.0);
+      COLOR_MASKS[6] = vec3(1.0, 0.5, 1.0);
+      COLOR_MASKS[7] = vec3(1.0, 1.0, 0.5);
+
+      frag_color = vec3(COLOR_MASKS[6]); 
 }
