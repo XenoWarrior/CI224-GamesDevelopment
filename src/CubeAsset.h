@@ -17,6 +17,8 @@ class CubeAsset : public GameAsset {
 
  private:
   GLuint element_buffer_length;
+  GLuint vertex_buffer_length;
+  
   GLuint vertex_buffer_token, element_buffer_token;
 };
 
