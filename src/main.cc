@@ -11,6 +11,7 @@
 #include "common.h"
 #include "GameWorld.h"
 
+const Uint8* keyboard_input;
 /*
  * SDL timers run in separate threads.  In the timer thread
  * push an event onto the event queue.  This event signifies
@@ -44,6 +45,38 @@ void Draw(const std::shared_ptr<SDL_Window> window, const std::shared_ptr<GameWo
 	// Background colour for the window
 	glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+
+	// Update game_world camera
+	if(keyboard_input[SDL_SCANCODE_W])
+	{
+		// Handle input for key W
+		std::cout << "W" << std::endl;
+		game_world->CameraController(0.0f, 0.0f, -0.3f);
+	}
+	if(keyboard_input[SDL_SCANCODE_A])
+	{
+		// Handle input for key A
+		std::cout << "A" << std::endl;
+		game_world->CameraController(-0.5f, 0.0f, 0.0f);
+	}
+	if(keyboard_input[SDL_SCANCODE_S])
+	{
+		// Handle input for key S
+		std::cout << "S" << std::endl;
+		game_world->CameraController(0.0f, 0.0f, 0.3f);
+	}
+	if(keyboard_input[SDL_SCANCODE_D])
+	{
+		// Handle input for key D
+		std::cout << "D" << std::endl;
+		game_world->CameraController(0.5f, 0.0f, 0.0f);
+	}
+	if(keyboard_input[SDL_SCANCODE_SPACE])
+	{
+		// Handle input for key SPACE
+		std::cout << "SPACE" << std::endl;
+		game_world->CameraController(0.0f, 0.5f, 0.0f);
+	}
 
 	// Draw the gameworld
 	game_world->Draw();
@@ -169,6 +202,8 @@ int main(int argc, char ** argv) {
 	{
 		SDL_Quit();
 	}
+
+  	keyboard_input = SDL_GetKeyboardState(NULL);
 
 	// Call the function "tick" every delay milliseconds
 	SDL_AddTimer(delay, tick, NULL);

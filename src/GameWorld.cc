@@ -17,3 +17,8 @@ void GameWorld::Draw()
 	// Calls draw from the asset manager
 	asset_manager->Draw();
 }
+
+void GameWorld::CameraController(GLfloat x, GLfloat y, GLfloat z)
+{
+	// Handle the X, Y and Z movement values
+}

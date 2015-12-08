@@ -26,6 +26,12 @@ class GameWorld {
 		* Calling Draw() will draw the entire world.
 		*/
 		void Draw();
+
+		/**
+		* Game camera controller handler
+		*/
+		void CameraController(GLfloat x, GLfloat y, GLfloat z);
+
 	private:
 		std::shared_ptr<GameAssetManager> asset_manager;
 };
