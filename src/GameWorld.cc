@@ -6,7 +6,7 @@ GameWorld::GameWorld (ApplicationMode mode)
 	asset_manager = std::make_shared<GameAssetManager>(mode);
 
 	// Make a few cubes
-	for(int i = 0; i < 5, i++)
+	for(int i = 0; i < 5; i++)
 	{
 		asset_manager->AddAsset(std::make_shared<CubeAsset>(0.0 + i, 0.0 + i, 0.0 + i));
 	}
