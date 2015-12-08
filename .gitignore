@@ -11,10 +11,10 @@ config.h
 config.h.in
 config.log
 config.status
-config.stub
+config.sub
 configure
 
-decomp
+depcomp
 libtool
 missing
 
