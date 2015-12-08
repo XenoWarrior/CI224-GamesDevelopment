@@ -80,7 +80,7 @@ host_triplet = x86_64-unknown-linux-gnu
 subdir = .
 DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
 	$(top_srcdir)/configure $(am__configure_deps) \
-	$(srcdir)/config.h.in compile config.guess config.sub depcomp \
+	$(srcdir)/config.h.in compile config.guess config.sub \
 	install-sh missing ltmain.sh
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/boost.m4 \

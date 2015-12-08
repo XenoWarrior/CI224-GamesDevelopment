@@ -4,11 +4,11 @@ CubeAsset::CubeAsset(GLfloat pos_x, GLfloat pos_y, GLfloat pos_z)
 {
 	// model coordinates, origin at centre.
 	GLfloat vertex_buffer [] {
-		//	X				Y				Z
-			-0.5 +pos_x	, 	-0.5 +pos_y	,	-0.5 +pos_z //0
-		,	0.5	 +pos_x	, 	-0.5 +pos_y	,	-0.5 +pos_z //1
-		,	-0.5 +pos_x	,  	0.5	 +pos_y	,	-0.5 +pos_z //2
-		,	0.5	 +pos_x	,  	0.5	 +pos_y	,	-0.5 +pos_z //3
+		//	X					Y					Z
+			-0.5f 	+pos_x	, 	-0.5f 	+pos_y	,	-0.5f +pos_z //0
+		,	0.5f	+pos_x	, 	-0.5f 	+pos_y	,	-0.5f +pos_z //1
+		,	-0.5f 	+pos_x	,  	0.5f	+pos_y	,	-0.5f +pos_z //2
+		,	0.5f	+pos_x	,  	0.5f	+pos_y	,	-0.5f +pos_z //3
 	};
 	vertex_buffer_length = sizeof(vertex_buffer);
 
