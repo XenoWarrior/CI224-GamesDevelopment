@@ -23,3 +23,6 @@ install-sh
 ltmain.sh
 
 stamp-h1
+
+*.o
+src/*.o
