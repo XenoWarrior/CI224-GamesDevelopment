@@ -28,6 +28,7 @@ class GameAssetManager {
 
 		void operator=(GameAssetManager const&); 		// assignment
 		void AddAsset(std::shared_ptr<CubeAsset>, std::shared_ptr<GameAsset>);
+		void RemoveAsset(int);
 		void Draw();
 
 		std::vector<std::shared_ptr<CubeAsset>> GetAssets();

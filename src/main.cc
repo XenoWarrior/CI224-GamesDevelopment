@@ -217,6 +217,9 @@ int main(int argc, char ** argv) {
 					case SDLK_SPACE:
 						game_world->DoAction(1);
 						break;
+					case SDLK_q:
+						game_world->DoAction(2);
+						break;
 				}
 				break;
 			default:

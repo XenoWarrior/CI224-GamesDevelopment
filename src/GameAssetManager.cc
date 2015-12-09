@@ -71,12 +71,22 @@ void GameAssetManager::AddAsset(std::shared_ptr<CubeAsset> cube_asset, std::shar
 }
 
 /**
+ * Removes an asset from the gameworld
+ */
+void GameAssetManager::RemoveAsset(int index)
+{
+	asset_list.erase(asset_list.begin() + index);
+	draw_list.erase(draw_list.begin() + index);
+}
+
+/**
  * Gets the asset list
  */
 std::vector<std::shared_ptr<CubeAsset>> GameAssetManager::GetAssets()
 {
 	return asset_list;
 }
+
 /**
  * Draws each GameAsset in the scene graph.
  */

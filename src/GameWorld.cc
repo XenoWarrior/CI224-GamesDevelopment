@@ -8,6 +8,35 @@ GameWorld::GameWorld (ApplicationMode mode)
 	// Starting point for cube (0,0,0)
 	std::shared_ptr<CubeAsset> tmp_obj = std::make_shared<CubeAsset>(0.0, 0.0, 0.0);
 	asset_manager->AddAsset(tmp_obj, tmp_obj);
+
+	/*
+		for(int i = 0; i <= 20; i++)
+		{
+			for(int x = 0; x <= 20; x++)
+			{
+				std::shared_ptr<CubeAsset> tmp_obj = std::make_shared<CubeAsset>(0.0+i, 0.0, 0.0+x);
+				asset_manager->AddAsset(tmp_obj, tmp_obj);
+			}
+		}
+
+		for(int i = 0; i <= 20; i++)
+		{
+			for(int x = 0; x <= 20; x++)
+			{
+				std::shared_ptr<CubeAsset> tmp_obj = std::make_shared<CubeAsset>(0.0f+x, 1.0+i, 0.0);
+				asset_manager->AddAsset(tmp_obj, tmp_obj);
+			}
+		}
+
+		for(int i = 0; i <= 20; i++)
+		{
+			for(int x = 0; x <= 20; x++)
+			{
+				std::shared_ptr<CubeAsset> tmp_obj = std::make_shared<CubeAsset>(0.0f+x, 1.0+i, 20.0);
+				asset_manager->AddAsset(tmp_obj, tmp_obj);
+			}
+		}
+	*/
 }
 
 /**
@@ -49,6 +78,10 @@ void GameWorld::CameraController(int k)
 
 void GameWorld::DoAction(int a)
 {
+
+	/******************************************
+		TODO: MOVE BLOCK CHECK TO ASSETMANAGER
+	******************************************/
 	if(a == 1)
 	{
 		/**
@@ -89,6 +122,44 @@ void GameWorld::DoAction(int a)
 		else
 		{
 			std::cout << "Cube already exists in that position!";
+			std::cout << "(Total Cubes: " << asset_manager->GetAssets().size() << ")" << std::endl;
+		}
+	}
+	if(a == 2)
+	{
+		/**
+		* Ultimately the same as adding a block
+		*/
+
+		// Get the cube asset list
+		std::vector<std::shared_ptr<CubeAsset>> asset_list = asset_manager->GetAssets();
+
+		// Check through list of assets and their positions
+		int i = 0; // Start at 0
+		int r = 0; // Block index to remove
+		bool flag = false; // Assume cube not in list
+		std::shared_ptr<CubeAsset> new_cube = std::make_shared<CubeAsset>(0.0f + int(position.x), 0.0f + int(position.y), 0.0f + int(position.z)); // Cube to make
+		CubeAsset cube_check = CubeAsset(0.0f,0.0f,0.0f); // Blank cube
+
+		for(i = 0; i < asset_list.size(); i++)
+		{
+			// The cube in our asset list to check
+			cube_check = *asset_list[i];
+
+			// Check the cube in the list against our new cube vec3
+			if(glm::to_string(cube_check.GetVec3()) == glm::to_string(glm::vec3(0.0f + int(position.x), 0.0f + int(position.y), 0.0f + int(position.z))))
+			{
+				// There is already a cube in the same vec3 position
+				r = i;
+				flag = true;
+				break;
+			}
+		}
+
+		if(flag)
+		{
+			asset_manager->RemoveAsset(i);
+			std::cout << "Removed cube at position: (X: " << int(position.x) << ", Y: " << int(position.y) << ", Z: " << int(position.z) << ")";
 			std::cout << "(Total Cubes: " << asset_manager->GetAssets().size() << ")" << std::endl;
 		}
 	}
