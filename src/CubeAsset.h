@@ -18,9 +18,6 @@ class CubeAsset : public GameAsset
 
 		virtual void Draw(GLuint);
 
-		// Checks the gameworld space for a block
-		bool CheckSpace(GLfloat pos_x, GLfloat pos_y, GLfloat pos_z);
-
 		// Gets the cube position
 		glm::vec3 GetVec3();
 
