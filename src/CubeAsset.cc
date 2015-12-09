@@ -8,42 +8,62 @@ CubeAsset::CubeAsset(GLfloat pos_x, GLfloat pos_y, GLfloat pos_z)
 
 	// model coordinates, origin at centre.
 	GLfloat vertex_buffer [] {
-		 -0.5f + pos_x, -0.5f + pos_y, -0.5f +pos_z
-		,-0.5f + pos_x,  0.5f + pos_y, -0.5f +pos_z
-		, 0.5f + pos_x, -0.5f + pos_y, -0.5f +pos_z
-		, 0.5f + pos_x,  0.5f + pos_y, -0.5f +pos_z
-		, 0.5f + pos_x, -0.5f + pos_y,  0.5f +pos_z
-		, 0.5f + pos_x,  0.5f + pos_y,  0.5f +pos_z
-		,-0.5f + pos_x, -0.5f + pos_y,  0.5f +pos_z
-		,-0.5f + pos_x,  0.5f + pos_y,  0.5f +pos_z
+		-0.5f + pos_x, -0.5f + pos_y, -0.5f +pos_z,
+		-0.5f + pos_x,  0.5f + pos_y, -0.5f +pos_z,
+		 0.5f + pos_x, -0.5f + pos_y, -0.5f +pos_z,
+		 0.5f + pos_x,  0.5f + pos_y, -0.5f +pos_z,
+		 0.5f + pos_x, -0.5f + pos_y,  0.5f +pos_z,
+		 0.5f + pos_x,  0.5f + pos_y,  0.5f +pos_z,
+		-0.5f + pos_x, -0.5f + pos_y,  0.5f +pos_z,
+		-0.5f + pos_x,  0.5f + pos_y,  0.5f +pos_z
 	};
 	vertex_buffer_length = sizeof(vertex_buffer);
 
+	// Use three random colours
+	float c1 = rf();
+	float c2 = rf();
+	float c3 = rf();
+
+	// Solid block colours
 	GLfloat color_buffer[] = {
-		rf(),  rf(),  rf(),
-		rf(),  rf(),  rf(),
-		rf(),  rf(),  rf(),
-		rf(),  rf(),  rf(),
-		rf(),  rf(),  rf(),
-		rf(),  rf(),  rf(),
-		rf(),  rf(),  rf(),
-		rf(),  rf(),  rf(),
+		c1, c2, c3,
+		c1, c2, c3,
+		c1, c2, c3,
+		c1, c2, c3,
+		c1, c2, c3,
+		c1, c2, c3,
+		c1, c2, c3,
+		c1, c2, c3
 	};
+
+	/* Fun magical colours
+		GLfloat color_buffer[] = {
+			rf(),  rf(),  rf(),
+			rf(),  rf(),  rf(),
+			rf(),  rf(),  rf(),
+			rf(),  rf(),  rf(),
+			rf(),  rf(),  rf(),
+			rf(),  rf(),  rf(),
+			rf(),  rf(),  rf(),
+			rf(),  rf(),  rf(),
+		};
+	*/
+
 	color_buffer_length = sizeof(color_buffer);
 
 	GLuint element_buffer []  {
-		  0, 1, 2
-		, 1, 3, 2
-		, 2, 3, 4
-		, 3, 5, 4
-		, 0, 2, 4
-		, 6, 0, 4
-		, 6, 7, 0
-		, 1, 0, 7
-		, 1, 7, 3
-		, 7, 5, 3
-		, 5, 6, 4
-		, 5, 7, 6
+		0, 1, 2,
+		1, 3, 2,
+		2, 3, 4,
+		3, 5, 4,
+		0, 2, 4,
+		6, 0, 4,
+		6, 7, 0,
+		1, 0, 7,
+		1, 7, 3,
+		7, 5, 3,
+		5, 6, 4,
+		5, 7, 6
 	};
 	element_buffer_length = sizeof(element_buffer);
 
