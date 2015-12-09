@@ -11,18 +11,22 @@
 class CubeAsset : public GameAsset
 {
 	public:
+		GLfloat cpos_x, cpos_y, cpos_z;
+
 		CubeAsset(GLfloat pos_x, GLfloat pos_y, GLfloat pos_z);
 		~CubeAsset();
+
 		virtual void Draw(GLuint);
 
 		// Checks the gameworld space for a block
 		bool CheckSpace(GLfloat pos_x, GLfloat pos_y, GLfloat pos_z);
 
+		// Gets the cube position
+		glm::vec3 GetVec3();
+
 	private:
 		GLuint element_buffer_length, vertex_buffer_length;
 		GLuint vertex_buffer_token, element_buffer_token;
-
-		GLfloat cpos_x, cpos_y, cpos_z;
 };
 
 #endif // CUBEASSET_H

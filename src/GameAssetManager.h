@@ -11,6 +11,7 @@
 
 #include "common.h"
 #include "GameAsset.h"
+#include "CubeAsset.h"
 
 /**
  * GameAssetManager is a container for GameAssets.  It also provides utility
@@ -26,10 +27,10 @@ class GameAssetManager {
 		GameAssetManager(GameAssetManager const&&); 	// move constructor
 
 		void operator=(GameAssetManager const&); 		// assignment
-		void AddAsset(std::shared_ptr<GameAsset>);
+		void AddAsset(std::shared_ptr<CubeAsset>, std::shared_ptr<GameAsset>);
 		void Draw();
 
-		std::vector<std::shared_ptr<GameAsset>> GetAssets();
+		std::vector<std::shared_ptr<CubeAsset>> GetAssets();
 
 	private:
 		GLuint CreateGLProgram(std::string &, std::string &);
@@ -40,6 +41,7 @@ class GameAssetManager {
 
 		// The internal scene graph is a simple list.
 		std::vector<std::shared_ptr<GameAsset>> draw_list;
+		std::vector<std::shared_ptr<CubeAsset>> asset_list;
 		GLuint program_token;
 };
 

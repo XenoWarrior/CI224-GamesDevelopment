@@ -62,20 +62,21 @@ void GameAssetManager::operator=(GameAssetManager const& the_manager)
 
 /**
  * Adds a GameAsset to the scene graph.
+ * NOTE: THERE MUST BE A BETTER WAY TO DO THIS INSTEAD OF PASSING IT TWO TIMES.
  */
-void GameAssetManager::AddAsset(std::shared_ptr<GameAsset> the_asset)
+void GameAssetManager::AddAsset(std::shared_ptr<CubeAsset> cube_asset, std::shared_ptr<GameAsset> the_asset)
 {
+	asset_list.push_back(cube_asset);
 	draw_list.push_back(the_asset);
 }
 
 /**
  * Gets the asset list
  */
-std::vector<std::shared_ptr<GameAsset>> GameAssetManager::GetAssets()
+std::vector<std::shared_ptr<CubeAsset>> GameAssetManager::GetAssets()
 {
-	return draw_list;
+	return asset_list;
 }
-
 /**
  * Draws each GameAsset in the scene graph.
  */

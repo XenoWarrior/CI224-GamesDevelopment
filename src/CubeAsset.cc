@@ -145,3 +145,8 @@ bool CubeAsset::CheckSpace(GLfloat pos_x, GLfloat pos_y, GLfloat pos_z)
 	// Return false if check shows no block
 	return false;
 }
+
+glm::vec3 CubeAsset::GetVec3()
+{
+	return glm::vec3(cpos_x, cpos_y, cpos_z);
+}

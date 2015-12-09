@@ -10,11 +10,13 @@ GameWorld::GameWorld (ApplicationMode mode)
 	{
 		if(i == 0)
 		{
-			asset_manager->AddAsset(std::make_shared<CubeAsset>(0.0, 0.0, 0.0));
+			std::shared_ptr<CubeAsset> tmp_obj = std::make_shared<CubeAsset>(0.0, 0.0, 0.0);
+			asset_manager->AddAsset(tmp_obj, tmp_obj);
 		}
 		else
 		{
-			asset_manager->AddAsset(std::make_shared<CubeAsset>(2.0*i, 0.0, 0.0));
+			std::shared_ptr<CubeAsset> tmp_obj = std::make_shared<CubeAsset>(0.0, 0.0, 0.0);
+			asset_manager->AddAsset(tmp_obj, tmp_obj);
 		}
 	}
 }
@@ -60,16 +62,46 @@ void GameWorld::DoAction(int a)
 {
 	if(a == 1)
 	{
-		// TEMP FOR DEBUG
-		std::vector<std::shared_ptr<GameAsset>> asset_list = asset_manager->GetAssets();
-		std::cout << "Previous Size: " << asset_list.size() << std::endl;
+		/**
+		* Slow check on the cube list, but does work.
+		* Ensures we can't place more than one asset in the same space
+		*
+		* NOTE: LATER UPDATE THIS TO PERFORM THIS TASK BETTER
+		*/
 
-		asset_manager->AddAsset(std::make_shared<CubeAsset>(0.0f + int(position.x), 0.0f + int(position.y), 0.0f + int(position.z)));
-		std::cout << "Created cube at position: (X: " << int(position.x) << ", Y: " << int(position.y) << ", Z: " << int(position.z) << ")" << std::endl;
+		// Get the cube asset list
+		std::vector<std::shared_ptr<CubeAsset>> asset_list = asset_manager->GetAssets();
 
-		// TEMP FOR DEBUG
-		asset_list = asset_manager->GetAssets();
-		std::cout << "New Size: " <<  asset_list.size() << std::endl;
+		// Check through list of assets and their positions
+		int i = 0; // Start at 0
+		bool flag = false; // Assume cube not in list
+		std::shared_ptr<CubeAsset> new_cube = std::make_shared<CubeAsset>(0.0f + int(position.x), 0.0f + int(position.y), 0.0f + int(position.z)); // Cube to make
+		CubeAsset cube_check = CubeAsset(0.0f,0.0f,0.0f); // Blank cube
+
+		for(i = 0; i < asset_list.size(); i++)
+		{
+			// The cube in our asset list to check
+			cube_check = *asset_list[i];
+
+			// Check the cube in the list against our new cube vec3
+			if(glm::to_string(cube_check.GetVec3()) == glm::to_string(glm::vec3(0.0f + int(position.x), 0.0f + int(position.y), 0.0f + int(position.z))))
+			{
+				// There is already a cube in the same vec3 position
+				flag = true;
+			}
+		}
+
+		if(!flag)
+		{
+			asset_manager->AddAsset(new_cube, new_cube);
+			std::cout << "Created cube at position: (X: " << int(position.x) << ", Y: " << int(position.y) << ", Z: " << int(position.z) << ")";
+			std::cout << "(Total Cubes: " << asset_manager->GetAssets().size() << ")" << std::endl;
+		}
+		else
+		{
+			std::cout << "Cube already exists in that position!";
+			std::cout << "(Total Cubes: " << asset_manager->GetAssets().size() << ")" << std::endl;
+		}
 	}
 }
 
