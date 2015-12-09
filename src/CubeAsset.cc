@@ -19,6 +19,18 @@ CubeAsset::CubeAsset(GLfloat pos_x, GLfloat pos_y, GLfloat pos_z)
 	};
 	vertex_buffer_length = sizeof(vertex_buffer);
 
+	GLfloat color_buffer[] = {
+		rf(),  rf(),  rf(),
+		rf(),  rf(),  rf(),
+		rf(),  rf(),  rf(),
+		rf(),  rf(),  rf(),
+		rf(),  rf(),  rf(),
+		rf(),  rf(),  rf(),
+		rf(),  rf(),  rf(),
+		rf(),  rf(),  rf(),
+	};
+	color_buffer_length = sizeof(color_buffer);
+
 	GLuint element_buffer []  {
 		  0, 1, 2
 		, 1, 3, 2
@@ -35,15 +47,23 @@ CubeAsset::CubeAsset(GLfloat pos_x, GLfloat pos_y, GLfloat pos_z)
 	};
 	element_buffer_length = sizeof(element_buffer);
 
-	// Transfer buffers to the GPU
-	//
+	/**
+	* Transfer buffers to the GPU
+	* create buffer
+	* immediately bind the buffer and transfer the data
+	*/
 
-	// create buffer
-	// immediately bind the buffer and transfer the data
+	// Send over GLfloats for the triangles
 	glGenBuffers(1, &vertex_buffer_token);
 	glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer_token);
 	glBufferData(GL_ARRAY_BUFFER, vertex_buffer_length, vertex_buffer, GL_STATIC_DRAW);
 
+	// Send over GLfloats for the colours
+	glGenBuffers(1, &color_buffer_token);
+	glBindBuffer(GL_ARRAY_BUFFER, color_buffer_token);
+	glBufferData(GL_ARRAY_BUFFER, color_buffer_length, color_buffer, GL_STATIC_DRAW);
+
+	// Send over GLfloats for the elements (joining the triangles)
 	glGenBuffers(1, &element_buffer_token);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, element_buffer_token);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, element_buffer_length, element_buffer, GL_STATIC_DRAW);
@@ -69,6 +89,11 @@ void checkError(std::string file, int line)
 	}
 }
 
+float CubeAsset::rf(){
+	float r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+	return r;
+}
+
 void CubeAsset::Draw(GLuint program_token)
 {
 	if(!glIsProgram(program_token))
@@ -78,7 +103,6 @@ void CubeAsset::Draw(GLuint program_token)
 	}
 
 	GLint validation_ok;
-
 	glValidateProgram(program_token);
 	glGetProgramiv(program_token, GL_VALIDATE_STATUS, &validation_ok);
 
@@ -107,17 +131,28 @@ void CubeAsset::Draw(GLuint program_token)
 
 	// use the previously transferred buffer as the vertex array.  This way
 	// we transfer the buffer once -- at construction -- not on every frame.
-	glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer_token); // 1 in from translate.vs
+	glEnableVertexAttribArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer_token);
 	glVertexAttribPointer(
-		position_attrib,               /* attribute */
-		3,                             /* size */
-		GL_FLOAT,                      /* type */
-		GL_FALSE,                      /* normalized? */
-		0,                             /* stride */
-		(void*)0                       /* array buffer offset */
+		0,				/* attribute */
+		3,				/* size */
+		GL_FLOAT,		/* type */
+		GL_FALSE,		/* normalized? */
+		0,				/* stride */
+		(void*)0		/* array buffer offset */
 	);
-	
-	glEnableVertexAttribArray(position_attrib);
+	glEnableVertexAttribArray(1);
+	checkGLError();
+
+	glBindBuffer(GL_ARRAY_BUFFER, color_buffer_token);
+	glVertexAttribPointer(
+		1,				/* attribute */
+		3,				/* size */
+		GL_FLOAT,		/* type */
+		GL_FALSE,		/* normalized? */
+		0,				/* stride */
+		(void*)0		/* array buffer offset */
+	);
 	checkGLError();
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, element_buffer_token);
@@ -127,7 +162,6 @@ void CubeAsset::Draw(GLuint program_token)
 		GL_UNSIGNED_INT,
 		(GLvoid*) 0
 	);
-
 	checkGLError();
 
 	glDisableVertexAttribArray(position_attrib);

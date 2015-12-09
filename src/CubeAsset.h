@@ -21,9 +21,12 @@ class CubeAsset : public GameAsset
 		// Gets the cube position
 		glm::vec3 GetVec3();
 
+		// Random float value
+		float rf();
+
 	private:
-		GLuint element_buffer_length, vertex_buffer_length;
-		GLuint vertex_buffer_token, element_buffer_token;
+		GLuint element_buffer_length, vertex_buffer_length, color_buffer_length;
+		GLuint vertex_buffer_token, element_buffer_token, color_buffer_token;
 };
 
 #endif // CUBEASSET_H
