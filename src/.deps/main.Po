@@ -725,10 +725,6 @@ main.o: main.cc /usr/include/stdc-predef.h /usr/include/GL/glew.h \
  /usr/include/boost/program_options/detail/convert.hpp \
  /usr/include/boost/program_options/variables_map.hpp \
  /usr/include/boost/program_options/version.hpp common.h GameWorld.h \
- GameAssetManager.h /usr/include/c++/4.8/fstream \
- /usr/include/x86_64-linux-gnu/c++/4.8/bits/basic_file.h \
- /usr/include/x86_64-linux-gnu/c++/4.8/bits/c++io.h \
- /usr/include/c++/4.8/bits/fstream.tcc GameAsset.h CubeAsset.h \
  /usr/include/glm/glm.hpp /usr/include/glm/detail/_fixes.hpp \
  /usr/include/glm/fwd.hpp /usr/include/glm/detail/type_int.hpp \
  /usr/include/glm/detail/setup.hpp /usr/include/glm/detail/type_float.hpp \
@@ -936,7 +932,11 @@ main.o: main.cc /usr/include/stdc-predef.h /usr/include/GL/glew.h \
  /usr/include/glm/detail/intrinsic_matrix.hpp \
  /usr/include/glm/detail/intrinsic_geometric.hpp \
  /usr/include/glm/detail/intrinsic_matrix.inl \
- /usr/include/glm/gtx/simd_vec4.hpp /usr/include/glm/gtx/simd_mat4.inl
+ /usr/include/glm/gtx/simd_vec4.hpp /usr/include/glm/gtx/simd_mat4.inl \
+ GameAssetManager.h /usr/include/c++/4.8/fstream \
+ /usr/include/x86_64-linux-gnu/c++/4.8/bits/basic_file.h \
+ /usr/include/x86_64-linux-gnu/c++/4.8/bits/c++io.h \
+ /usr/include/c++/4.8/bits/fstream.tcc GameAsset.h CubeAsset.h
 
 /usr/include/stdc-predef.h:
 
@@ -2620,20 +2620,6 @@ common.h:
 
 GameWorld.h:
 
-GameAssetManager.h:
-
-/usr/include/c++/4.8/fstream:
-
-/usr/include/x86_64-linux-gnu/c++/4.8/bits/basic_file.h:
-
-/usr/include/x86_64-linux-gnu/c++/4.8/bits/c++io.h:
-
-/usr/include/c++/4.8/bits/fstream.tcc:
-
-GameAsset.h:
-
-CubeAsset.h:
-
 /usr/include/glm/glm.hpp:
 
 /usr/include/glm/detail/_fixes.hpp:
@@ -3219,3 +3205,17 @@ CubeAsset.h:
 /usr/include/glm/gtx/simd_vec4.hpp:
 
 /usr/include/glm/gtx/simd_mat4.inl:
+
+GameAssetManager.h:
+
+/usr/include/c++/4.8/fstream:
+
+/usr/include/x86_64-linux-gnu/c++/4.8/bits/basic_file.h:
+
+/usr/include/x86_64-linux-gnu/c++/4.8/bits/c++io.h:
+
+/usr/include/c++/4.8/bits/fstream.tcc:
+
+GameAsset.h:
+
+CubeAsset.h:

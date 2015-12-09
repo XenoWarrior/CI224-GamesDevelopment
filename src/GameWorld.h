@@ -3,6 +3,8 @@
 
 #include <memory>
 #include <GL/gl.h>
+#include <glm/glm.hpp>
+#include <glm/ext.hpp>
 
 #include "common.h"
 #include "GameAssetManager.h"
@@ -30,10 +32,20 @@ class GameWorld {
 		/**
 		* Game camera controller handler
 		*/
-		void CameraController(GLfloat x, GLfloat y, GLfloat z);
+		void CameraController(int keycode);
+		void DoAction(int a);
 
 	private:
 		std::shared_ptr<GameAssetManager> asset_manager;
+
+		GLfloat camera_speed = 0.1;
+
+		GLfloat camera_x = 0.0;
+		GLfloat camera_y = 0.0;
+
+		glm::vec3 position = glm::vec3(0, 0, 0);
+		glm::vec3 z_direction;
+		glm::vec3 x_direction;
 };
 
 #endif // GAMEWORLD_H
