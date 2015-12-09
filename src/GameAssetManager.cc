@@ -62,21 +62,86 @@ void GameAssetManager::operator=(GameAssetManager const& the_manager)
 
 /**
  * Adds a GameAsset to the scene graph.
- * NOTE: THERE MUST BE A BETTER WAY TO DO THIS INSTEAD OF PASSING IT TWO TIMES.
  */
-void GameAssetManager::AddAsset(std::shared_ptr<CubeAsset> cube_asset, std::shared_ptr<GameAsset> the_asset)
+void GameAssetManager::AddAsset(std::shared_ptr<CubeAsset> cube_asset)
 {
-	asset_list.push_back(cube_asset);
-	draw_list.push_back(the_asset);
+	// Rather than pass two CubeAssets, only parse one and *cast* to GameAsset
+	std::shared_ptr<GameAsset> the_asset = cube_asset;
+
+	// Loop setup
+	bool flag = false;
+	CubeAsset cc = *cube_asset;
+	CubeAsset nc = CubeAsset(0.0,0.0,0.0);
+
+	glm::vec3 cube_pos = cc.GetVec3();
+
+	// Loop through the assetlist to check if there is already a cube in the position
+	for(int i = 0; i < asset_list.size(); i++)
+	{
+		nc = *asset_list[i];
+		if(glm::to_string(cc.GetVec3()) == glm::to_string(nc.GetVec3()))
+		{
+			flag = true;
+			break;
+		}
+	}
+
+	if(!flag)
+	{
+		asset_list.push_back(cube_asset);
+		draw_list.push_back(the_asset);
+		std::cout << "Created cube at position: (X: " << int(cube_pos.x) << ", Y: " << int(cube_pos.y) << ", Z: " << int(cube_pos.z) << ")";
+		std::cout << " (Total Cubes: " << asset_list.size() << ")" << std::endl;
+
+	}
+	else
+	{
+		std::cout << "Cube already exists at position: (X: " << int(cube_pos.x) << ", Y: " << int(cube_pos.y) << ", Z: " << int(cube_pos.z) << ")";
+		std::cout << " (Total Cubes: " << asset_list.size() << ")" << std::endl;
+	}
+}
+
+void GameAssetManager::RemoveAll()
+{
+	asset_list.clear();
+	draw_list.clear();
 }
 
 /**
  * Removes an asset from the gameworld
  */
-void GameAssetManager::RemoveAsset(int index)
-{
-	asset_list.erase(asset_list.begin() + index);
-	draw_list.erase(draw_list.begin() + index);
+void GameAssetManager::RemoveAsset(glm::vec3 position)
+{		
+	// Loops setup
+	int r = 0;
+	bool flag = false;
+	CubeAsset cc = CubeAsset(0.0,0.0,0.0);
+
+	// Loop through the assetlist to check if there is a cube in the position we want to remove from
+	for(int i = 0; i < asset_list.size(); i++)
+	{
+		cc = *asset_list[i];
+		if(glm::to_string(cc.GetVec3()) == glm::to_string(glm::vec3(0.0f + int(position.x), 0.0f + int(position.y), 0.0f + int(position.z))))
+		{
+			r = i;
+			flag = true;
+			break;
+		}
+	}
+
+	if(flag)
+	{
+		asset_list.erase(asset_list.begin() + r);
+		draw_list.erase(draw_list.begin() + r);
+		std::cout << "Removed cube at position: (X: " << int(position.x) << ", Y: " << int(position.y) << ", Z: " << int(position.z) << ")";
+		std::cout << " (Total Cubes: " << asset_list.size() << ")" << std::endl;
+	}
+	else
+	{
+		std::cout << "No cube at position: (X: " << int(position.x) << ", Y: " << int(position.y) << ", Z: " << int(position.z) << ")";
+		std::cout << " (Total Cubes: " << asset_list.size() << ")" << std::endl;
+	}
+
 }
 
 /**

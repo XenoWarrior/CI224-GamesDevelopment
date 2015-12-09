@@ -220,6 +220,9 @@ int main(int argc, char ** argv) {
 					case SDLK_q:
 						game_world->DoAction(2);
 						break;
+					case SDLK_g:
+						game_world->DoAction(3);
+						break;
 				}
 				break;
 			default:

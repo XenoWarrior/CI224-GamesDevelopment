@@ -34,8 +34,13 @@ class GameWorld {
 		/**
 		* Game camera controller handler
 		*/
-		void CameraController(int keycode);
-		void DoAction(int a);
+		void CameraController(int);
+		void DoAction(int);
+
+		/**
+		* World generation functions
+		*/
+		void CreateFloor(int, int);
 
 	private:
 		std::shared_ptr<GameAssetManager> asset_manager;

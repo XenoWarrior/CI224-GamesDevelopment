@@ -7,36 +7,7 @@ GameWorld::GameWorld (ApplicationMode mode)
 
 	// Starting point for cube (0,0,0)
 	std::shared_ptr<CubeAsset> tmp_obj = std::make_shared<CubeAsset>(0.0, 0.0, 0.0);
-	asset_manager->AddAsset(tmp_obj, tmp_obj);
-
-	/*
-		for(int i = 0; i <= 20; i++)
-		{
-			for(int x = 0; x <= 20; x++)
-			{
-				std::shared_ptr<CubeAsset> tmp_obj = std::make_shared<CubeAsset>(0.0+i, 0.0, 0.0+x);
-				asset_manager->AddAsset(tmp_obj, tmp_obj);
-			}
-		}
-
-		for(int i = 0; i <= 20; i++)
-		{
-			for(int x = 0; x <= 20; x++)
-			{
-				std::shared_ptr<CubeAsset> tmp_obj = std::make_shared<CubeAsset>(0.0f+x, 1.0+i, 0.0);
-				asset_manager->AddAsset(tmp_obj, tmp_obj);
-			}
-		}
-
-		for(int i = 0; i <= 20; i++)
-		{
-			for(int x = 0; x <= 20; x++)
-			{
-				std::shared_ptr<CubeAsset> tmp_obj = std::make_shared<CubeAsset>(0.0f+x, 1.0+i, 20.0);
-				asset_manager->AddAsset(tmp_obj, tmp_obj);
-			}
-		}
-	*/
+	asset_manager->AddAsset(tmp_obj);
 }
 
 /**
@@ -45,6 +16,8 @@ GameWorld::GameWorld (ApplicationMode mode)
 * 5 = I, 6 = J, 7 = K, 8 = L (Camera Look)
 * 9 = R, 10= F (Move on Y axis)
 * This could likely be handled better, but it works.
+*
+* @param k (int) - ID of action to perform
 */
 void GameWorld::CameraController(int k)
 {
@@ -76,97 +49,33 @@ void GameWorld::CameraController(int k)
 		position.y -= 0.5f * camera_speed;
 }
 
+/**
+ * Handles action codes passed from main
+ * @param a (int) ID of action to perform
+ */
 void GameWorld::DoAction(int a)
 {
-
-	/******************************************
-		TODO: MOVE BLOCK CHECK TO ASSETMANAGER
-	******************************************/
 	if(a == 1)
 	{
-		/**
-		* Slow check on the cube list, but does work.
-		* Ensures we can't place more than one asset in the same space
-		*
-		* NOTE: LATER UPDATE THIS TO PERFORM THIS TASK BETTER
-		*/
-
-		// Get the cube asset list
-		std::vector<std::shared_ptr<CubeAsset>> asset_list = asset_manager->GetAssets();
-
-		// Check through list of assets and their positions
-		int i = 0; // Start at 0
-		bool flag = false; // Assume cube not in list
 		std::shared_ptr<CubeAsset> new_cube = std::make_shared<CubeAsset>(0.0f + int(position.x), 0.0f + int(position.y), 0.0f + int(position.z)); // Cube to make
-		CubeAsset cube_check = CubeAsset(0.0f,0.0f,0.0f); // Blank cube
-
-		for(i = 0; i < asset_list.size(); i++)
-		{
-			// The cube in our asset list to check
-			cube_check = *asset_list[i];
-
-			// Check the cube in the list against our new cube vec3
-			if(glm::to_string(cube_check.GetVec3()) == glm::to_string(glm::vec3(0.0f + int(position.x), 0.0f + int(position.y), 0.0f + int(position.z))))
-			{
-				// There is already a cube in the same vec3 position
-				flag = true;
-			}
-		}
-
-		if(!flag)
-		{
-			asset_manager->AddAsset(new_cube, new_cube);
-			std::cout << "Created cube at position: (X: " << int(position.x) << ", Y: " << int(position.y) << ", Z: " << int(position.z) << ")";
-			std::cout << "(Total Cubes: " << asset_manager->GetAssets().size() << ")" << std::endl;
-		}
-		else
-		{
-			std::cout << "Cube already exists in that position!";
-			std::cout << "(Total Cubes: " << asset_manager->GetAssets().size() << ")" << std::endl;
-		}
+		asset_manager->AddAsset(new_cube);
 	}
 	if(a == 2)
 	{
-		/**
-		* Ultimately the same as adding a block
-		*/
-
-		// Get the cube asset list
-		std::vector<std::shared_ptr<CubeAsset>> asset_list = asset_manager->GetAssets();
-
-		// Check through list of assets and their positions
-		int i = 0; // Start at 0
-		int r = 0; // Block index to remove
-		bool flag = false; // Assume cube not in list
-		std::shared_ptr<CubeAsset> new_cube = std::make_shared<CubeAsset>(0.0f + int(position.x), 0.0f + int(position.y), 0.0f + int(position.z)); // Cube to make
-		CubeAsset cube_check = CubeAsset(0.0f,0.0f,0.0f); // Blank cube
-
-		for(i = 0; i < asset_list.size(); i++)
-		{
-			// The cube in our asset list to check
-			cube_check = *asset_list[i];
-
-			// Check the cube in the list against our new cube vec3
-			if(glm::to_string(cube_check.GetVec3()) == glm::to_string(glm::vec3(0.0f + int(position.x), 0.0f + int(position.y), 0.0f + int(position.z))))
-			{
-				// There is already a cube in the same vec3 position
-				r = i;
-				flag = true;
-				break;
-			}
-		}
-
-		if(flag)
-		{
-			asset_manager->RemoveAsset(i);
-			std::cout << "Removed cube at position: (X: " << int(position.x) << ", Y: " << int(position.y) << ", Z: " << int(position.z) << ")";
-			std::cout << "(Total Cubes: " << asset_manager->GetAssets().size() << ")" << std::endl;
-		}
+		asset_manager->RemoveAsset(position);
+	}
+	if(a == 3)
+	{
+		asset_manager->RemoveAll();
+		CreateFloor(rand() % 20 + 1, rand() % 20 + 1);
 	}
 }
 
+/**
+ * Handles drawing of the camera and game world assets
+ */
 void GameWorld::Draw()
-{   
+{
 	glm::vec3 direction(
 		cos(camera_y) * sin(camera_x),
 		sin(camera_y),
@@ -201,4 +110,18 @@ void GameWorld::Draw()
 
 	// Calls draw from the asset manager
 	asset_manager->Draw();
+}
+
+/**
+ * Generates a floor from 0,0 to X and Y specified
+ */
+void GameWorld::CreateFloor(int x, int y)
+{
+	for(int i = 0; i < x; i++)
+	{
+		for(int o = 0; o < y; o++)
+		{
+			asset_manager->AddAsset(std::make_shared<CubeAsset>(0.0+i, 0.0, 0.0+o));
+		}
+	}
 }
