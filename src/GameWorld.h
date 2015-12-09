@@ -5,6 +5,7 @@
 #include <GL/gl.h>
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
+#include <math.h>
 
 #include "common.h"
 #include "GameAssetManager.h"

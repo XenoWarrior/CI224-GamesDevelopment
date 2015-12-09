@@ -48,8 +48,8 @@ void GameWorld::DoAction(int a)
 {
 	if(a == 1)
 	{
-		asset_manager->AddAsset(std::make_shared<CubeAsset>(position.x, position.y, position.z));
-		std::cout << "Created cube at position: (X: " << position.x << ", Y: " << position.y << ", Z: " << position.z << ")" << std::endl;
+		asset_manager->AddAsset(std::make_shared<CubeAsset>(0.0f + int(position.x), 0.0f + int(position.y), 0.0f + int(position.z)));
+		std::cout << "Created cube at position: (X: " << int(position.x) << ", Y: " << int(position.y) << ", Z: " << int(position.z) << ")" << std::endl;
 	}
 }
 
