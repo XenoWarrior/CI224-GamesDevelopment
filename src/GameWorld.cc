@@ -38,6 +38,7 @@ void GameWorld::CameraController(int k)
 	if(k == 4)
 		position += x_direction * camera_speed;
 
+
 	// For I J K L
 	if(k == 5)
 		camera_y += 0.5f * camera_speed;
@@ -59,8 +60,16 @@ void GameWorld::DoAction(int a)
 {
 	if(a == 1)
 	{
+		// TEMP FOR DEBUG
+		std::vector<std::shared_ptr<GameAsset>> asset_list = asset_manager->GetAssets();
+		std::cout << "Previous Size: " << asset_list.size() << std::endl;
+
 		asset_manager->AddAsset(std::make_shared<CubeAsset>(0.0f + int(position.x), 0.0f + int(position.y), 0.0f + int(position.z)));
 		std::cout << "Created cube at position: (X: " << int(position.x) << ", Y: " << int(position.y) << ", Z: " << int(position.z) << ")" << std::endl;
+
+		// TEMP FOR DEBUG
+		asset_list = asset_manager->GetAssets();
+		std::cout << "New Size: " <<  asset_list.size() << std::endl;
 	}
 }
 

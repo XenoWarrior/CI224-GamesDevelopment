@@ -69,6 +69,14 @@ void GameAssetManager::AddAsset(std::shared_ptr<GameAsset> the_asset)
 }
 
 /**
+ * Gets the asset list
+ */
+std::vector<std::shared_ptr<GameAsset>> GameAssetManager::GetAssets()
+{
+	return draw_list;
+}
+
+/**
  * Draws each GameAsset in the scene graph.
  */
 void GameAssetManager::Draw()

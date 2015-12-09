@@ -2,6 +2,10 @@
 
 CubeAsset::CubeAsset(GLfloat pos_x, GLfloat pos_y, GLfloat pos_z)
 {
+	cpos_x = pos_x;
+	cpos_y = pos_y;
+	cpos_z = pos_z;
+
 	// model coordinates, origin at centre.
 	GLfloat vertex_buffer [] {
 		 -0.5f + pos_x, -0.5f + pos_y, -0.5f +pos_z
@@ -127,4 +131,17 @@ void CubeAsset::Draw(GLuint program_token)
 	checkGLError();
 
 	glDisableVertexAttribArray(position_attrib);
+}
+
+/**
+* Checks if there is a cube already in the current space
+*/
+bool CubeAsset::CheckSpace(GLfloat pos_x, GLfloat pos_y, GLfloat pos_z)
+{
+	// Return true of block already exists
+	if(cpos_z == pos_x && cpos_y == pos_y && cpos_z == pos_z)
+		return true;
+
+	// Return false if check shows no block
+	return false;
 }

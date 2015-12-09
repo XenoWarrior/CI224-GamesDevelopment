@@ -29,6 +29,8 @@ class GameAssetManager {
 		void AddAsset(std::shared_ptr<GameAsset>);
 		void Draw();
 
+		std::vector<std::shared_ptr<GameAsset>> GetAssets();
+
 	private:
 		GLuint CreateGLProgram(std::string &, std::string &);
 		GLuint CreateGLESShader(GLenum, std::string &);
