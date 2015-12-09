@@ -26,3 +26,10 @@ stamp-h1
 
 *.o
 src/*.o
+
+Makefile
+shaders/Makefile
+src/CubeAsset.o
+src/GameAssetManager.o
+src/GameWorld.o
+src/shaderexample
