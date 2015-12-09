@@ -64,6 +64,10 @@ void Draw(const std::shared_ptr<SDL_Window> window, const std::shared_ptr<GameWo
 		game_world->CameraController(7);
 	if(keyboard_input[SDL_SCANCODE_L])
 		game_world->CameraController(8);
+	if(keyboard_input[SDL_SCANCODE_R])
+		game_world->CameraController(9);
+	if(keyboard_input[SDL_SCANCODE_F])
+		game_world->CameraController(10);
 
 	// Draw the gameworld
 	game_world->Draw();

@@ -23,9 +23,12 @@ GameWorld::GameWorld (ApplicationMode mode)
 * Handles the keyboard inputs passed from main.
 * 1 = W, 2 = A, 3 = S, 4 = D (Player Movement)
 * 5 = I, 6 = J, 7 = K, 8 = L (Camera Look)
+* 9 = R, 10= F (Move on Y axis)
+* This could likely be handled better, but it works.
 */
 void GameWorld::CameraController(int k)
 {
+	// For W A S D
 	if(k == 1)
 		position += z_direction * camera_speed;
 	if(k == 2)
@@ -34,14 +37,22 @@ void GameWorld::CameraController(int k)
 		position -= z_direction * camera_speed;
 	if(k == 4)
 		position += x_direction * camera_speed;
+
+	// For I J K L
 	if(k == 5)
-		camera_y += 0.5f / 10.0f;
+		camera_y += 0.5f * camera_speed;
 	if(k == 6)
-		camera_x += 0.5f / 10.0f;
+		camera_x += 0.5f * camera_speed;
 	if(k == 7)
-		camera_y -= 0.5f / 10.0f;
+		camera_y -= 0.5f * camera_speed;
 	if(k == 8)
-		camera_x -= 0.5f / 10.0f;
+		camera_x -= 0.5f * camera_speed;
+
+	// For R F
+	if(k == 9)
+		position.y += 0.5f * camera_speed;
+	if(k == 10)
+		position.y -= 0.5f * camera_speed;
 }
 
 void GameWorld::DoAction(int a)
