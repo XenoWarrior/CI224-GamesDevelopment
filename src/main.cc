@@ -43,6 +43,10 @@ struct SDLWindowDeleter
  */
 void Draw(const std::shared_ptr<SDL_Window> window, const std::shared_ptr<GameWorld> game_world)
 {
+	int x, y;
+	SDL_GetRelativeMouseState(&x, &y);
+	game_world->MoveCamera(x,y);
+
 	// Background colour for the window
 	glClearColor(0.0f, 0.1f, 0.1f, 0.5f);
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
@@ -104,6 +108,9 @@ std::shared_ptr<SDL_Window> InitWorld()
 		std::cout << "Failed to initialise SDL: " << SDL_GetError() << std::endl;
 		return nullptr;
 	}
+	SDL_ShowCursor(1);
+	SDL_WarpMouseInWindow(window.get(), width >> 1, height >> 1 ); 
+	SDL_GetError();
 
 	// When we close a window quit the SDL application
 	atexit(SDL_Quit);
@@ -120,6 +127,9 @@ std::shared_ptr<SDL_Window> InitWorld()
 		std::cout << "Failed to create SDL window: " << SDL_GetError() << std::endl;
 		return nullptr;
 	}
+
+	SDL_WarpMouseInWindow(_window, 320, 240);
+	SDL_GetError();
 
 	SDL_GLContext glContext = SDL_GL_CreateContext(_window);
 	if (!glContext)

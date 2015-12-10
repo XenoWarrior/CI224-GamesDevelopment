@@ -49,6 +49,13 @@ void GameWorld::CameraController(int k)
 		position.y -= 0.5f * camera_speed;
 }
 
+// test
+void GameWorld::MoveCamera(int x, int y)
+{
+	camera_y -= y * camera_speed / 10.0f;
+	camera_x += x * camera_speed / 10.0f;
+}
+
 /**
  * Handles action codes passed from main
  * @param a (int) ID of action to perform

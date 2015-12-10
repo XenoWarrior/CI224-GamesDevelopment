@@ -35,6 +35,7 @@ class GameWorld {
 		* Game camera controller handler
 		*/
 		void CameraController(int);
+		void MoveCamera(int , int);
 		void DoAction(int);
 
 		/**
