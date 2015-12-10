@@ -31,60 +31,37 @@ void GameWorld::CameraController(int k)
 	if(k == 4)
 		position += x_direction * camera_speed;
 
-
 	// I K 
 	if(k == 5)
-	{
-		if(camera_y >= 1.5)
-		{
-			camera_y = 1.5;
-		}
-		else
-		{
-			camera_y += 0.5f * camera_speed;
-		}
-	}
+		camera_y += 0.5f * camera_speed;
 	if(k == 7)
-	{
-		if(camera_y <= -1.5)
-		{
-			camera_y = -1.5;
-		}
-		else
-		{
-			camera_y -= 0.5f * camera_speed;
-		}
-	}
+		camera_y -= 0.5f * camera_speed;
 
 	// J L
 	if(k == 6)
-	{
-		if(camera_x >= 6.3)
-		{
-			camera_x = 0;
-		}
-		else
-		{
-			camera_x += 0.5f * camera_speed;
-		}
-	}
+		camera_x += 0.5f * camera_speed;
 	if(k == 8)
-	{
-		if(camera_x <= -6.3)
-		{
-			camera_x = 0;
-		}
-		else
-		{
-			camera_x -= 0.5f * camera_speed;
-		}
-	}
+		camera_x -= 0.5f * camera_speed;
 
 	// For R F
 	if(k == 9)
 		position.y += 0.5f * camera_speed;
 	if(k == 10)
 		position.y -= 0.5f * camera_speed;
+
+	// Resetting camera position X
+	if(camera_x <= -6.28)
+		camera_x = 0;
+	if(camera_x >= 6.28)
+		camera_x = 0;
+
+	// Resetting camera position Y
+	if(camera_y >= 1.5f)
+		camera_y = 1.5;
+	if(camera_y <= -1.5f)
+		camera_y = -1.5;
+
+	std::cout << glm::to_string(cam_view) << std::endl;
 }
 
 // test
@@ -102,10 +79,9 @@ void GameWorld::DrawGrid()
 	for(float i = -500; i <= 500; i += 0.5)
 	{
 		glBegin(GL_LINES);
-		glColor3ub(255, 255, 255);
 		glVertex3f(-500, -0.5, i);
 		glVertex3f(500, -0.5, i);
-		glVertex3f(i, -0.5,-500);
+		glVertex3f(i, -0.5, -500);
 		glVertex3f(i, -0.5, 500);
 		glEnd();
 	}
@@ -119,8 +95,10 @@ void GameWorld::DoAction(int a)
 {
 	if(a == 1)
 	{
-		std::shared_ptr<CubeAsset> new_cube = std::make_shared<CubeAsset>(0.0f + int(position.x), 0.0f + int(position.y), 0.0f + int(position.z)); // Cube to make
+		std::shared_ptr<CubeAsset> new_cube = std::make_shared<CubeAsset>(0.0f + int(round(position.x)), 0.0f + int(round(position.y)), 0.0f + int(round(position.z))); // Cube to make
 		asset_manager->AddAsset(new_cube);
+
+		std::cout <<  camera_x << " " << camera_y << std::endl;
 	}
 	if(a == 2)
 	{
@@ -159,7 +137,7 @@ void GameWorld::Draw()
 
 	glm::vec3 vup = glm::cross(x_direction, direction);
 	glm::mat4 cam_proj = glm::perspective(75.0f, 4.0f / 3.0f, 0.1f, 100.0f);
-	glm::mat4 cam_view = glm::lookAt(
+	cam_view = glm::lookAt(
 		position,
 		position + direction,
 		vup

@@ -4,6 +4,8 @@
 #include <GL/glew.h>
 #include <GL/gl.h>
 #include <SDL2/SDL.h>
+#include <glm/glm.hpp>
+#include <glm/ext.hpp>
 #include <iostream>
 #include <memory>
 #include <boost/program_options.hpp>
@@ -11,6 +13,7 @@
 #include "common.h"
 #include "GameWorld.h"
 
+// Lousy global variables
 const Uint8* keyboard_input;
 bool use_mouse = false;
 
@@ -112,8 +115,6 @@ std::shared_ptr<SDL_Window> InitWorld()
 		std::cout << "Failed to initialise SDL: " << SDL_GetError() << std::endl;
 		return nullptr;
 	}
-	SDL_ShowCursor(1);
-	SDL_WarpMouseInWindow(window.get(), width >> 1, height >> 1 ); 
 	SDL_GetError();
 
 	// When we close a window quit the SDL application
@@ -131,9 +132,6 @@ std::shared_ptr<SDL_Window> InitWorld()
 		std::cout << "Failed to create SDL window: " << SDL_GetError() << std::endl;
 		return nullptr;
 	}
-
-	SDL_WarpMouseInWindow(_window, 320, 240);
-	SDL_GetError();
 
 	SDL_GLContext glContext = SDL_GL_CreateContext(_window);
 	if (!glContext)

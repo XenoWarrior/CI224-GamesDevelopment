@@ -2,6 +2,7 @@
 #define GAMEWORLD_H
 
 #include <memory>
+#include <GL/glew.h>
 #include <GL/gl.h>
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
@@ -44,6 +45,7 @@ class GameWorld {
 		*/
 		void CreateFloor(int, int);
 
+
 	private:
 		std::shared_ptr<GameAssetManager> asset_manager;
 
@@ -51,10 +53,13 @@ class GameWorld {
 
 		GLfloat camera_x = 0.0;
 		GLfloat camera_y = 0.0;
+		double point = 1.57;
 
 		glm::vec3 position = glm::vec3(0, 0, -3);
 		glm::vec3 z_direction;
 		glm::vec3 x_direction;
+
+		glm::mat4 cam_view;
 };
 
 #endif // GAMEWORLD_H
