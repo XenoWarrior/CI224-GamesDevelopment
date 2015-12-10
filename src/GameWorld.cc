@@ -32,15 +32,53 @@ void GameWorld::CameraController(int k)
 		position += x_direction * camera_speed;
 
 
-	// For I J K L
+	// I K 
 	if(k == 5)
-		camera_y += 0.5f * camera_speed;
-	if(k == 6)
-		camera_x += 0.5f * camera_speed;
+	{
+		if(camera_y >= 1.5)
+		{
+			camera_y = 1.5;
+		}
+		else
+		{
+			camera_y += 0.5f * camera_speed;
+		}
+	}
 	if(k == 7)
-		camera_y -= 0.5f * camera_speed;
+	{
+		if(camera_y <= -1.5)
+		{
+			camera_y = -1.5;
+		}
+		else
+		{
+			camera_y -= 0.5f * camera_speed;
+		}
+	}
+
+	// J L
+	if(k == 6)
+	{
+		if(camera_x >= 6.3)
+		{
+			camera_x = 0;
+		}
+		else
+		{
+			camera_x += 0.5f * camera_speed;
+		}
+	}
 	if(k == 8)
-		camera_x -= 0.5f * camera_speed;
+	{
+		if(camera_x <= -6.3)
+		{
+			camera_x = 0;
+		}
+		else
+		{
+			camera_x -= 0.5f * camera_speed;
+		}
+	}
 
 	// For R F
 	if(k == 9)

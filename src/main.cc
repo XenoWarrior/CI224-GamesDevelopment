@@ -12,6 +12,7 @@
 #include "GameWorld.h"
 
 const Uint8* keyboard_input;
+bool use_mouse = false;
 
 /*
  * SDL timers run in separate threads.  In the timer thread
@@ -43,9 +44,12 @@ struct SDLWindowDeleter
  */
 void Draw(const std::shared_ptr<SDL_Window> window, const std::shared_ptr<GameWorld> game_world)
 {
-	int x, y;
-	SDL_GetRelativeMouseState(&x, &y);
-	game_world->MoveCamera(x,y);
+	if(use_mouse)
+	{
+		int x, y;
+		SDL_GetRelativeMouseState(&x, &y);
+		game_world->MoveCamera(x,y);
+	}
 
 	// Background colour for the window
 	glClearColor(0.0f, 0.1f, 0.1f, 0.5f);
@@ -164,6 +168,7 @@ ApplicationMode ParseOptions (int argc, char ** argv)
 	po::options_description desc("Allowed options");
 	desc.add_options()
 		("help", "print this help message")
+		("mouse", "Enabled experimental mouse-look")
 		("translate", "Show translation example (default)")
 		("rotate", "Show rotation example")
 		("scale", "Show scale example");
@@ -176,6 +181,11 @@ ApplicationMode ParseOptions (int argc, char ** argv)
 	{
 		std::cout << desc << std::endl;
 		exit(0);
+	}
+
+	if(vm.count("mouse"))
+	{
+		use_mouse = true;
 	}
 
 	if(vm.count("rotate"))
