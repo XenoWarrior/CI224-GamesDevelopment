@@ -21,6 +21,7 @@ class CubeAsset : public GameAsset
 		// Gets the cube position
 		glm::vec3 GetVec3();
 
+
 		// Random float value
 		float rf();
 

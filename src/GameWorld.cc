@@ -21,6 +21,18 @@ GameWorld::GameWorld (ApplicationMode mode)
 */
 void GameWorld::CameraController(int k)
 {
+	// Slow collision checker
+	std::vector<std::shared_ptr<CubeAsset>> asset_list = asset_manager->GetAssets();
+	for(int i = 0; i < asset_list.size(); i++)
+	{
+		CubeAsset c = *asset_list[i];
+		if(CheckCollision(c.GetVec3()))
+		{
+			std::cout << "[P]Detected collision with cube at: (X: " << position.x << ", Y: " << position.y << ", Z: " << position.z << ")" << std::endl;
+			std::cout << "[C]Detected collision with cube at: (X: " << c.GetVec3().x << ", Y: " << c.GetVec3().y << ", Z: " << c.GetVec3().z << ")" << std::endl;
+		}
+	}
+
 	// For W A S D
 	if(k == 1)
 		position += z_direction * camera_speed;
@@ -167,4 +179,15 @@ void GameWorld::CreateFloor(int x, int y)
 			asset_manager->AddAsset(std::make_shared<CubeAsset>(0.0+i, 0.0, 0.0+o));
 		}
 	}
+}
+
+/**
+ * Returns true if the position passed is already filled with a block
+ */
+bool GameWorld::CheckCollision(glm::vec3 point)
+{
+	if(point == glm::vec3(int(position.x), int(position.y), int(position.z)))
+		return true;
+	
+	return false;
 }

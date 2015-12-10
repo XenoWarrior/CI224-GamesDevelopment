@@ -40,6 +40,12 @@ class GameWorld {
 		void MoveCamera(int , int);
 		void DoAction(int);
 
+
+		/**
+		*  Collision checker
+		*/
+		bool CheckCollision(glm::vec3);
+
 		/**
 		* World generation functions
 		*/

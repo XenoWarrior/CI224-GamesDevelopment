@@ -187,6 +187,9 @@ void CubeAsset::Draw(GLuint program_token)
 	glDisableVertexAttribArray(position_attrib);
 }
 
+/**
+ * Returns the vec3 of the cube
+ */
 glm::vec3 CubeAsset::GetVec3()
 {
 	return glm::vec3(cpos_x, cpos_y, cpos_z);

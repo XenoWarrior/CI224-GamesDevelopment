@@ -101,6 +101,9 @@ void GameAssetManager::AddAsset(std::shared_ptr<CubeAsset> cube_asset)
 	}
 }
 
+/**
+ * Removes all of the assets from the world
+ */
 void GameAssetManager::RemoveAll()
 {
 	asset_list.clear();
