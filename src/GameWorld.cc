@@ -158,7 +158,7 @@ void GameWorld::Draw()
 	);
 
 	glm::vec3 vup = glm::cross(x_direction, direction);
-	glm::mat4 cam_proj = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
+	glm::mat4 cam_proj = glm::perspective(75.0f, 4.0f / 3.0f, 0.1f, 100.0f);
 	glm::mat4 cam_view = glm::lookAt(
 		position,
 		position + direction,
