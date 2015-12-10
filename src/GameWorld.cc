@@ -61,7 +61,7 @@ void GameWorld::CameraController(int k)
 	if(camera_y <= -1.5f)
 		camera_y = -1.5;
 
-	std::cout << glm::to_string(cam_view) << std::endl;
+	//std::cout << glm::to_string(cam_view) << std::endl;
 }
 
 // test
@@ -98,7 +98,7 @@ void GameWorld::DoAction(int a)
 		std::shared_ptr<CubeAsset> new_cube = std::make_shared<CubeAsset>(0.0f + int(round(position.x)), 0.0f + int(round(position.y)), 0.0f + int(round(position.z))); // Cube to make
 		asset_manager->AddAsset(new_cube);
 
-		std::cout <<  camera_x << " " << camera_y << std::endl;
+		//std::cout <<  camera_x << " " << camera_y << std::endl;
 	}
 	if(a == 2)
 	{
