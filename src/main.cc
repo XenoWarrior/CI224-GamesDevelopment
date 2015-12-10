@@ -52,30 +52,30 @@ void Draw(const std::shared_ptr<SDL_Window> window, const std::shared_ptr<GameWo
 	}
 
 	// Background colour for the window
-	glClearColor(0.0f, 0.1f, 0.1f, 0.5f);
+	glClearColor(0.0f, 0.2f, 0.2f, 0.3f);
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
 	// Update game_world camera
 	if(keyboard_input[SDL_SCANCODE_W])
-		game_world->CameraController(1);
+		game_world->CameraController(1); // forward
 	if(keyboard_input[SDL_SCANCODE_A])
-		game_world->CameraController(2);
+		game_world->CameraController(2); // left
 	if(keyboard_input[SDL_SCANCODE_S])
-		game_world->CameraController(3);
+		game_world->CameraController(3); // back
 	if(keyboard_input[SDL_SCANCODE_D])
-		game_world->CameraController(4);
+		game_world->CameraController(4); // right
 	if(keyboard_input[SDL_SCANCODE_I])
-		game_world->CameraController(5);
+		game_world->CameraController(5); // cam up
 	if(keyboard_input[SDL_SCANCODE_J])
-		game_world->CameraController(6);
+		game_world->CameraController(6); // cam left
 	if(keyboard_input[SDL_SCANCODE_K])
-		game_world->CameraController(7);
+		game_world->CameraController(7); // cam down
 	if(keyboard_input[SDL_SCANCODE_L])
-		game_world->CameraController(8);
+		game_world->CameraController(8); // cam right
 	if(keyboard_input[SDL_SCANCODE_R])
-		game_world->CameraController(9);
+		game_world->CameraController(9); // player: +y ("fly" up)
 	if(keyboard_input[SDL_SCANCODE_F])
-		game_world->CameraController(10);
+		game_world->CameraController(10); // player: -y ("fly" down)
 
 	// Draw the gameworld
 	game_world->Draw();
@@ -120,7 +120,7 @@ std::shared_ptr<SDL_Window> InitWorld()
 	atexit(SDL_Quit);
 
 	// Create a new window with an OpenGL surface
-	_window = SDL_CreateWindow("Shader Example"
+	_window = SDL_CreateWindow("BlockWorld"
 							 , SDL_WINDOWPOS_CENTERED
 							 , SDL_WINDOWPOS_CENTERED
 							 , width
@@ -242,6 +242,9 @@ int main(int argc, char ** argv) {
 						break;
 					case SDLK_g:
 						game_world->DoAction(3);
+						break;
+					case SDLK_ESCAPE:
+						exit(0);
 						break;
 				}
 				break;

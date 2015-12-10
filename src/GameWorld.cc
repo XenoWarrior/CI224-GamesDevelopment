@@ -95,6 +95,23 @@ void GameWorld::MoveCamera(int x, int y)
 }
 
 /**
+ * Draws a grid in 3D space
+ */
+void GameWorld::DrawGrid()
+{
+	for(float i = -500; i <= 500; i += 0.5)
+	{
+		glBegin(GL_LINES);
+		glColor3ub(255, 255, 255);
+		glVertex3f(-500, -0.5, i);
+		glVertex3f(500, -0.5, i);
+		glVertex3f(i, -0.5,-500);
+		glVertex3f(i, -0.5, 500);
+		glEnd();
+	}
+}
+
+/**
  * Handles action codes passed from main
  * @param a (int) ID of action to perform
  */
@@ -155,6 +172,9 @@ void GameWorld::Draw()
 
 	// Calls draw from the asset manager
 	asset_manager->Draw();
+
+	// Draws our grid
+	DrawGrid();
 }
 
 /**

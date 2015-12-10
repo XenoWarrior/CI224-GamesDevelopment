@@ -30,6 +30,7 @@ class GameWorld {
 		* Calling Draw() will draw the entire world.
 		*/
 		void Draw();
+		void DrawGrid();
 
 		/**
 		* Game camera controller handler
