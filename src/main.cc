@@ -1,5 +1,6 @@
 #define GLEW_STATIC
 #define RUN_GRAPHICS_DISPLAY 0x00;
+#define GLM_FORCE_RADIANS 
 
 #include <GL/glew.h>
 #include <GL/gl.h>
