@@ -32,6 +32,9 @@ shaders/Makefile
 src/CubeAsset.o
 src/GameAssetManager.o
 src/GameWorld.o
+src/main.o
 src/shaderexample
 src/Makefile
 src/Makefile.am
+
+src/.deps/*
