@@ -72,7 +72,20 @@ void GameWorld::CameraController(int k)
 		camera_y = 1.5;
 	if(camera_y <= -1.5f)
 		camera_y = -1.5;
-	
+}
+
+// test
+void GameWorld::MoveCamera(int x, int y)
+{
+	camera_y -= y * camera_speed / 10.0f;
+	camera_x += x * camera_speed / 10.0f;
+}
+
+/**
+ * Calculates the camera facing direction
+ */
+void GameWorld::UpdateFacingDirection()
+{
 	if(camera_x <= point && camera_x >= 0.0 && f_pos != "N")
 	{
 		f_pos = "N";
@@ -120,11 +133,51 @@ void GameWorld::CameraController(int k)
 	}
 }
 
-// test
-void GameWorld::MoveCamera(int x, int y)
+/**
+ * Returns an offset for the space in front of the camera
+ */
+glm::vec3 GameWorld::GetOffset()
 {
-	camera_y -= y * camera_speed / 10.0f;
-	camera_x += x * camera_speed / 10.0f;
+	UpdateFacingDirection();
+	int x = 0, y = 0, z = 0;
+	if(f_pos == "N")
+	{
+		z += 2;
+	}
+	if(f_pos == "NE")
+	{
+		z += 1;
+		x -= 1;
+	}
+	if(f_pos == "E")
+	{
+		x -= 2;
+	}
+	if(f_pos == "SE")
+	{
+		z -= 1;
+		x -= 1;
+	}
+	if(f_pos == "S")
+	{
+		z -= 2;
+	}
+	if(f_pos == "SW")
+	{
+		z -= 1;
+		x += 1;
+	}
+	if(f_pos == "W")
+	{
+		x += 2;
+	}
+	if(f_pos == "NW")
+	{
+		z += 1;
+		x += 1;
+	}
+
+	return glm::vec3(x,y,z);
 }
 
 /**
@@ -151,45 +204,8 @@ void GameWorld::DoAction(int a)
 {
 	if(a == 1)
 	{
-		int x = 0, y = 0, z = 0;
-		if(f_pos == "N")
-		{
-			z += 2;
-		}
-		if(f_pos == "NE")
-		{
-			z += 1;
-			x -= 1;
-		}
-		if(f_pos == "E")
-		{
-			x -= 2;
-		}
-		if(f_pos == "SE")
-		{
-			z -= 1;
-			x -= 1;
-		}
-		if(f_pos == "S")
-		{
-			z -= 2;
-		}
-		if(f_pos == "SW")
-		{
-			z -= 1;
-			x += 1;
-		}
-		if(f_pos == "W")
-		{
-			x += 2;
-		}
-		if(f_pos == "NW")
-		{
-			z += 1;
-			x += 1;
-		}
-
-		std::shared_ptr<CubeAsset> new_cube = std::make_shared<CubeAsset>(0.0f + int(round(position.x)) + x, 0.0f + int(round(position.y)) + y, 0.0f + int(round(position.z)) + z); // Cube to make
+		glm::vec3 offset_pos = GetOffset();
+		std::shared_ptr<CubeAsset> new_cube = std::make_shared<CubeAsset>(0.0f + int(round(position.x)) + offset_pos.x, 0.0f + int(round(position.y)) + offset_pos.y, 0.0f + int(round(position.z)) + offset_pos.z); // Cube to make
 		asset_manager->AddAsset(new_cube);
 	}
 	if(a == 2)

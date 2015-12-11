@@ -27,36 +27,22 @@ class GameWorld {
 		*/
 		GameWorld(ApplicationMode);
 
-		/**
-		* Calling Draw() will draw the entire world.
-		*/
 		void Draw();
 		void DrawGrid();
-
-		/**
-		* Game camera controller handler
-		*/
 		void CameraController(int);
 		void MoveCamera(int , int);
 		void DoAction(int);
-
-
-		/**
-		*  Collision checker
-		*/
-		bool CheckCollision(glm::vec3);
-
-		/**
-		* World generation functions
-		*/
+		void UpdateFacingDirection();
 		void CreateFloor(int, int);
 
+		bool CheckCollision(glm::vec3);
 
+		glm::vec3 GetOffset();
+		
 	private:
 		std::shared_ptr<GameAssetManager> asset_manager;
 
 		GLfloat camera_speed = 0.1;
-
 		GLfloat camera_x = 0.0;
 		GLfloat camera_y = 0.0;
 		double point = 0.39375;
@@ -65,7 +51,6 @@ class GameWorld {
 		glm::vec3 position = glm::vec3(0, 0, -3);
 		glm::vec3 z_direction;
 		glm::vec3 x_direction;
-
 		glm::mat4 cam_view;
 };
 
