@@ -6,7 +6,7 @@ GameWorld::GameWorld (ApplicationMode mode)
 	asset_manager = std::make_shared<GameAssetManager>(mode);
 
 	// Starting point for cube (0,0,0)
-	std::shared_ptr<CubeAsset> tmp_obj = std::make_shared<CubeAsset>(0.0, 0.0, 0.0);
+	std::shared_ptr<CubeAsset> tmp_obj = std::make_shared<CubeAsset>(1000.0, 0.0, 0.0);
 	asset_manager->AddAsset(tmp_obj);
 }
 
@@ -151,7 +151,45 @@ void GameWorld::DoAction(int a)
 {
 	if(a == 1)
 	{
-		std::shared_ptr<CubeAsset> new_cube = std::make_shared<CubeAsset>(0.0f + int(round(position.x)), 0.0f + int(round(position.y)), 0.0f + int(round(position.z))); // Cube to make
+		int x = 0, y = 0, z = 0;
+		if(f_pos == "N")
+		{
+			z += 2;
+		}
+		if(f_pos == "NE")
+		{
+			z += 1;
+			x -= 1;
+		}
+		if(f_pos == "E")
+		{
+			x -= 2;
+		}
+		if(f_pos == "SE")
+		{
+			z -= 1;
+			x -= 1;
+		}
+		if(f_pos == "S")
+		{
+			z -= 2;
+		}
+		if(f_pos == "SW")
+		{
+			z -= 1;
+			x += 1;
+		}
+		if(f_pos == "W")
+		{
+			x += 2;
+		}
+		if(f_pos == "NW")
+		{
+			z += 1;
+			x += 1;
+		}
+
+		std::shared_ptr<CubeAsset> new_cube = std::make_shared<CubeAsset>(0.0f + int(round(position.x)) + x, 0.0f + int(round(position.y)) + y, 0.0f + int(round(position.z)) + z); // Cube to make
 		asset_manager->AddAsset(new_cube);
 	}
 	if(a == 2)
