@@ -72,6 +72,8 @@ void GameWorld::CameraController(int k)
 		camera_y = 1.5;
 	if(camera_y <= -1.5f)
 		camera_y = -1.5;
+
+	std::cout << camera_y << "::" << position.y << std::endl;
 }
 
 // test
@@ -175,6 +177,16 @@ glm::vec3 GameWorld::GetOffset()
 	{
 		z += 1;
 		x += 1;
+	}
+
+	// JUST A TEST, NEEDS UPDATING
+	if(camera_y > 0.5)
+	{
+		y += 1;
+	}
+	if(camera_y < -0.5)
+	{
+		y -= 1;
 	}
 
 	return glm::vec3(x,y,z);
