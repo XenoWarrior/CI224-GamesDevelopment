@@ -59,7 +59,8 @@ class GameWorld {
 
 		GLfloat camera_x = 0.0;
 		GLfloat camera_y = 0.0;
-		double point = 1.57;
+		double point = 0.39375;
+		std::string f_pos = "N";
 
 		glm::vec3 position = glm::vec3(0, 0, -3);
 		glm::vec3 z_direction;

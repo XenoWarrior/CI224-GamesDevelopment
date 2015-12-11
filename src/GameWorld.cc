@@ -62,8 +62,8 @@ void GameWorld::CameraController(int k)
 		position.y -= 0.5f * camera_speed;
 
 	// Resetting camera position X
-	if(camera_x <= -6.28)
-		camera_x = 0;
+	if(camera_x <= 0)
+		camera_x = 6.279;
 	if(camera_x >= 6.28)
 		camera_x = 0;
 
@@ -72,8 +72,52 @@ void GameWorld::CameraController(int k)
 		camera_y = 1.5;
 	if(camera_y <= -1.5f)
 		camera_y = -1.5;
-
-	//std::cout << glm::to_string(cam_view) << std::endl;
+	
+	if(camera_x <= point && camera_x >= 0.0 && f_pos != "N")
+	{
+		f_pos = "N";
+		std::cout << "[N]" << "X " << camera_x << ", Y " << camera_y << std::endl;
+	}
+	if(camera_x >= point && camera_x <= point*3 && f_pos != "NW")
+	{
+		f_pos = "NW";
+		std::cout << "[NW]" << "X " << camera_x << ", Y " << camera_y << std::endl;
+	}
+	if(camera_x >= point*3 && camera_x <= point*5 && f_pos != "W")
+	{
+		f_pos = "W";
+		std::cout << "[W]" << "X " << camera_x << ", Y " << camera_y << std::endl;
+	}
+	if(camera_x >= point*5 && camera_x <= point*7 && f_pos != "SW")
+	{
+		f_pos = "SW";
+		std::cout << "[SW]" << "X " << camera_x << ", Y " << camera_y << std::endl;
+	}
+	if(camera_x >= point*7 && camera_x <= point*9 && f_pos != "S")
+	{
+		f_pos = "S";
+		std::cout << "[S]" << "X " << camera_x << ", Y " << camera_y << std::endl;
+	}
+	if(camera_x >= point*9 && camera_x <= point*11 && f_pos != "SE")
+	{
+		f_pos = "SE";
+		std::cout << "[SE]" << "X " << camera_x << ", Y " << camera_y << std::endl;
+	}
+	if(camera_x >= point*11 && camera_x <= point*13 && f_pos != "E")
+	{
+		f_pos = "E";
+		std::cout << "[E]" << "X " << camera_x << ", Y " << camera_y << std::endl;
+	}
+	if(camera_x >= point*13 && camera_x <= point*15 && f_pos != "NE")
+	{
+		f_pos = "NE";
+		std::cout << "[NE]" << "X " << camera_x << ", Y " << camera_y << std::endl;
+	}
+	if(camera_x >= point*15 && camera_x <= point*16 && f_pos != "NE")
+	{
+		f_pos = "NE";
+		std::cout << "[NE]" << "X " << camera_x << ", Y " << camera_y << std::endl;
+	}
 }
 
 // test
@@ -109,8 +153,6 @@ void GameWorld::DoAction(int a)
 	{
 		std::shared_ptr<CubeAsset> new_cube = std::make_shared<CubeAsset>(0.0f + int(round(position.x)), 0.0f + int(round(position.y)), 0.0f + int(round(position.z))); // Cube to make
 		asset_manager->AddAsset(new_cube);
-
-		//std::cout <<  camera_x << " " << camera_y << std::endl;
 	}
 	if(a == 2)
 	{
