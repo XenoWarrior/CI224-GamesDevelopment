@@ -6,7 +6,7 @@ GameWorld::GameWorld (ApplicationMode mode)
 	asset_manager = std::make_shared<GameAssetManager>(mode);
 
 	// Starting point for cube (0,0,0)
-	std::shared_ptr<CubeAsset> tmp_obj = std::make_shared<CubeAsset>(1000.0, 0.0, 0.0);
+	std::shared_ptr<CubeAsset> tmp_obj = std::make_shared<CubeAsset>(glm::vec3(0.0, 0.0, 0.0));
 	asset_manager->AddAsset(tmp_obj);
 }
 
@@ -62,10 +62,10 @@ void GameWorld::CameraController(int k)
 		position.y -= 0.5f * camera_speed;
 
 	// Resetting camera position X
+	if(camera_x >= 6.298)
+		camera_x = 0.1;
 	if(camera_x <= 0)
-		camera_x = 6.279;
-	if(camera_x >= 6.28)
-		camera_x = 0;
+		camera_x = 6.297;
 
 	// Resetting camera position Y
 	if(camera_y >= 1.5f)
@@ -205,12 +205,13 @@ void GameWorld::DoAction(int a)
 	if(a == 1)
 	{
 		glm::vec3 offset_pos = GetOffset();
-		std::shared_ptr<CubeAsset> new_cube = std::make_shared<CubeAsset>(0.0f + int(round(position.x)) + offset_pos.x, 0.0f + int(round(position.y)) + offset_pos.y, 0.0f + int(round(position.z)) + offset_pos.z); // Cube to make
+		std::shared_ptr<CubeAsset> new_cube = std::make_shared<CubeAsset>(glm::vec3(0.0f + int(round(position.x)) + offset_pos.x, 0.0f + int(round(position.y)) + offset_pos.y, 0.0f + int(round(position.z)) + offset_pos.z)); // Cube to make
 		asset_manager->AddAsset(new_cube);
 	}
 	if(a == 2)
 	{
-		asset_manager->RemoveAsset(position);
+		glm::vec3 offset_pos = GetOffset();
+		asset_manager->RemoveAsset(position, offset_pos);
 	}
 	if(a == 3)
 	{
@@ -272,7 +273,7 @@ void GameWorld::CreateFloor(int x, int y)
 	{
 		for(int o = 0; o < y; o++)
 		{
-			asset_manager->AddAsset(std::make_shared<CubeAsset>(0.0+i, 0.0, 0.0+o));
+			asset_manager->AddAsset(std::make_shared<CubeAsset>(glm::vec3(0.0+i, 0.0, 0.0+o)));
 		}
 	}
 }

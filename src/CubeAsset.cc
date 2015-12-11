@@ -1,21 +1,20 @@
 #include "CubeAsset.h"
 
-CubeAsset::CubeAsset(GLfloat pos_x, GLfloat pos_y, GLfloat pos_z)
+CubeAsset::CubeAsset(glm::vec3 p)
 {
-	cpos_x = pos_x;
-	cpos_y = pos_y;
-	cpos_z = pos_z;
+	// Can be moved into vec3
+	position = p;
 
 	// model coordinates, origin at centre.
 	GLfloat vertex_buffer [] {
-		-0.5f + pos_x, -0.5f + pos_y, -0.5f +pos_z,
-		-0.5f + pos_x,  0.5f + pos_y, -0.5f +pos_z,
-		 0.5f + pos_x, -0.5f + pos_y, -0.5f +pos_z,
-		 0.5f + pos_x,  0.5f + pos_y, -0.5f +pos_z,
-		 0.5f + pos_x, -0.5f + pos_y,  0.5f +pos_z,
-		 0.5f + pos_x,  0.5f + pos_y,  0.5f +pos_z,
-		-0.5f + pos_x, -0.5f + pos_y,  0.5f +pos_z,
-		-0.5f + pos_x,  0.5f + pos_y,  0.5f +pos_z
+		-0.5f + position.x, -0.5f + position.y, -0.5f + position.z,
+		-0.5f + position.x,  0.5f + position.y, -0.5f + position.z,
+		 0.5f + position.x, -0.5f + position.y, -0.5f + position.z,
+		 0.5f + position.x,  0.5f + position.y, -0.5f + position.z,
+		 0.5f + position.x, -0.5f + position.y,  0.5f + position.z,
+		 0.5f + position.x,  0.5f + position.y,  0.5f + position.z,
+		-0.5f + position.x, -0.5f + position.y,  0.5f + position.z,
+		-0.5f + position.x,  0.5f + position.y,  0.5f + position.z
 	};
 	vertex_buffer_length = sizeof(vertex_buffer);
 
@@ -192,5 +191,5 @@ void CubeAsset::Draw(GLuint program_token)
  */
 glm::vec3 CubeAsset::GetVec3()
 {
-	return glm::vec3(cpos_x, cpos_y, cpos_z);
+	return position;
 }

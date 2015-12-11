@@ -11,19 +11,15 @@
 class CubeAsset : public GameAsset
 {
 	public:
-		GLfloat cpos_x, cpos_y, cpos_z;
+		glm::vec3 position;			// cube vec3
 
-		CubeAsset(GLfloat pos_x, GLfloat pos_y, GLfloat pos_z);
+		CubeAsset(glm::vec3);
 		~CubeAsset();
 
 		virtual void Draw(GLuint);
 
-		// Gets the cube position
-		glm::vec3 GetVec3();
-
-
-		// Random float value
-		float rf();
+		glm::vec3 GetVec3();		// get cube vec3
+		float rf();					// generate random float
 
 	private:
 		GLuint element_buffer_length, vertex_buffer_length, color_buffer_length;

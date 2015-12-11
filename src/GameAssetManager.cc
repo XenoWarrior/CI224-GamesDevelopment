@@ -71,7 +71,7 @@ void GameAssetManager::AddAsset(std::shared_ptr<CubeAsset> cube_asset)
 	// Loop setup
 	bool flag = false;
 	CubeAsset cc = *cube_asset;
-	CubeAsset nc = CubeAsset(0.0,0.0,0.0);
+	CubeAsset nc = CubeAsset(glm::vec3(0.0,0.0,0.0));
 
 	glm::vec3 cube_pos = cc.GetVec3();
 
@@ -113,18 +113,18 @@ void GameAssetManager::RemoveAll()
 /**
  * Removes an asset from the gameworld
  */
-void GameAssetManager::RemoveAsset(glm::vec3 position)
+void GameAssetManager::RemoveAsset(glm::vec3 position, glm::vec3 offset_pos)
 {		
 	// Loops setup
 	int r = 0;
 	bool flag = false;
-	CubeAsset cc = CubeAsset(0.0,0.0,0.0);
+	CubeAsset cc = CubeAsset(glm::vec3(0.0,0.0,0.0));
 
 	// Loop through the assetlist to check if there is a cube in the position we want to remove from
 	for(int i = 0; i < asset_list.size(); i++)
 	{
 		cc = *asset_list[i];
-		if(glm::to_string(cc.GetVec3()) == glm::to_string(glm::vec3(0.0f + int(position.x), 0.0f + int(position.y), 0.0f + int(position.z))))
+		if(glm::to_string(cc.GetVec3()) == glm::to_string(glm::vec3(0.0f + int(round(position.x)) + offset_pos.x, 0.0f + int(round(position.y)) + offset_pos.y, 0.0f + int(round(position.z)) + offset_pos.z)))
 		{
 			r = i;
 			flag = true;

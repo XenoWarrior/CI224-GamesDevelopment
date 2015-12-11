@@ -28,7 +28,7 @@ class GameAssetManager {
 
 		void operator=(GameAssetManager const&); 		// assignment
 		void AddAsset(std::shared_ptr<CubeAsset>);
-		void RemoveAsset(glm::vec3);
+		void RemoveAsset(glm::vec3, glm::vec3);
 		void RemoveAll();
 		void Draw();
 
