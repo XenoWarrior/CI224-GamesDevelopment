@@ -33,7 +33,7 @@ class GameWorld {
 		void MoveCamera(int , int);
 		void DoAction(int);
 		void UpdateFacingDirection();
-		void CreateFloor(int, int);
+		void CreateFloor(int, int, int);
 
 		bool CheckCollision(glm::vec3);
 

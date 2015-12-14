@@ -21,7 +21,7 @@ GameWorld::GameWorld (ApplicationMode mode)
 */
 void GameWorld::CameraController(int k)
 {
-	// Slow collision checker
+	/* Slow collision checker
 	std::vector<std::shared_ptr<CubeAsset>> asset_list = asset_manager->GetAssets();
 	for(int i = 0; i < asset_list.size(); i++)
 	{
@@ -31,7 +31,7 @@ void GameWorld::CameraController(int k)
 			std::cout << "[P]Detected collision with cube at: (X: " << position.x << ", Y: " << position.y << ", Z: " << position.z << ")" << std::endl;
 			std::cout << "[C]Detected collision with cube at: (X: " << c.GetVec3().x << ", Y: " << c.GetVec3().y << ", Z: " << c.GetVec3().z << ")" << std::endl;
 		}
-	}
+	}*/
 
 	// For W A S D
 	if(k == 1)
@@ -72,8 +72,6 @@ void GameWorld::CameraController(int k)
 		camera_y = 1.5;
 	if(camera_y <= -1.5f)
 		camera_y = -1.5;
-
-	std::cout << camera_y << "::" << position.y << std::endl;
 }
 
 // test
@@ -144,7 +142,7 @@ glm::vec3 GameWorld::GetOffset()
 	int x = 0, y = 0, z = 0;
 	if(f_pos == "N")
 	{
-		z += 2;
+		z += 1;
 	}
 	if(f_pos == "NE")
 	{
@@ -153,7 +151,7 @@ glm::vec3 GameWorld::GetOffset()
 	}
 	if(f_pos == "E")
 	{
-		x -= 2;
+		x -= 1;
 	}
 	if(f_pos == "SE")
 	{
@@ -162,7 +160,7 @@ glm::vec3 GameWorld::GetOffset()
 	}
 	if(f_pos == "S")
 	{
-		z -= 2;
+		z -= 1;
 	}
 	if(f_pos == "SW")
 	{
@@ -228,7 +226,7 @@ void GameWorld::DoAction(int a)
 	if(a == 3)
 	{
 		asset_manager->RemoveAll();
-		CreateFloor(rand() % 20 + 1, rand() % 20 + 1);
+		CreateFloor(rand() % 19 + 1, rand() % 19 + 1, rand() % 19 + 1);
 	}
 }
 
@@ -279,13 +277,19 @@ void GameWorld::Draw()
 /**
  * Generates a floor from 0,0 to X and Y specified
  */
-void GameWorld::CreateFloor(int x, int y)
+void GameWorld::CreateFloor(int x, int y, int z)
 {
 	for(int i = 0; i < x; i++)
 	{
 		for(int o = 0; o < y; o++)
 		{
-			asset_manager->AddAsset(std::make_shared<CubeAsset>(glm::vec3(0.0+i, 0.0, 0.0+o)));
+			for(int p = 0; p < z; p++)
+			{
+				if((rand() % 18 + 2) > 15)
+				{
+					asset_manager->AddAsset(std::make_shared<CubeAsset>(glm::vec3(0.0+i, 0.0+p, 0.0+o)));
+				}
+			}
 		}
 	}
 }
