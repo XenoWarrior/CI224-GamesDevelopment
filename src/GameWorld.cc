@@ -87,50 +87,23 @@ void GameWorld::MoveCamera(int x, int y)
 void GameWorld::UpdateFacingDirection()
 {
 	if(camera_x <= point && camera_x >= 0.0 && f_pos != "N")
-	{
 		f_pos = "N";
-		std::cout << "[N]" << "X " << camera_x << ", Y " << camera_y << std::endl;
-	}
 	if(camera_x >= point && camera_x <= point*3 && f_pos != "NW")
-	{
 		f_pos = "NW";
-		std::cout << "[NW]" << "X " << camera_x << ", Y " << camera_y << std::endl;
-	}
 	if(camera_x >= point*3 && camera_x <= point*5 && f_pos != "W")
-	{
 		f_pos = "W";
-		std::cout << "[W]" << "X " << camera_x << ", Y " << camera_y << std::endl;
-	}
 	if(camera_x >= point*5 && camera_x <= point*7 && f_pos != "SW")
-	{
 		f_pos = "SW";
-		std::cout << "[SW]" << "X " << camera_x << ", Y " << camera_y << std::endl;
-	}
 	if(camera_x >= point*7 && camera_x <= point*9 && f_pos != "S")
-	{
 		f_pos = "S";
-		std::cout << "[S]" << "X " << camera_x << ", Y " << camera_y << std::endl;
-	}
 	if(camera_x >= point*9 && camera_x <= point*11 && f_pos != "SE")
-	{
 		f_pos = "SE";
-		std::cout << "[SE]" << "X " << camera_x << ", Y " << camera_y << std::endl;
-	}
 	if(camera_x >= point*11 && camera_x <= point*13 && f_pos != "E")
-	{
 		f_pos = "E";
-		std::cout << "[E]" << "X " << camera_x << ", Y " << camera_y << std::endl;
-	}
 	if(camera_x >= point*13 && camera_x <= point*15 && f_pos != "NE")
-	{
 		f_pos = "NE";
-		std::cout << "[NE]" << "X " << camera_x << ", Y " << camera_y << std::endl;
-	}
-	if(camera_x >= point*15 && camera_x <= point*16 && f_pos != "NE")
-	{
-		f_pos = "NE";
-		std::cout << "[NE]" << "X " << camera_x << ", Y " << camera_y << std::endl;
-	}
+	if(camera_x >= point*15 && camera_x <= point*16 && f_pos != "N")
+		f_pos = "N";
 }
 
 /**
@@ -140,6 +113,7 @@ glm::vec3 GameWorld::GetOffset()
 {
 	UpdateFacingDirection();
 	int x = 0, y = 0, z = 0;
+
 	if(f_pos == "N")
 	{
 		z += block_dist;
