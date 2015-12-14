@@ -142,49 +142,49 @@ glm::vec3 GameWorld::GetOffset()
 	int x = 0, y = 0, z = 0;
 	if(f_pos == "N")
 	{
-		z += 1;
+		z += block_dist;
 	}
 	if(f_pos == "NE")
 	{
-		z += 1;
-		x -= 1;
+		z += block_dist;
+		x -= block_dist;
 	}
 	if(f_pos == "E")
 	{
-		x -= 1;
+		x -= block_dist;
 	}
 	if(f_pos == "SE")
 	{
-		z -= 1;
-		x -= 1;
+		z -= block_dist;
+		x -= block_dist;
 	}
 	if(f_pos == "S")
 	{
-		z -= 1;
+		z -= block_dist;
 	}
 	if(f_pos == "SW")
 	{
-		z -= 1;
-		x += 1;
+		z -= block_dist;
+		x += block_dist;
 	}
 	if(f_pos == "W")
 	{
-		x += 1;
+		x += block_dist;
 	}
 	if(f_pos == "NW")
 	{
-		z += 1;
-		x += 1;
+		z += block_dist;
+		x += block_dist;
 	}
 
 	// JUST A TEST, NEEDS UPDATING
 	if(camera_y > 0.5)
 	{
-		y += 1;
+		y += block_dist;
 	}
 	if(camera_y < -0.5)
 	{
-		y -= 1;
+		y -= block_dist;
 	}
 
 	return glm::vec3(x,y,z);
