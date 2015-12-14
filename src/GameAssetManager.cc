@@ -90,14 +90,6 @@ void GameAssetManager::AddAsset(std::shared_ptr<CubeAsset> cube_asset)
 	{
 		asset_list.push_back(cube_asset);
 		draw_list.push_back(the_asset);
-		std::cout << "Created cube at position: (X: " << int(cube_pos.x) << ", Y: " << int(cube_pos.y) << ", Z: " << int(cube_pos.z) << ")";
-		std::cout << " (Total Cubes: " << asset_list.size() << ")" << std::endl;
-
-	}
-	else
-	{
-		std::cout << "Cube already exists at position: (X: " << int(cube_pos.x) << ", Y: " << int(cube_pos.y) << ", Z: " << int(cube_pos.z) << ")";
-		std::cout << " (Total Cubes: " << asset_list.size() << ")" << std::endl;
 	}
 }
 
@@ -106,6 +98,14 @@ void GameAssetManager::AddAsset(std::shared_ptr<CubeAsset> cube_asset)
  */
 void GameAssetManager::RemoveAll()
 {
+	// Free the GL buffer data
+	for(int i = 0; i < asset_list.size(); i++)
+	{
+		CubeAsset cc = *asset_list[i];
+		cc.FreeBuffer();
+	}
+
+	// Remove the assets from the list
 	asset_list.clear();
 	draw_list.clear();
 }
@@ -134,17 +134,13 @@ void GameAssetManager::RemoveAsset(glm::vec3 position, glm::vec3 offset_pos)
 
 	if(flag)
 	{
+		// Free the buffer
+		cc.FreeBuffer();
+		
+		// Remove the asset
 		asset_list.erase(asset_list.begin() + r);
 		draw_list.erase(draw_list.begin() + r);
-		std::cout << "Removed cube at position: (X: " << int(position.x) << ", Y: " << int(position.y) << ", Z: " << int(position.z) << ")";
-		std::cout << " (Total Cubes: " << asset_list.size() << ")" << std::endl;
 	}
-	else
-	{
-		std::cout << "No cube at position: (X: " << int(position.x) << ", Y: " << int(position.y) << ", Z: " << int(position.z) << ")";
-		std::cout << " (Total Cubes: " << asset_list.size() << ")" << std::endl;
-	}
-
 }
 
 /**

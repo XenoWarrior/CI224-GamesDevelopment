@@ -35,19 +35,6 @@ CubeAsset::CubeAsset(glm::vec3 p)
 		c1, c2, c3
 	};
 
-	/* Fun magical colours
-		GLfloat color_buffer[] = {
-			rf(),  rf(),  rf(),
-			rf(),  rf(),  rf(),
-			rf(),  rf(),  rf(),
-			rf(),  rf(),  rf(),
-			rf(),  rf(),  rf(),
-			rf(),  rf(),  rf(),
-			rf(),  rf(),  rf(),
-			rf(),  rf(),  rf(),
-		};
-	*/
-
 	color_buffer_length = sizeof(color_buffer);
 
 	GLuint element_buffer []  {
@@ -86,6 +73,8 @@ CubeAsset::CubeAsset(glm::vec3 p)
 	glGenBuffers(1, &element_buffer_token);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, element_buffer_token);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, element_buffer_length, element_buffer, GL_STATIC_DRAW);
+
+
 }
 
 CubeAsset::~CubeAsset() {
@@ -192,4 +181,14 @@ void CubeAsset::Draw(GLuint program_token)
 glm::vec3 CubeAsset::GetVec3()
 {
 	return position;
+}
+
+/**
+ * Remove buffer data for the cube
+ */
+void CubeAsset::FreeBuffer()
+{
+	glInvalidateBufferData(vertex_buffer_token);
+	glInvalidateBufferData(element_buffer_token);
+	glInvalidateBufferData(color_buffer_token);
 }

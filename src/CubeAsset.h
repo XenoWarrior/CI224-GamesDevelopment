@@ -21,6 +21,8 @@ class CubeAsset : public GameAsset
 		glm::vec3 GetVec3();		// get cube vec3
 		float rf();					// generate random float
 
+		void FreeBuffer();
+
 	private:
 		GLuint element_buffer_length, vertex_buffer_length, color_buffer_length;
 		GLuint vertex_buffer_token, element_buffer_token, color_buffer_token;
