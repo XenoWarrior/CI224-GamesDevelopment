@@ -169,7 +169,7 @@ glm::vec3 GameWorld::GetOffset()
 	}
 	if(f_pos == "W")
 	{
-		x += 2;
+		x += 1;
 	}
 	if(f_pos == "NW")
 	{
