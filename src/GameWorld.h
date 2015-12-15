@@ -30,7 +30,7 @@ class GameWorld {
 		void Draw();
 		void DrawGrid();
 		void CameraController(int);
-		void MoveCamera(glm::vec2);
+		void MoveCamera(glm::vec2, glm::vec2);
 		void DoAction(int);
 		void UpdateFacingDirection();
 		void CreateFloor(int, int, int);

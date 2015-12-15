@@ -70,10 +70,10 @@ void GameWorld::CameraController(int k)
 }
 
 // test
-void GameWorld::MoveCamera(glm::vec2 motion)
+void GameWorld::MoveCamera(glm::vec2 motion, glm::vec2 display)
 {
-	camera_x += (320 - motion.x) * camera_speed / 100.0f;
-	camera_y += (240 - motion.y) * camera_speed / 100.0f;
+	camera_x += ((display.x/2) - motion.x) * camera_speed / 100.0f;
+	camera_y += ((display.y/2) - motion.y) * camera_speed / 100.0f;
 }
 
 /**

@@ -17,6 +17,7 @@
 // Lousy global variables
 const Uint8* keyboard_input;
 SDL_Window * _window;
+SDL_DisplayMode display;
 
 /*
  * SDL timers run in separate threads.  In the timer thread
@@ -53,10 +54,10 @@ void HandleInput(const std::shared_ptr<GameWorld> game_world)
 	SDL_PumpEvents();
 	SDL_GetMouseState(&x, &y); 
 	SDL_EventState(SDL_MOUSEMOTION, SDL_IGNORE);
-	SDL_WarpMouseInWindow(_window, 320, 240); 
+	SDL_WarpMouseInWindow(_window, display.w/2, display.h/2); 
 	SDL_EventState(SDL_MOUSEMOTION, SDL_ENABLE);
 	SDL_PumpEvents(); 
-	game_world->MoveCamera(glm::vec2(x,y));
+	game_world->MoveCamera(glm::vec2(x,y), glm::vec2(display.w, display.h));
 
 	// Update game_world camera
 	if(keyboard_input[SDL_SCANCODE_W])
@@ -106,8 +107,6 @@ void Draw(const std::shared_ptr<SDL_Window> window, const std::shared_ptr<GameWo
 std::shared_ptr<SDL_Window> InitWorld()
 {
 	// Window properties
-	Uint32 width = 640;
-	Uint32 height = 480;
 	std::shared_ptr<SDL_Window> window;
 
 	// Glew will later ensure that OpenGL 3 *is* supported
@@ -131,13 +130,19 @@ std::shared_ptr<SDL_Window> InitWorld()
 	// When we close a window quit the SDL application
 	atexit(SDL_Quit);
 
+	SDL_ShowCursor(0);
+	SDL_GetCurrentDisplayMode(0, &display);
+
 	// Create a new window with an OpenGL surface
 	_window = SDL_CreateWindow("BlockWorld"
 							 , SDL_WINDOWPOS_CENTERED
 							 , SDL_WINDOWPOS_CENTERED
-							 , width
-							 , height
+							 , display.w
+							 , display.h
 							 , SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
+	
+	SDL_SetWindowFullscreen(_window, SDL_WINDOW_FULLSCREEN);
+	
 	if(!_window)
 	{
 		std::cout << "Failed to create SDL window: " << SDL_GetError() << std::endl;
