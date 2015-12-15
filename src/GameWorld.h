@@ -34,6 +34,7 @@ class GameWorld {
 		void DoAction(int);
 		void UpdateFacingDirection();
 		void CreateFloor(int, int, int);
+		void ChangeBlockDist(int);
 
 		bool CheckCollision(glm::vec3);
 

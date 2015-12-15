@@ -311,3 +311,13 @@ bool GameWorld::CheckCollision(glm::vec3 point)
 	
 	return false;
 }
+
+/**
+ * Changes block distance
+ */
+void GameWorld::ChangeBlockDist(int i)
+{
+	std::cout << block_dist << std::endl;
+	block_dist += i;
+	std::cout << block_dist << std::endl;
+}

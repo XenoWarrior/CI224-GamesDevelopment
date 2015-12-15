@@ -76,12 +76,17 @@ void HandleInput(const std::shared_ptr<GameWorld> game_world)
 	if(keyboard_input[SDL_SCANCODE_LCTRL])
 		game_world->CameraController(10); // player: -y ("fly" down)
 
-	if(keyboard_input[SDL_SCANCODE_E])
+	if(SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT))
 		game_world->DoAction(1); 
-	if(keyboard_input[SDL_SCANCODE_Q])
+	if(SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_RIGHT))
 		game_world->DoAction(2); 
 	if(keyboard_input[SDL_SCANCODE_G])
 		game_world->DoAction(3);
+
+	if(keyboard_input[SDL_SCANCODE_E])
+		game_world->ChangeBlockDist(1);
+	if(keyboard_input[SDL_SCANCODE_Q])
+		game_world->ChangeBlockDist(-1);
 
 	if(keyboard_input[SDL_SCANCODE_ESCAPE])
 		SDL_Quit();
