@@ -161,6 +161,47 @@ glm::vec3 GameWorld::GetOffset()
  */
 void GameWorld::DrawGrid()
 {
+	glm::vec3 offset_pos = GetOffset();
+
+	glBegin(GL_QUADS);
+	// Bottom
+    glVertex3f(int(round(position.x) + offset_pos.x) - 0.2f, int(round(position.y) + offset_pos.y) - 0.52f, int(round(position.z) + offset_pos.z) + 0.2f);
+    glVertex3f(int(round(position.x) + offset_pos.x) + 0.2f, int(round(position.y) + offset_pos.y) - 0.52f, int(round(position.z) + offset_pos.z) + 0.2f);
+    glVertex3f(int(round(position.x) + offset_pos.x) + 0.2f, int(round(position.y) + offset_pos.y) - 0.52f, int(round(position.z) + offset_pos.z) - 0.2f);
+    glVertex3f(int(round(position.x) + offset_pos.x) - 0.2f, int(round(position.y) + offset_pos.y) - 0.52f, int(round(position.z) + offset_pos.z) - 0.2f);
+    
+    // Top
+    glVertex3f(int(round(position.x) + offset_pos.x) - 0.2f, int(round(position.y) + offset_pos.y) + 0.52f, int(round(position.z) + offset_pos.z) + 0.2f);
+    glVertex3f(int(round(position.x) + offset_pos.x) + 0.2f, int(round(position.y) + offset_pos.y) + 0.52f, int(round(position.z) + offset_pos.z) + 0.2f);
+    glVertex3f(int(round(position.x) + offset_pos.x) + 0.2f, int(round(position.y) + offset_pos.y) + 0.52f, int(round(position.z) + offset_pos.z) - 0.2f);
+    glVertex3f(int(round(position.x) + offset_pos.x) - 0.2f, int(round(position.y) + offset_pos.y) + 0.52f, int(round(position.z) + offset_pos.z) - 0.2f);
+
+    // Front
+    glVertex3f(int(round(position.x) + offset_pos.x) - 0.125f, int(round(position.y) + offset_pos.y) - 0.125f, int(round(position.z) + offset_pos.z) - 0.52);
+    glVertex3f(int(round(position.x) + offset_pos.x) + 0.125f, int(round(position.y) + offset_pos.y) - 0.125f, int(round(position.z) + offset_pos.z) - 0.52);
+    glVertex3f(int(round(position.x) + offset_pos.x) + 0.125f, int(round(position.y) + offset_pos.y) + 0.125f, int(round(position.z) + offset_pos.z) - 0.52);
+    glVertex3f(int(round(position.x) + offset_pos.x) - 0.125f, int(round(position.y) + offset_pos.y) + 0.125f, int(round(position.z) + offset_pos.z) - 0.52);
+
+    // Back
+    glVertex3f(int(round(position.x) + offset_pos.x) - 0.125f, int(round(position.y) + offset_pos.y) - 0.125f, int(round(position.z) + offset_pos.z) + 0.52);
+    glVertex3f(int(round(position.x) + offset_pos.x) + 0.125f, int(round(position.y) + offset_pos.y) - 0.125f, int(round(position.z) + offset_pos.z) + 0.52);
+    glVertex3f(int(round(position.x) + offset_pos.x) + 0.125f, int(round(position.y) + offset_pos.y) + 0.125f, int(round(position.z) + offset_pos.z) + 0.52);
+    glVertex3f(int(round(position.x) + offset_pos.x) - 0.125f, int(round(position.y) + offset_pos.y) + 0.125f, int(round(position.z) + offset_pos.z) + 0.52);
+
+    // Left
+    glVertex3f(int(round(position.x) + offset_pos.x) + 0.52f, int(round(position.y) + offset_pos.y) - 0.125f, int(round(position.z) + offset_pos.z) + 0.125f);
+    glVertex3f(int(round(position.x) + offset_pos.x) + 0.52f, int(round(position.y) + offset_pos.y) - 0.125f, int(round(position.z) + offset_pos.z) - 0.125f);
+    glVertex3f(int(round(position.x) + offset_pos.x) + 0.52f, int(round(position.y) + offset_pos.y) + 0.125f, int(round(position.z) + offset_pos.z) - 0.125f);
+    glVertex3f(int(round(position.x) + offset_pos.x) + 0.52f, int(round(position.y) + offset_pos.y) + 0.125f, int(round(position.z) + offset_pos.z) + 0.125f);
+    
+    // Right
+    glVertex3f(int(round(position.x) + offset_pos.x) - 0.52f, int(round(position.y) + offset_pos.y) - 0.125f, int(round(position.z) + offset_pos.z) + 0.125f);
+    glVertex3f(int(round(position.x) + offset_pos.x) - 0.52f, int(round(position.y) + offset_pos.y) - 0.125f, int(round(position.z) + offset_pos.z) - 0.125f);
+    glVertex3f(int(round(position.x) + offset_pos.x) - 0.52f, int(round(position.y) + offset_pos.y) + 0.125f, int(round(position.z) + offset_pos.z) - 0.125f);
+    glVertex3f(int(round(position.x) + offset_pos.x) - 0.52f, int(round(position.y) + offset_pos.y) + 0.125f, int(round(position.z) + offset_pos.z) + 0.125f);
+
+	glEnd();
+
 	for(float i = -100; i <= 100; i += 0.5)
 	{
 		glBegin(GL_LINES);

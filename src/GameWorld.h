@@ -42,7 +42,7 @@ class GameWorld {
 	private:
 		std::shared_ptr<GameAssetManager> asset_manager;
 
-		int block_dist = 1;
+		int block_dist = 2;
 
 		GLfloat camera_speed = 0.1;
 		GLfloat camera_x = 0.0;

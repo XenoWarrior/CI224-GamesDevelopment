@@ -16,8 +16,11 @@
 
 // Lousy global variables
 const Uint8* keyboard_input;
+
 SDL_Window * _window;
-SDL_DisplayMode display;
+
+int window_width, window_height;
+bool fullscreen = false;
 
 /*
  * SDL timers run in separate threads.  In the timer thread
@@ -54,10 +57,10 @@ void HandleInput(const std::shared_ptr<GameWorld> game_world)
 	SDL_PumpEvents();
 	SDL_GetMouseState(&x, &y); 
 	SDL_EventState(SDL_MOUSEMOTION, SDL_IGNORE);
-	SDL_WarpMouseInWindow(_window, display.w/2, display.h/2); 
+	SDL_WarpMouseInWindow(_window, window_width/2, window_height/2); 
 	SDL_EventState(SDL_MOUSEMOTION, SDL_ENABLE);
 	SDL_PumpEvents(); 
-	game_world->MoveCamera(glm::vec2(x,y), glm::vec2(display.w, display.h));
+	game_world->MoveCamera(glm::vec2(x,y), glm::vec2(window_width, window_height));
 
 	// Update game_world camera
 	if(keyboard_input[SDL_SCANCODE_W])
@@ -131,17 +134,32 @@ std::shared_ptr<SDL_Window> InitWorld()
 	atexit(SDL_Quit);
 
 	SDL_ShowCursor(0);
-	SDL_GetCurrentDisplayMode(0, &display);
 
+	if(fullscreen)
+	{
+		SDL_DisplayMode display;
+		SDL_GetCurrentDisplayMode(0, &display);
+		window_width = display.w;
+		window_height = display.h;
+	}
+	else
+	{
+		window_width = 1024;
+		window_height = 768;
+	}
+	
 	// Create a new window with an OpenGL surface
 	_window = SDL_CreateWindow("BlockWorld"
 							 , SDL_WINDOWPOS_CENTERED
 							 , SDL_WINDOWPOS_CENTERED
-							 , display.w
-							 , display.h
+							 , window_width
+							 , window_height
 							 , SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
-	
-	SDL_SetWindowFullscreen(_window, SDL_WINDOW_FULLSCREEN);
+
+	if(fullscreen)
+	{
+		SDL_SetWindowFullscreen(_window, SDL_WINDOW_FULLSCREEN);
+	}
 	
 	if(!_window)
 	{
@@ -182,6 +200,7 @@ ApplicationMode ParseOptions (int argc, char ** argv)
 	po::options_description desc("Allowed options");
 	desc.add_options()
 		("help", "print this help message")
+		("fullscreen", "Runs the game in fullscreen")
 		("translate", "Show translation example (default)")
 		("rotate", "Show rotation example")
 		("scale", "Show scale example");
@@ -194,6 +213,11 @@ ApplicationMode ParseOptions (int argc, char ** argv)
 	{
 		std::cout << desc << std::endl;
 		exit(0);
+	}
+
+	if(vm.count("fullscreen"))
+	{
+		fullscreen = true;
 	}
 
 	if(vm.count("rotate"))
