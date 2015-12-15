@@ -17,6 +17,7 @@
 // Lousy global variables
 const Uint8* keyboard_input;
 bool use_mouse = false;
+SDL_Window * _window;
 
 /*
  * SDL timers run in separate threads.  In the timer thread
@@ -48,13 +49,6 @@ struct SDLWindowDeleter
  */
 void Draw(const std::shared_ptr<SDL_Window> window, const std::shared_ptr<GameWorld> game_world)
 {
-	if(use_mouse)
-	{
-		int x, y;
-		SDL_GetRelativeMouseState(&x, &y);
-		game_world->MoveCamera(x,y);
-	}
-
 	// Background colour for the window
 	glClearColor(0.0f, 0.2f, 0.2f, 0.3f);
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
@@ -97,7 +91,6 @@ std::shared_ptr<SDL_Window> InitWorld()
 	// Window properties
 	Uint32 width = 640;
 	Uint32 height = 480;
-	SDL_Window * _window;
 	std::shared_ptr<SDL_Window> window;
 
 	// Glew will later ensure that OpenGL 3 *is* supported
@@ -201,6 +194,19 @@ ApplicationMode ParseOptions (int argc, char ** argv)
 	return TRANSFORM;
 }
 
+glm::vec2 MouseMotion()
+{
+	int x, y;
+	SDL_PumpEvents(); 
+	SDL_GetMouseState(&x, &y); 
+	SDL_EventState(SDL_MOUSEMOTION, SDL_IGNORE);
+	SDL_WarpMouseInWindow(_window, 320, 240); 
+	SDL_EventState(SDL_MOUSEMOTION, SDL_ENABLE); 
+	SDL_PumpEvents(); 
+
+	return glm::vec2(x, y);
+}
+
 int main(int argc, char ** argv) {
 	Uint32 delay = 1000/60; // in milliseconds
 
@@ -229,6 +235,9 @@ int main(int argc, char ** argv) {
 				break;
 			case SDL_USEREVENT:
 				Draw(window, game_world);
+				break;
+			case SDL_MOUSEMOTION:
+				game_world->MoveCamera(MouseMotion());
 				break;
 			case SDL_KEYDOWN:
 				switch(event.key.keysym.sym)

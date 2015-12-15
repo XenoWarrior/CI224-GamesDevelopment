@@ -30,7 +30,7 @@ class GameWorld {
 		void Draw();
 		void DrawGrid();
 		void CameraController(int);
-		void MoveCamera(int , int);
+		void MoveCamera(glm::vec2);
 		void DoAction(int);
 		void UpdateFacingDirection();
 		void CreateFloor(int, int, int);
@@ -47,7 +47,9 @@ class GameWorld {
 		GLfloat camera_speed = 0.1;
 		GLfloat camera_x = 0.0;
 		GLfloat camera_y = 0.0;
+
 		double point = 0.39375;
+
 		std::string f_pos = "N";
 
 		glm::vec3 position = glm::vec3(0, 0, -3);

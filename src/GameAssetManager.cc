@@ -136,7 +136,7 @@ void GameAssetManager::RemoveAsset(glm::vec3 position, glm::vec3 offset_pos)
 	{
 		// Free the buffer
 		cc.FreeBuffer();
-		
+
 		// Remove the asset
 		asset_list.erase(asset_list.begin() + r);
 		draw_list.erase(draw_list.begin() + r);
