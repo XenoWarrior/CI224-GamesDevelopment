@@ -52,6 +52,7 @@ class GameWorld {
 
 		std::string f_pos = "N";
 
+		glm::vec3 offset_pos;
 		glm::vec3 position = glm::vec3(0, 0, -3);
 		glm::vec3 z_direction;
 		glm::vec3 x_direction;

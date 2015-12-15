@@ -16,7 +16,6 @@
 
 // Lousy global variables
 const Uint8* keyboard_input;
-bool use_mouse = false;
 SDL_Window * _window;
 
 /*
@@ -45,13 +44,19 @@ struct SDLWindowDeleter
 };
 
 /*
- * Draws the game world and handles buffer switching.
+ * Handles input
  */
-void Draw(const std::shared_ptr<SDL_Window> window, const std::shared_ptr<GameWorld> game_world)
+void HandleInput(const std::shared_ptr<GameWorld> game_world)
 {
-	// Background colour for the window
-	glClearColor(0.0f, 0.2f, 0.2f, 0.3f);
-	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+	// Camera controller
+	int x, y;
+	SDL_PumpEvents();
+	SDL_GetMouseState(&x, &y); 
+	SDL_EventState(SDL_MOUSEMOTION, SDL_IGNORE);
+	SDL_WarpMouseInWindow(_window, 320, 240); 
+	SDL_EventState(SDL_MOUSEMOTION, SDL_ENABLE);
+	SDL_PumpEvents(); 
+	game_world->MoveCamera(glm::vec2(x,y));
 
 	// Update game_world camera
 	if(keyboard_input[SDL_SCANCODE_W])
@@ -62,18 +67,30 @@ void Draw(const std::shared_ptr<SDL_Window> window, const std::shared_ptr<GameWo
 		game_world->CameraController(3); // back
 	if(keyboard_input[SDL_SCANCODE_D])
 		game_world->CameraController(4); // right
-	if(keyboard_input[SDL_SCANCODE_I])
-		game_world->CameraController(5); // cam up
-	if(keyboard_input[SDL_SCANCODE_J])
-		game_world->CameraController(6); // cam left
-	if(keyboard_input[SDL_SCANCODE_K])
-		game_world->CameraController(7); // cam down
-	if(keyboard_input[SDL_SCANCODE_L])
-		game_world->CameraController(8); // cam right
-	if(keyboard_input[SDL_SCANCODE_R])
+	if(keyboard_input[SDL_SCANCODE_SPACE])
 		game_world->CameraController(9); // player: +y ("fly" up)
-	if(keyboard_input[SDL_SCANCODE_F])
+	if(keyboard_input[SDL_SCANCODE_LCTRL])
 		game_world->CameraController(10); // player: -y ("fly" down)
+
+	if(keyboard_input[SDL_SCANCODE_E])
+		game_world->DoAction(1); 
+	if(keyboard_input[SDL_SCANCODE_Q])
+		game_world->DoAction(2); 
+	if(keyboard_input[SDL_SCANCODE_G])
+		game_world->DoAction(3);
+
+	if(keyboard_input[SDL_SCANCODE_ESCAPE])
+		SDL_Quit();
+}
+
+/*
+ * Draws the game world and handles buffer switching.
+ */
+void Draw(const std::shared_ptr<SDL_Window> window, const std::shared_ptr<GameWorld> game_world)
+{
+	// Background colour for the window
+	glClearColor(0.0f, 0.2f, 0.2f, 0.3f);
+	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
 	// Draw the gameworld
 	game_world->Draw();
@@ -160,7 +177,6 @@ ApplicationMode ParseOptions (int argc, char ** argv)
 	po::options_description desc("Allowed options");
 	desc.add_options()
 		("help", "print this help message")
-		("mouse", "Enabled experimental mouse-look")
 		("translate", "Show translation example (default)")
 		("rotate", "Show rotation example")
 		("scale", "Show scale example");
@@ -175,11 +191,6 @@ ApplicationMode ParseOptions (int argc, char ** argv)
 		exit(0);
 	}
 
-	if(vm.count("mouse"))
-	{
-		use_mouse = true;
-	}
-
 	if(vm.count("rotate"))
 	{
 		return ROTATE;
@@ -192,19 +203,6 @@ ApplicationMode ParseOptions (int argc, char ** argv)
 
 	// The default
 	return TRANSFORM;
-}
-
-glm::vec2 MouseMotion()
-{
-	int x, y;
-	SDL_PumpEvents(); 
-	SDL_GetMouseState(&x, &y); 
-	SDL_EventState(SDL_MOUSEMOTION, SDL_IGNORE);
-	SDL_WarpMouseInWindow(_window, 320, 240); 
-	SDL_EventState(SDL_MOUSEMOTION, SDL_ENABLE); 
-	SDL_PumpEvents(); 
-
-	return glm::vec2(x, y);
 }
 
 int main(int argc, char ** argv) {
@@ -235,26 +233,7 @@ int main(int argc, char ** argv) {
 				break;
 			case SDL_USEREVENT:
 				Draw(window, game_world);
-				break;
-			case SDL_MOUSEMOTION:
-				game_world->MoveCamera(MouseMotion());
-				break;
-			case SDL_KEYDOWN:
-				switch(event.key.keysym.sym)
-				{
-					case SDLK_SPACE:
-						game_world->DoAction(1);
-						break;
-					case SDLK_q:
-						game_world->DoAction(2);
-						break;
-					case SDLK_g:
-						game_world->DoAction(3);
-						break;
-					case SDLK_ESCAPE:
-						exit(0);
-						break;
-				}
+				HandleInput(game_world);
 				break;
 			default:
 			  break;

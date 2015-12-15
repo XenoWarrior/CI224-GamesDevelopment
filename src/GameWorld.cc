@@ -12,26 +12,21 @@ GameWorld::GameWorld (ApplicationMode mode)
 
 /**
 * Handles the keyboard inputs passed from main.
-* 1 = W, 2 = A, 3 = S, 4 = D (Player Movement)
-* 5 = I, 6 = J, 7 = K, 8 = L (Camera Look)
-* 9 = R, 10= F (Move on Y axis)
-* This could likely be handled better, but it works.
-*
-* @param k (int) - ID of action to perform
 */
 void GameWorld::CameraController(int k)
 {
 	/* Slow collision checker
-	std::vector<std::shared_ptr<CubeAsset>> asset_list = asset_manager->GetAssets();
-	for(int i = 0; i < asset_list.size(); i++)
-	{
-		CubeAsset c = *asset_list[i];
-		if(CheckCollision(c.GetVec3()))
+		std::vector<std::shared_ptr<CubeAsset>> asset_list = asset_manager->GetAssets();
+		for(int i = 0; i < asset_list.size(); i++)
 		{
-			std::cout << "[P]Detected collision with cube at: (X: " << position.x << ", Y: " << position.y << ", Z: " << position.z << ")" << std::endl;
-			std::cout << "[C]Detected collision with cube at: (X: " << c.GetVec3().x << ", Y: " << c.GetVec3().y << ", Z: " << c.GetVec3().z << ")" << std::endl;
+			CubeAsset c = *asset_list[i];
+			if(CheckCollision(c.GetVec3()))
+			{
+				std::cout << "[P]Detected collision with cube at: (X: " << position.x << ", Y: " << position.y << ", Z: " << position.z << ")" << std::endl;
+				std::cout << "[C]Detected collision with cube at: (X: " << c.GetVec3().x << ", Y: " << c.GetVec3().y << ", Z: " << c.GetVec3().z << ")" << std::endl;
+			}
 		}
-	}*/
+	*/
 
 	// For W A S D
 	if(k == 1)
@@ -118,13 +113,22 @@ glm::vec3 GameWorld::GetOffset()
 	{
 		z += block_dist;
 	}
+	if(f_pos == "E")
+	{
+		x -= block_dist;
+	}
+	if(f_pos == "S")
+	{
+		z -= block_dist;
+	}
+	if(f_pos == "W")
+	{
+		x += block_dist;
+	}
+
 	if(f_pos == "NE")
 	{
 		z += block_dist;
-		x -= block_dist;
-	}
-	if(f_pos == "E")
-	{
 		x -= block_dist;
 	}
 	if(f_pos == "SE")
@@ -132,17 +136,9 @@ glm::vec3 GameWorld::GetOffset()
 		z -= block_dist;
 		x -= block_dist;
 	}
-	if(f_pos == "S")
-	{
-		z -= block_dist;
-	}
 	if(f_pos == "SW")
 	{
 		z -= block_dist;
-		x += block_dist;
-	}
-	if(f_pos == "W")
-	{
 		x += block_dist;
 	}
 	if(f_pos == "NW")
@@ -153,15 +149,11 @@ glm::vec3 GameWorld::GetOffset()
 
 	// JUST A TEST, NEEDS UPDATING
 	if(camera_y > 0.5)
-	{
 		y += block_dist;
-	}
 	if(camera_y < -0.5)
-	{
 		y -= block_dist;
-	}
 
-	return glm::vec3(x,y,z);
+	return glm::vec3(x, y, z);
 }
 
 /**
@@ -169,13 +161,13 @@ glm::vec3 GameWorld::GetOffset()
  */
 void GameWorld::DrawGrid()
 {
-	for(float i = -500; i <= 500; i += 0.5)
+	for(float i = -100; i <= 100; i += 0.5)
 	{
 		glBegin(GL_LINES);
-		glVertex3f(-500, -0.5, i);
-		glVertex3f(500, -0.5, i);
-		glVertex3f(i, -0.5, -500);
-		glVertex3f(i, -0.5, 500);
+		glVertex3f(-100, -0.5, i);
+		glVertex3f(100, -0.5, i);
+		glVertex3f(i, -0.5, -100);
+		glVertex3f(i, -0.5, 100);
 		glEnd();
 	}
 }
@@ -188,13 +180,13 @@ void GameWorld::DoAction(int a)
 {
 	if(a == 1)
 	{
-		glm::vec3 offset_pos = GetOffset();
+		offset_pos = GetOffset();
 		std::shared_ptr<CubeAsset> new_cube = std::make_shared<CubeAsset>(glm::vec3(0.0f + int(round(position.x)) + offset_pos.x, 0.0f + int(round(position.y)) + offset_pos.y, 0.0f + int(round(position.z)) + offset_pos.z)); // Cube to make
 		asset_manager->AddAsset(new_cube);
 	}
 	if(a == 2)
 	{
-		glm::vec3 offset_pos = GetOffset();
+		offset_pos = GetOffset();
 		asset_manager->RemoveAsset(position, offset_pos);
 	}
 	if(a == 3)
