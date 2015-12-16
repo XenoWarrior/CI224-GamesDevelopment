@@ -202,13 +202,13 @@ void GameWorld::DrawGrid()
 
 	glEnd();
 
-	for(float i = -100; i <= 100; i += 0.5)
+	for(float i = -20; i <= 20; i += 0.5)
 	{
 		glBegin(GL_LINES);
-		glVertex3f(-100, -0.5, i);
-		glVertex3f(100, -0.5, i);
-		glVertex3f(i, -0.5, -100);
-		glVertex3f(i, -0.5, 100);
+		glVertex3f(-20, -0.5, i);
+		glVertex3f(20, -0.5, i);
+		glVertex3f(i, -0.5, -20);
+		glVertex3f(i, -0.5, 20);
 		glEnd();
 	}
 }
