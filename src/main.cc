@@ -14,13 +14,13 @@
 #include "common.h"
 #include "GameWorld.h"
 
-// Lousy global variables
-const Uint8* keyboard_input;
-
-SDL_Window * _window;
-
-int window_width, window_height;
-bool fullscreen = false;
+/**
+* Global variables
+*/
+const Uint8* KEYBOARD_INPUT;
+SDL_Window * _WINDOW;
+int WINDOW_WIDTH, WINDOW_HEIGHT;
+bool FULLSCREEN = false;
 
 /*
  * SDL timers run in separate threads.  In the timer thread
@@ -57,40 +57,40 @@ void HandleInput(const std::shared_ptr<GameWorld> game_world)
 	SDL_PumpEvents();
 	SDL_GetMouseState(&x, &y); 
 	SDL_EventState(SDL_MOUSEMOTION, SDL_IGNORE);
-	SDL_WarpMouseInWindow(_window, window_width/2, window_height/2); 
+	SDL_WarpMouseInWindow(_WINDOW, WINDOW_WIDTH/2, WINDOW_HEIGHT/2); 
 	SDL_EventState(SDL_MOUSEMOTION, SDL_ENABLE);
 	SDL_PumpEvents(); 
-	game_world->MoveCamera(glm::vec2(x,y), glm::vec2(window_width, window_height));
+	game_world->MoveCamera(glm::vec2(x,y), glm::vec2(WINDOW_WIDTH, WINDOW_HEIGHT));
 
 	// Update game_world camera
-	if(keyboard_input[SDL_SCANCODE_W])
+	if(KEYBOARD_INPUT[SDL_SCANCODE_W])
 		game_world->CameraController(1); // forward
-	if(keyboard_input[SDL_SCANCODE_A])
+	if(KEYBOARD_INPUT[SDL_SCANCODE_A])
 		game_world->CameraController(2); // left
-	if(keyboard_input[SDL_SCANCODE_S])
+	if(KEYBOARD_INPUT[SDL_SCANCODE_S])
 		game_world->CameraController(3); // back
-	if(keyboard_input[SDL_SCANCODE_D])
+	if(KEYBOARD_INPUT[SDL_SCANCODE_D])
 		game_world->CameraController(4); // right
-	if(keyboard_input[SDL_SCANCODE_SPACE])
+	if(KEYBOARD_INPUT[SDL_SCANCODE_SPACE])
 		game_world->CameraController(9); // player: +y ("fly" up)
-	if(keyboard_input[SDL_SCANCODE_LCTRL])
+	if(KEYBOARD_INPUT[SDL_SCANCODE_LCTRL])
 		game_world->CameraController(10); // player: -y ("fly" down)
 
 	if(SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT))
 		game_world->DoAction(1); 
 	if(SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_RIGHT))
 		game_world->DoAction(2); 
-	if(keyboard_input[SDL_SCANCODE_G])
+	if(KEYBOARD_INPUT[SDL_SCANCODE_G])
 		game_world->DoAction(3);
-	if(keyboard_input[SDL_SCANCODE_H])
+	if(KEYBOARD_INPUT[SDL_SCANCODE_H])
 		game_world->DoAction(4);
 
-	if(keyboard_input[SDL_SCANCODE_E])
+	if(KEYBOARD_INPUT[SDL_SCANCODE_E])
 		game_world->ChangeBlockDist(1);
-	if(keyboard_input[SDL_SCANCODE_Q])
+	if(KEYBOARD_INPUT[SDL_SCANCODE_Q])
 		game_world->ChangeBlockDist(-1);
 
-	if(keyboard_input[SDL_SCANCODE_ESCAPE])
+	if(KEYBOARD_INPUT[SDL_SCANCODE_ESCAPE])
 		SDL_Quit();
 }
 
@@ -142,39 +142,39 @@ std::shared_ptr<SDL_Window> InitWorld()
 
 	SDL_ShowCursor(0);
 
-	if(fullscreen)
+	if(FULLSCREEN)
 	{
 		SDL_DisplayMode display;
 		SDL_GetCurrentDisplayMode(0, &display);
-		window_width = display.w;
-		window_height = display.h;
+		WINDOW_WIDTH = display.w;
+		WINDOW_HEIGHT = display.h;
 	}
 	else
 	{
-		window_width = 1024;
-		window_height = 768;
+		WINDOW_WIDTH = 1024;
+		WINDOW_HEIGHT = 768;
 	}
 	
 	// Create a new window with an OpenGL surface
-	_window = SDL_CreateWindow("BlockWorld"
-							 , SDL_WINDOWPOS_CENTERED
-							 , SDL_WINDOWPOS_CENTERED
-							 , window_width
-							 , window_height
-							 , SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
+	_WINDOW = SDL_CreateWindow("BlockWorld"
+							 , SDL_WindowPOS_CENTERED
+							 , SDL_WindowPOS_CENTERED
+							 , WINDOW_WIDTH
+							 , WINDOW_HEIGHT
+							 , SDL_Window_OPENGL | SDL_Window_SHOWN);
 
-	if(fullscreen)
+	if(FULLSCREEN)
 	{
-		SDL_SetWindowFullscreen(_window, SDL_WINDOW_FULLSCREEN);
+		SDL_SetWindowFULLSCREEN(_WINDOW, SDL_Window_FULLSCREEN);
 	}
 	
-	if(!_window)
+	if(!_WINDOW)
 	{
 		std::cout << "Failed to create SDL window: " << SDL_GetError() << std::endl;
 		return nullptr;
 	}
 
-	SDL_GLContext glContext = SDL_GL_CreateContext(_window);
+	SDL_GLContext glContext = SDL_GL_CreateContext(_WINDOW);
 	if (!glContext)
 	{
 		std::cout << "Failed to create OpenGL context: " << SDL_GetError() << std::endl;
@@ -196,7 +196,7 @@ std::shared_ptr<SDL_Window> InitWorld()
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
 
-	window.reset(_window, SDL_DestroyWindow);
+	window.reset(_WINDOW, SDL_DestroyWindow);
 	return window;
 }
 
@@ -207,7 +207,7 @@ ApplicationMode ParseOptions (int argc, char ** argv)
 	po::options_description desc("Allowed options");
 	desc.add_options()
 		("help", "print this help message")
-		("fullscreen", "Runs the game in fullscreen")
+		("FULLSCREEN", "Runs the game in FULLSCREEN")
 		("translate", "Show translation example (default)")
 		("rotate", "Show rotation example")
 		("scale", "Show scale example");
@@ -222,9 +222,9 @@ ApplicationMode ParseOptions (int argc, char ** argv)
 		exit(0);
 	}
 
-	if(vm.count("fullscreen"))
+	if(vm.count("FULLSCREEN"))
 	{
-		fullscreen = true;
+		FULLSCREEN = true;
 	}
 
 	if(vm.count("rotate"))
@@ -253,7 +253,7 @@ int main(int argc, char ** argv) {
 		SDL_Quit();
 	}
 
-	keyboard_input = SDL_GetKeyboardState(NULL);
+	KEYBOARD_INPUT = SDL_GetKeyboardState(NULL);
 
 	// Call the function "tick" every delay milliseconds
 	SDL_AddTimer(delay, tick, NULL);
