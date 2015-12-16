@@ -37,6 +37,7 @@ Uint32 tick(Uint32 interval, void *param)
 	event.user.data2 = 0;
 	SDL_PushEvent(&event);
 	return interval;
+	std::cout << "tick" << std::endl;
 }
 
 struct SDLWindowDeleter

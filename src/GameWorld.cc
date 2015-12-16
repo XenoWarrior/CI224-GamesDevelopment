@@ -11,6 +11,88 @@ GameWorld::GameWorld (ApplicationMode mode)
 }
 
 /**
+ * Handles drawing of the camera and game world assets
+ */
+void GameWorld::Draw()
+{
+	// Update the facing direction
+	UpdateFacingDirection();
+
+	// Resetting camera position X
+	if(camera_x >= 6.280)
+		camera_x = 0.1;
+	if(camera_x <= 0)
+		camera_x = 6.280;
+
+	// Resetting camera position Y
+	if(camera_y >= 1.5f)
+		camera_y = 1.5;
+	if(camera_y <= -1.5f)
+		camera_y = -1.5;
+
+	glm::vec3 direction(
+		cos(camera_y) * sin(camera_x),
+		sin(camera_y),
+		cos(camera_y) * cos(camera_x)
+	);
+
+	glm::vec3 move_direction(
+		cos(camera_y) * sin(camera_x),
+		0,
+		cos(camera_y) * cos(camera_x)
+	);
+	z_direction = move_direction;
+
+	x_direction = glm::vec3(
+		sin(camera_x - 3.14f/2.0f),
+		0,
+		cos(camera_x - 3.14f/2.0f)
+	);
+
+	glm::vec3 vup = glm::cross(x_direction, direction);
+	glm::mat4 cam_proj = glm::perspective(75.0f, 4.0f / 3.0f, 0.1f, 100.0f);
+	cam_view = glm::lookAt(
+		position,
+		position + direction,
+		vup
+	);
+	glm::mat4 cam_mod(1.0f);
+
+	glUniformMatrix4fv(0, 1, GL_FALSE, &cam_proj[0][0]);
+	glUniformMatrix4fv(1, 1, GL_FALSE, &cam_view[0][0]);
+	glUniformMatrix4fv(2, 1, GL_FALSE, &cam_mod[0][0]);
+
+	// Calls draw from the asset manager
+	asset_manager->Draw();
+
+	// Draws our grid
+	DrawGrid();
+}
+
+/**
+ * Handles action codes passed from main
+ */
+void GameWorld::DoAction(int a)
+{
+	if(a == 1)
+	{
+		offset_pos = GetOffset();
+		std::shared_ptr<CubeAsset> new_cube = std::make_shared<CubeAsset>(glm::vec3(0.0f + int(round(position.x)) + offset_pos.x, 0.0f + int(round(position.y)) + offset_pos.y, 0.0f + int(round(position.z)) + offset_pos.z)); // Cube to make
+		asset_manager->AddAsset(new_cube);
+	}
+	if(a == 2)
+	{
+		offset_pos = GetOffset();
+		asset_manager->RemoveAsset(position, offset_pos);
+	}
+	if(a == 3)
+	{
+		asset_manager->RemoveAll();
+		CreateFloor(rand() % 19 + 1, rand() % 19 + 1, rand() % 19 + 1);
+	}
+}
+
+/**
 * Handles the keyboard inputs passed from main.
 */
 void GameWorld::CameraController(int k)
@@ -56,20 +138,11 @@ void GameWorld::CameraController(int k)
 	if(k == 10)
 		position.y -= 0.5f * camera_speed;
 
-	// Resetting camera position X
-	if(camera_x >= 6.298)
-		camera_x = 0.1;
-	if(camera_x <= 0)
-		camera_x = 6.297;
-
-	// Resetting camera position Y
-	if(camera_y >= 1.5f)
-		camera_y = 1.5;
-	if(camera_y <= -1.5f)
-		camera_y = -1.5;
 }
 
-// test
+/**
+ * Handles the mouse input for the camera
+ */
 void GameWorld::MoveCamera(glm::vec2 motion, glm::vec2 display)
 {
 	camera_x += ((display.x/2) - motion.x) * camera_speed / 100.0f;
@@ -82,23 +155,50 @@ void GameWorld::MoveCamera(glm::vec2 motion, glm::vec2 display)
 void GameWorld::UpdateFacingDirection()
 {
 	if(camera_x <= point && camera_x >= 0.0 && f_pos != "N")
+	{
 		f_pos = "N";
+		return;
+	}
 	if(camera_x >= point && camera_x <= point*3 && f_pos != "NW")
+	{
 		f_pos = "NW";
+		return;
+	}
 	if(camera_x >= point*3 && camera_x <= point*5 && f_pos != "W")
+	{
 		f_pos = "W";
+		return;
+	}
 	if(camera_x >= point*5 && camera_x <= point*7 && f_pos != "SW")
+	{
 		f_pos = "SW";
+		return;
+	}
 	if(camera_x >= point*7 && camera_x <= point*9 && f_pos != "S")
+	{
 		f_pos = "S";
+		return;
+	}
 	if(camera_x >= point*9 && camera_x <= point*11 && f_pos != "SE")
+	{
 		f_pos = "SE";
+		return;
+	}
 	if(camera_x >= point*11 && camera_x <= point*13 && f_pos != "E")
+	{
 		f_pos = "E";
+		return;
+	}
 	if(camera_x >= point*13 && camera_x <= point*15 && f_pos != "NE")
+	{
 		f_pos = "NE";
-	if(camera_x >= point*15 && camera_x <= point*16 && f_pos != "N")
+		return;
+	}
+	if(camera_x >= point*15 && camera_x <= point*17 && f_pos != "N")
+	{
 		f_pos = "N";
+		return;
+	}
 }
 
 /**
@@ -106,7 +206,6 @@ void GameWorld::UpdateFacingDirection()
  */
 glm::vec3 GameWorld::GetOffset()
 {
-	UpdateFacingDirection();
 	int x = 0, y = 0, z = 0;
 
 	if(f_pos == "N")
@@ -149,9 +248,13 @@ glm::vec3 GameWorld::GetOffset()
 
 	// JUST A TEST, NEEDS UPDATING
 	if(camera_y > 0.5)
+	{
 		y += block_dist;
+	}
 	if(camera_y < -0.5)
+	{
 		y -= block_dist;
+	}
 
 	return glm::vec3(x, y, z);
 }
@@ -214,74 +317,6 @@ void GameWorld::DrawGrid()
 }
 
 /**
- * Handles action codes passed from main
- * @param a (int) ID of action to perform
- */
-void GameWorld::DoAction(int a)
-{
-	if(a == 1)
-	{
-		offset_pos = GetOffset();
-		std::shared_ptr<CubeAsset> new_cube = std::make_shared<CubeAsset>(glm::vec3(0.0f + int(round(position.x)) + offset_pos.x, 0.0f + int(round(position.y)) + offset_pos.y, 0.0f + int(round(position.z)) + offset_pos.z)); // Cube to make
-		asset_manager->AddAsset(new_cube);
-	}
-	if(a == 2)
-	{
-		offset_pos = GetOffset();
-		asset_manager->RemoveAsset(position, offset_pos);
-	}
-	if(a == 3)
-	{
-		asset_manager->RemoveAll();
-		CreateFloor(rand() % 19 + 1, rand() % 19 + 1, rand() % 19 + 1);
-	}
-}
-
-/**
- * Handles drawing of the camera and game world assets
- */
-void GameWorld::Draw()
-{
-	glm::vec3 direction(
-		cos(camera_y) * sin(camera_x),
-		sin(camera_y),
-		cos(camera_y) * cos(camera_x)
-	);
-
-	glm::vec3 move_direction(
-		cos(camera_y) * sin(camera_x),
-		0,
-		cos(camera_y) * cos(camera_x)
-	);
-	z_direction = move_direction;
-
-	x_direction = glm::vec3(
-		sin(camera_x - 3.14f/2.0f),
-		0,
-		cos(camera_x - 3.14f/2.0f)
-	);
-
-	glm::vec3 vup = glm::cross(x_direction, direction);
-	glm::mat4 cam_proj = glm::perspective(75.0f, 4.0f / 3.0f, 0.1f, 100.0f);
-	cam_view = glm::lookAt(
-		position,
-		position + direction,
-		vup
-	);
-	glm::mat4 cam_mod(1.0f);
-
-	glUniformMatrix4fv(0, 1, GL_FALSE, &cam_proj[0][0]);
-	glUniformMatrix4fv(1, 1, GL_FALSE, &cam_view[0][0]);
-	glUniformMatrix4fv(2, 1, GL_FALSE, &cam_mod[0][0]);
-
-	// Calls draw from the asset manager
-	asset_manager->Draw();
-
-	// Draws our grid
-	DrawGrid();
-}
-
-/**
  * Generates a floor from 0,0 to X and Y specified
  */
 void GameWorld::CreateFloor(int x, int y, int z)
@@ -307,7 +342,9 @@ void GameWorld::CreateFloor(int x, int y, int z)
 bool GameWorld::CheckCollision(glm::vec3 point)
 {
 	if(point == glm::vec3(int(position.x), int(position.y), int(position.z)))
+	{
 		return true;
+	}
 	
 	return false;
 }
@@ -317,7 +354,15 @@ bool GameWorld::CheckCollision(glm::vec3 point)
  */
 void GameWorld::ChangeBlockDist(int i)
 {
-	std::cout << block_dist << std::endl;
 	block_dist += i;
-	std::cout << block_dist << std::endl;
+
+	// Check distance
+	if(block_dist < 1)
+	{
+		block_dist = 1;
+	}
+	if(block_dist > 10)
+	{
+		block_dist = 10;
+	}
 }
