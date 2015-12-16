@@ -157,15 +157,15 @@ std::shared_ptr<SDL_Window> InitWorld()
 	
 	// Create a new window with an OpenGL surface
 	_WINDOW = SDL_CreateWindow("BlockWorld"
-							 , SDL_WindowPOS_CENTERED
-							 , SDL_WindowPOS_CENTERED
+							 , SDL_WINDOWPOS_CENTERED
+							 , SDL_WINDOWPOS_CENTERED
 							 , WINDOW_WIDTH
 							 , WINDOW_HEIGHT
-							 , SDL_Window_OPENGL | SDL_Window_SHOWN);
+							 , SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
 
 	if(FULLSCREEN)
 	{
-		SDL_SetWindowFULLSCREEN(_WINDOW, SDL_Window_FULLSCREEN);
+		SDL_SetWindowFullscreen(_WINDOW, SDL_WINDOW_FULLSCREEN);
 	}
 	
 	if(!_WINDOW)
