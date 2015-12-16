@@ -2,8 +2,9 @@
 
 CubeAsset::CubeAsset(glm::vec3 p)
 {
-	// Can be moved into vec3
+	// Position of the cube
 	position = p;
+	glm::vec3 c = glm::vec3(rf(),rf(),rf());
 
 	// model coordinates, origin at centre.
 	GLfloat vertex_buffer [] {
@@ -18,21 +19,16 @@ CubeAsset::CubeAsset(glm::vec3 p)
 	};
 	vertex_buffer_length = sizeof(vertex_buffer);
 
-	// Use three random colours
-	float c1 = rf();
-	float c2 = rf();
-	float c3 = rf();
-
 	// Solid block colours
 	GLfloat color_buffer[] = {
-		c1, c2, c3,
-		c1, c2, c3,
-		c1, c2, c3,
-		c1, c2, c3,
-		c1, c2, c3,
-		c1, c2, c3,
-		c1, c2, c3,
-		c1, c2, c3
+		c.x, c.y, c.z,
+		c.x, c.y, c.z,
+		c.x, c.y, c.z,
+		c.x, c.y, c.z,
+		c.x, c.y, c.z,
+		c.x, c.y, c.z,
+		c.x, c.y, c.z,
+		c.x, c.y, c.z
 	};
 
 	color_buffer_length = sizeof(color_buffer);

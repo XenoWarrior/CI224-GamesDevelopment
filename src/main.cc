@@ -207,7 +207,7 @@ ApplicationMode ParseOptions (int argc, char ** argv)
 	po::options_description desc("Allowed options");
 	desc.add_options()
 		("help", "print this help message")
-		("FULLSCREEN", "Runs the game in FULLSCREEN")
+		("fullscreen", "Runs the game in fullscreen")
 		("translate", "Show translation example (default)")
 		("rotate", "Show rotation example")
 		("scale", "Show scale example");
