@@ -88,7 +88,12 @@ void GameWorld::DoAction(int a)
 	if(a == 3)
 	{
 		asset_manager->RemoveAll();
-		CreateFloor(rand() % 19 + 1, rand() % 19 + 1, rand() % 19 + 1);
+		CreateShape("sphere", rand() % 19 + 1);
+	}
+	if(a == 4)
+	{
+		asset_manager->RemoveAll();
+		CreateShape("cube", rand() % 19 + 1);
 	}
 }
 
@@ -268,40 +273,40 @@ void GameWorld::DrawGrid()
 
 	glBegin(GL_QUADS);
 	// Bottom
-    glVertex3f(int(round(position.x) + offset_pos.x) - 0.2f, int(round(position.y) + offset_pos.y) - 0.52f, int(round(position.z) + offset_pos.z) + 0.2f);
-    glVertex3f(int(round(position.x) + offset_pos.x) + 0.2f, int(round(position.y) + offset_pos.y) - 0.52f, int(round(position.z) + offset_pos.z) + 0.2f);
-    glVertex3f(int(round(position.x) + offset_pos.x) + 0.2f, int(round(position.y) + offset_pos.y) - 0.52f, int(round(position.z) + offset_pos.z) - 0.2f);
-    glVertex3f(int(round(position.x) + offset_pos.x) - 0.2f, int(round(position.y) + offset_pos.y) - 0.52f, int(round(position.z) + offset_pos.z) - 0.2f);
-    
-    // Top
-    glVertex3f(int(round(position.x) + offset_pos.x) - 0.2f, int(round(position.y) + offset_pos.y) + 0.52f, int(round(position.z) + offset_pos.z) + 0.2f);
-    glVertex3f(int(round(position.x) + offset_pos.x) + 0.2f, int(round(position.y) + offset_pos.y) + 0.52f, int(round(position.z) + offset_pos.z) + 0.2f);
-    glVertex3f(int(round(position.x) + offset_pos.x) + 0.2f, int(round(position.y) + offset_pos.y) + 0.52f, int(round(position.z) + offset_pos.z) - 0.2f);
-    glVertex3f(int(round(position.x) + offset_pos.x) - 0.2f, int(round(position.y) + offset_pos.y) + 0.52f, int(round(position.z) + offset_pos.z) - 0.2f);
+	glVertex3f(int(round(position.x) + offset_pos.x) - 0.2f, int(round(position.y) + offset_pos.y) - 0.52f, int(round(position.z) + offset_pos.z) + 0.2f);
+	glVertex3f(int(round(position.x) + offset_pos.x) + 0.2f, int(round(position.y) + offset_pos.y) - 0.52f, int(round(position.z) + offset_pos.z) + 0.2f);
+	glVertex3f(int(round(position.x) + offset_pos.x) + 0.2f, int(round(position.y) + offset_pos.y) - 0.52f, int(round(position.z) + offset_pos.z) - 0.2f);
+	glVertex3f(int(round(position.x) + offset_pos.x) - 0.2f, int(round(position.y) + offset_pos.y) - 0.52f, int(round(position.z) + offset_pos.z) - 0.2f);
+	
+	// Top
+	glVertex3f(int(round(position.x) + offset_pos.x) - 0.2f, int(round(position.y) + offset_pos.y) + 0.52f, int(round(position.z) + offset_pos.z) + 0.2f);
+	glVertex3f(int(round(position.x) + offset_pos.x) + 0.2f, int(round(position.y) + offset_pos.y) + 0.52f, int(round(position.z) + offset_pos.z) + 0.2f);
+	glVertex3f(int(round(position.x) + offset_pos.x) + 0.2f, int(round(position.y) + offset_pos.y) + 0.52f, int(round(position.z) + offset_pos.z) - 0.2f);
+	glVertex3f(int(round(position.x) + offset_pos.x) - 0.2f, int(round(position.y) + offset_pos.y) + 0.52f, int(round(position.z) + offset_pos.z) - 0.2f);
 
-    // Front
-    glVertex3f(int(round(position.x) + offset_pos.x) - 0.125f, int(round(position.y) + offset_pos.y) - 0.125f, int(round(position.z) + offset_pos.z) - 0.52);
-    glVertex3f(int(round(position.x) + offset_pos.x) + 0.125f, int(round(position.y) + offset_pos.y) - 0.125f, int(round(position.z) + offset_pos.z) - 0.52);
-    glVertex3f(int(round(position.x) + offset_pos.x) + 0.125f, int(round(position.y) + offset_pos.y) + 0.125f, int(round(position.z) + offset_pos.z) - 0.52);
-    glVertex3f(int(round(position.x) + offset_pos.x) - 0.125f, int(round(position.y) + offset_pos.y) + 0.125f, int(round(position.z) + offset_pos.z) - 0.52);
+	// Front
+	glVertex3f(int(round(position.x) + offset_pos.x) - 0.125f, int(round(position.y) + offset_pos.y) - 0.125f, int(round(position.z) + offset_pos.z) - 0.52);
+	glVertex3f(int(round(position.x) + offset_pos.x) + 0.125f, int(round(position.y) + offset_pos.y) - 0.125f, int(round(position.z) + offset_pos.z) - 0.52);
+	glVertex3f(int(round(position.x) + offset_pos.x) + 0.125f, int(round(position.y) + offset_pos.y) + 0.125f, int(round(position.z) + offset_pos.z) - 0.52);
+	glVertex3f(int(round(position.x) + offset_pos.x) - 0.125f, int(round(position.y) + offset_pos.y) + 0.125f, int(round(position.z) + offset_pos.z) - 0.52);
 
-    // Back
-    glVertex3f(int(round(position.x) + offset_pos.x) - 0.125f, int(round(position.y) + offset_pos.y) - 0.125f, int(round(position.z) + offset_pos.z) + 0.52);
-    glVertex3f(int(round(position.x) + offset_pos.x) + 0.125f, int(round(position.y) + offset_pos.y) - 0.125f, int(round(position.z) + offset_pos.z) + 0.52);
-    glVertex3f(int(round(position.x) + offset_pos.x) + 0.125f, int(round(position.y) + offset_pos.y) + 0.125f, int(round(position.z) + offset_pos.z) + 0.52);
-    glVertex3f(int(round(position.x) + offset_pos.x) - 0.125f, int(round(position.y) + offset_pos.y) + 0.125f, int(round(position.z) + offset_pos.z) + 0.52);
+	// Back
+	glVertex3f(int(round(position.x) + offset_pos.x) - 0.125f, int(round(position.y) + offset_pos.y) - 0.125f, int(round(position.z) + offset_pos.z) + 0.52);
+	glVertex3f(int(round(position.x) + offset_pos.x) + 0.125f, int(round(position.y) + offset_pos.y) - 0.125f, int(round(position.z) + offset_pos.z) + 0.52);
+	glVertex3f(int(round(position.x) + offset_pos.x) + 0.125f, int(round(position.y) + offset_pos.y) + 0.125f, int(round(position.z) + offset_pos.z) + 0.52);
+	glVertex3f(int(round(position.x) + offset_pos.x) - 0.125f, int(round(position.y) + offset_pos.y) + 0.125f, int(round(position.z) + offset_pos.z) + 0.52);
 
-    // Left
-    glVertex3f(int(round(position.x) + offset_pos.x) + 0.52f, int(round(position.y) + offset_pos.y) - 0.125f, int(round(position.z) + offset_pos.z) + 0.125f);
-    glVertex3f(int(round(position.x) + offset_pos.x) + 0.52f, int(round(position.y) + offset_pos.y) - 0.125f, int(round(position.z) + offset_pos.z) - 0.125f);
-    glVertex3f(int(round(position.x) + offset_pos.x) + 0.52f, int(round(position.y) + offset_pos.y) + 0.125f, int(round(position.z) + offset_pos.z) - 0.125f);
-    glVertex3f(int(round(position.x) + offset_pos.x) + 0.52f, int(round(position.y) + offset_pos.y) + 0.125f, int(round(position.z) + offset_pos.z) + 0.125f);
-    
-    // Right
-    glVertex3f(int(round(position.x) + offset_pos.x) - 0.52f, int(round(position.y) + offset_pos.y) - 0.125f, int(round(position.z) + offset_pos.z) + 0.125f);
-    glVertex3f(int(round(position.x) + offset_pos.x) - 0.52f, int(round(position.y) + offset_pos.y) - 0.125f, int(round(position.z) + offset_pos.z) - 0.125f);
-    glVertex3f(int(round(position.x) + offset_pos.x) - 0.52f, int(round(position.y) + offset_pos.y) + 0.125f, int(round(position.z) + offset_pos.z) - 0.125f);
-    glVertex3f(int(round(position.x) + offset_pos.x) - 0.52f, int(round(position.y) + offset_pos.y) + 0.125f, int(round(position.z) + offset_pos.z) + 0.125f);
+	// Left
+	glVertex3f(int(round(position.x) + offset_pos.x) + 0.52f, int(round(position.y) + offset_pos.y) - 0.125f, int(round(position.z) + offset_pos.z) + 0.125f);
+	glVertex3f(int(round(position.x) + offset_pos.x) + 0.52f, int(round(position.y) + offset_pos.y) - 0.125f, int(round(position.z) + offset_pos.z) - 0.125f);
+	glVertex3f(int(round(position.x) + offset_pos.x) + 0.52f, int(round(position.y) + offset_pos.y) + 0.125f, int(round(position.z) + offset_pos.z) - 0.125f);
+	glVertex3f(int(round(position.x) + offset_pos.x) + 0.52f, int(round(position.y) + offset_pos.y) + 0.125f, int(round(position.z) + offset_pos.z) + 0.125f);
+	
+	// Right
+	glVertex3f(int(round(position.x) + offset_pos.x) - 0.52f, int(round(position.y) + offset_pos.y) - 0.125f, int(round(position.z) + offset_pos.z) + 0.125f);
+	glVertex3f(int(round(position.x) + offset_pos.x) - 0.52f, int(round(position.y) + offset_pos.y) - 0.125f, int(round(position.z) + offset_pos.z) - 0.125f);
+	glVertex3f(int(round(position.x) + offset_pos.x) - 0.52f, int(round(position.y) + offset_pos.y) + 0.125f, int(round(position.z) + offset_pos.z) - 0.125f);
+	glVertex3f(int(round(position.x) + offset_pos.x) - 0.52f, int(round(position.y) + offset_pos.y) + 0.125f, int(round(position.z) + offset_pos.z) + 0.125f);
 
 	glEnd();
 
@@ -317,24 +322,42 @@ void GameWorld::DrawGrid()
 }
 
 /**
- * Generates a floor from 0,0 to X and Y specified
+ * Generates a shape
  */
-void GameWorld::CreateFloor(int x, int y, int z)
+void GameWorld::CreateShape(std::string shape, int size)
 {
-	for(int i = 0; i < x; i++)
+	if(shape == "sphere")
 	{
-		for(int o = 0; o < y; o++)
+		for (int z = 0; z < size; z++)
 		{
-			for(int p = 0; p < z; p++)
+			for (int y = 0; y < size; y++)
 			{
-				if((rand() % 18 + 2) > 15)
+				for (int x = 0; x < size; x++)
 				{
-					asset_manager->AddAsset(std::make_shared<CubeAsset>(glm::vec3(0.0+i, 0.0+p, 0.0+o)));
+					if (sqrt((float) (x-size/2)*(x-size/2) + (y-size/2)*(y-size/2) + (z-size/2)*(z-size/2)) <= size/2)
+					{
+						asset_manager->AddAsset(std::make_shared<CubeAsset>(glm::vec3(0.0+x, 0.0+y, 0.0+z)));
+					}
+				}
+			}
+		}
+		return;
+	}
+	else if(shape == "cube")
+	{
+		for (int z = 0; z < size; z++)
+		{
+			for (int y = 0; y < size; y++)
+			{
+				for (int x = 0; x < size; x++)
+				{
+					asset_manager->AddAsset(std::make_shared<CubeAsset>(glm::vec3(0.0+x, 0.0+y, 0.0+z)));
 				}
 			}
 		}
 	}
 }
+
 
 /**
  * Returns true if the position passed is already filled with a block

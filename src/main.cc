@@ -83,6 +83,8 @@ void HandleInput(const std::shared_ptr<GameWorld> game_world)
 		game_world->DoAction(2); 
 	if(keyboard_input[SDL_SCANCODE_G])
 		game_world->DoAction(3);
+	if(keyboard_input[SDL_SCANCODE_H])
+		game_world->DoAction(4);
 
 	if(keyboard_input[SDL_SCANCODE_E])
 		game_world->ChangeBlockDist(1);
