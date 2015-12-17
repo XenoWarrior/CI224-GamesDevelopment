@@ -213,7 +213,7 @@ void GameWorld::UpdateFacingDirection()
 glm::vec3 GameWorld::GetOffset()
 {
 	int x = 0, y = 0, z = 0, s = 0;
-	float p =	 0.0f;
+	float p = 0.0f;
 
 	if(f_pos == "N")
 	{
@@ -221,7 +221,7 @@ glm::vec3 GameWorld::GetOffset()
 			p = camera_x;
 		else
 			p = camera_x - point*16;
-		
+
 		s = int(floor(p * 10));
 		z += block_dist;
 		x += s;
@@ -419,4 +419,68 @@ void GameWorld::ChangeBlockDist(int i)
 	{
 		block_dist = 10;
 	}
+}
+
+//test
+void GameWorld::LoadMap(std::string filename)
+{
+	// Read in file
+	std::cout << "Reading file: " << filename << std::endl;
+	std::ifstream infile(filename);
+	
+	// Static set map size
+	int map_size = 601;
+
+	// Check if file is open
+	if(infile.is_open())
+	{
+		// Opened the file
+		std::cout << "File opened!" << std::endl;
+
+		// Setup cube_y vector that stores the cube's Y position
+		std::vector<int> cube_y;
+
+		// For the loop setup
+		int push_i = 0, push_s = 0;
+
+		// Loops through and add each position
+		while (infile >> push_s)
+		{
+			// Only take the Y axis, X and Z handled by increment
+			if(push_i == 1)
+			{
+				std::cout << "Pushing: (Y: " << push_s  << ")" << std::endl;
+
+				// Push on the Y
+				cube_y.push_back(push_s);
+			}
+
+			// Check if we're on the third number in the PPM file
+			if(push_i == 2)
+			{
+				// Reset XYZ check to 0
+				push_i = 0;
+			}
+			else
+			{
+				// Increment i to check our position
+				push_i++;
+			}
+		}
+
+		int i = 0;
+		for(int z = 0; z < map_size; z++)
+		{
+			std::cout << "Row " << z << std::endl;
+
+			for(int x = 0; x < map_size; x++)
+			{
+				asset_manager->AddAsset(std::make_shared<CubeAsset>(glm::vec3(x, (cube_y[i]/2), z)));
+				i++;
+			}
+		} 	
+		std::cout << "Done" << i << cube_y.size() << std::endl;
+	}
+
+	return;
 }

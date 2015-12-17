@@ -2,11 +2,15 @@
 #define GAMEWORLD_H
 
 #include <memory>
+#include <iostream>
+#include <fstream>
+#include <string>
+
+#include <math.h>
 #include <GL/glew.h>
 #include <GL/gl.h>
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
-#include <math.h>
 
 #include "common.h"
 #include "GameAssetManager.h"
@@ -35,6 +39,7 @@ class GameWorld {
 		void UpdateFacingDirection();
 		void CreateShape(std::string, int);
 		void ChangeBlockDist(int);
+		void LoadMap(std::string);
 
 		bool CheckCollision(glm::vec3);
 

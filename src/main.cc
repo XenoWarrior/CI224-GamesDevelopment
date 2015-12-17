@@ -84,6 +84,9 @@ void HandleInput(const std::shared_ptr<GameWorld> game_world)
 		game_world->DoAction(3);
 	if(KEYBOARD_INPUT[SDL_SCANCODE_H])
 		game_world->DoAction(4);
+	
+	if(KEYBOARD_INPUT[SDL_SCANCODE_J])
+		game_world->LoadMap("heightmap.ppm");
 
 	if(KEYBOARD_INPUT[SDL_SCANCODE_E])
 		game_world->ChangeBlockDist(1);
