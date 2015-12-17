@@ -151,8 +151,8 @@ std::shared_ptr<SDL_Window> InitWorld()
 	}
 	else
 	{
-		WINDOW_WIDTH = 1024;
-		WINDOW_HEIGHT = 768;
+		WINDOW_WIDTH = 640;
+		WINDOW_HEIGHT = 480;
 	}
 	
 	// Create a new window with an OpenGL surface
@@ -222,7 +222,7 @@ ApplicationMode ParseOptions (int argc, char ** argv)
 		exit(0);
 	}
 
-	if(vm.count("FULLSCREEN"))
+	if(vm.count("fullscreen"))
 	{
 		FULLSCREEN = true;
 	}

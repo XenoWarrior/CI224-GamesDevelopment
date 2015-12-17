@@ -208,26 +208,41 @@ void GameWorld::UpdateFacingDirection()
 
 /**
  * Returns an offset for the space in front of the camera
+ * and also calculates block placement based on the camera angle
  */
 glm::vec3 GameWorld::GetOffset()
 {
-	int x = 0, y = 0, z = 0;
+	int x = 0, y = 0, z = 0, s = 0;
+	float p =	 0.0f;
 
 	if(f_pos == "N")
 	{
+		if(camera_x < 1)
+			p = camera_x;
+		else
+			p = camera_x - point*16;
+		
+		s = int(floor(p * 10));
 		z += block_dist;
+		x += s;
 	}
 	if(f_pos == "E")
 	{
+		s = int(floor((point*12 - camera_x) * 10));
 		x -= block_dist;
+		z -= s;	
 	}
 	if(f_pos == "S")
 	{
+		s = int(floor((point*8 - camera_x) * 10));
 		z -= block_dist;
+		x += s;
 	}
 	if(f_pos == "W")
 	{
+		s = int(floor((point*4 - camera_x) * 10));
 		x += block_dist;
+		z += s;
 	}
 
 	if(f_pos == "NE")
@@ -251,15 +266,30 @@ glm::vec3 GameWorld::GetOffset()
 		x += block_dist;
 	}
 
-	// JUST A TEST, NEEDS UPDATING
-	if(camera_y > 0.5)
+	s = int(camera_y * 10);
+	if(s > block_dist)
 	{
-		y += block_dist;
+		s = block_dist;
 	}
-	if(camera_y < -0.5)
+	if(s < (0 - block_dist))
 	{
-		y -= block_dist;
+		s = (0 - block_dist);
 	}
+	y += s;
+
+	if(x > block_dist)
+		x = block_dist;
+	if(y > block_dist)
+		y = block_dist;
+	if(z > block_dist)
+		z = block_dist;
+
+	if(x < 0 - block_dist)
+		x = 0 - block_dist;
+	if(y < 0 - block_dist)
+		y = 0 - block_dist;
+	if(z < 0 - block_dist)
+		z = 0 - block_dist;
 
 	return glm::vec3(x, y, z);
 }
@@ -355,6 +385,7 @@ void GameWorld::CreateShape(std::string shape, int size)
 				}
 			}
 		}
+		return;
 	}
 }
 
