@@ -421,65 +421,61 @@ void GameWorld::ChangeBlockDist(int i)
 	}
 }
 
-//test
+/**
+ * A very bad example of rendering heightmaps
+ * Takes in a PPM file, reads the headers and then the map data
+ */
 void GameWorld::LoadMap(std::string filename)
 {
-	// Read in file
-	std::cout << "Reading file: " << filename << std::endl;
+	std::cout << "Reading file: " << filename << "..." << std::endl;
 	std::ifstream infile(filename);
 	
-	// Static set map size
-	int map_size = 601;
-
-	// Check if file is open
 	if(infile.is_open())
 	{
-		// Opened the file
-		std::cout << "File opened!" << std::endl;
-
-		// Setup cube_y vector that stores the cube's Y position
+		// Stores the cube Y cordinates from the PPM file
 		std::vector<int> cube_y;
 
-		// For the loop setup
-		int push_i = 0, push_s = 0;
+		// For the loop, increment and Y co-ordinate
+		int push_i = 0, push_s = 0, i = 0;
 
-		// Loops through and add each position
+		// For the headers
+		std::string MAP_TYPE; 
+		int MAP_WIDTH, MAP_HEIGHT, MAP_COLOURS, TOTAL_BLOCKS;
+		double PERCENTAGE;
+
+		// Read in headers
+		infile >> MAP_TYPE >> MAP_WIDTH >> MAP_HEIGHT >> MAP_COLOURS;
+		TOTAL_BLOCKS = MAP_WIDTH * MAP_HEIGHT;
+
+		std::cout 	<< "File Data:" << std::endl
+					<< "    File Type: " << MAP_TYPE << std::endl
+					<< "    Map Width: " << MAP_WIDTH << std::endl
+					<< "    Map Height: " << MAP_HEIGHT << std::endl
+					<< "    Map Colours: " << MAP_COLOURS << std::endl;
+
+		// Read in map data
 		while (infile >> push_s)
 		{
-			// Only take the Y axis, X and Z handled by increment
 			if(push_i == 1)
-			{
-				std::cout << "Pushing: (Y: " << push_s  << ")" << std::endl;
-
-				// Push on the Y
 				cube_y.push_back(push_s);
-			}
 
-			// Check if we're on the third number in the PPM file
 			if(push_i == 2)
-			{
-				// Reset XYZ check to 0
 				push_i = 0;
-			}
 			else
-			{
-				// Increment i to check our position
 				push_i++;
-			}
 		}
-
-		int i = 0;
-		for(int z = 0; z < map_size; z++)
+	
+		for(int z = 0; z < MAP_HEIGHT; z++)
 		{
-			std::cout << "Row " << z << std::endl;
-
-			for(int x = 0; x < map_size; x++)
+			for(int x = 0; x < MAP_WIDTH; x++)
 			{
-				asset_manager->AddAsset(std::make_shared<CubeAsset>(glm::vec3(x, (cube_y[i]/2), z)));
+				asset_manager->AddAsset(std::make_shared<CubeAsset>(glm::vec3(x, cube_y[i], z)));
 				i++;
+
+				std::cout << "[" << i << " / " << TOTAL_BLOCKS << "]\r";
+				std::cout.flush();
 			}
 		} 	
-		std::cout << "Done" << i << cube_y.size() << std::endl;
 	}
 
 	return;
