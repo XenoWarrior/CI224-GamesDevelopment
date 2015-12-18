@@ -16,6 +16,7 @@
 #include "GameAssetManager.h"
 #include "CubeAsset.h"
 #include "GameAsset.h"
+#include "BlockColours.h"
 
 /**
  * GameWorld allows us to separate the management of the game world from the
@@ -45,6 +46,8 @@ class GameWorld {
 
 		glm::vec3 GetOffset();
 		
+		BlockColours colour_manager;
+		
 	private:
 		std::shared_ptr<GameAssetManager> asset_manager;
 
@@ -63,6 +66,7 @@ class GameWorld {
 		glm::vec3 z_direction;
 		glm::vec3 x_direction;
 		glm::mat4 cam_view;
+
 };
 
 #endif // GAMEWORLD_H
