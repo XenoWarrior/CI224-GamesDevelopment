@@ -1,10 +1,9 @@
 language: cpp
 compiler:
 - gcc
-
 before_install:
-  - apt-get update -qq
-  - apt-get install -y libsdl-* libglew-dev libglm-dev libboost-all-dev libboost-program-options-dev autotools-dev
+  - sudo apt-get update -qq
+  - sudo apt-get install -y libsdl-* libglew-dev libglm-dev libboost-all-dev libboost-program-options-dev autotools-dev
   - autoreconf -i
   - ./configure
 branches:
@@ -15,4 +14,4 @@ notifications:
 os:
 - linux
 
-sudo: false
+sudo: true
