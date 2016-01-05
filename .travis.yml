@@ -1,11 +1,16 @@
 language: cpp
 compiler:
 - gcc
+before_install:
+  - sudo apt-get update -qq
+  - sudo apt-get install -y libsdl-* libglew-dev libglm-dev libboost-all-dev libboost-program-options-dev
 branches:
   only:
-  - master
+    - master
 notifications:
-  email: false
+  email: true
 os:
 - linux
-sudo: false
+- osx
+
+sudo: true
