@@ -5,6 +5,7 @@
 #include <GL/glew.h>
 #include <GL/gl.h>
 #include <SDL2/SDL.h>
+
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
 #include <iostream>
@@ -17,7 +18,6 @@
 /**
 * Global variables
 */
-const Uint8* KEYBOARD_INPUT;
 SDL_Window * _WINDOW;
 int WINDOW_WIDTH, WINDOW_HEIGHT;
 bool FULLSCREEN = false;
@@ -46,56 +46,6 @@ struct SDLWindowDeleter
 		SDL_DestroyWindow(window);
 	}
 };
-
-/*
- * Handles input
- */
-void HandleInput(const std::shared_ptr<GameWorld> game_world)
-{
-	// Camera controller
-	int x, y;
-	SDL_PumpEvents();
-	SDL_GetMouseState(&x, &y); 
-	SDL_EventState(SDL_MOUSEMOTION, SDL_IGNORE);
-	SDL_WarpMouseInWindow(_WINDOW, WINDOW_WIDTH/2, WINDOW_HEIGHT/2); 
-	SDL_EventState(SDL_MOUSEMOTION, SDL_ENABLE);
-	SDL_PumpEvents(); 
-	game_world->MoveCamera(glm::vec2(x,y), glm::vec2(WINDOW_WIDTH, WINDOW_HEIGHT));
-
-	// Update game_world camera
-	if(KEYBOARD_INPUT[SDL_SCANCODE_W])
-		game_world->CameraController(1); // forward
-	if(KEYBOARD_INPUT[SDL_SCANCODE_A])
-		game_world->CameraController(2); // left
-	if(KEYBOARD_INPUT[SDL_SCANCODE_S])
-		game_world->CameraController(3); // back
-	if(KEYBOARD_INPUT[SDL_SCANCODE_D])
-		game_world->CameraController(4); // right
-	if(KEYBOARD_INPUT[SDL_SCANCODE_SPACE])
-		game_world->CameraController(9); // player: +y ("fly" up)
-	if(KEYBOARD_INPUT[SDL_SCANCODE_LCTRL])
-		game_world->CameraController(10); // player: -y ("fly" down)
-
-	if(SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT))
-		game_world->DoAction(1); 
-	if(SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_RIGHT))
-		game_world->DoAction(2); 
-	if(KEYBOARD_INPUT[SDL_SCANCODE_G])
-		game_world->DoAction(3);
-	if(KEYBOARD_INPUT[SDL_SCANCODE_H])
-		game_world->DoAction(4);
-	
-	if(KEYBOARD_INPUT[SDL_SCANCODE_J])
-		game_world->LoadMap("heightmap.ppm");
-
-	if(KEYBOARD_INPUT[SDL_SCANCODE_E])
-		game_world->ChangeBlockDist(1);
-	if(KEYBOARD_INPUT[SDL_SCANCODE_Q])
-		game_world->ChangeBlockDist(-1);
-
-	if(KEYBOARD_INPUT[SDL_SCANCODE_ESCAPE])
-		SDL_Quit();
-}
 
 /*
  * Draws the game world and handles buffer switching.
@@ -256,8 +206,6 @@ int main(int argc, char ** argv) {
 		SDL_Quit();
 	}
 
-	KEYBOARD_INPUT = SDL_GetKeyboardState(NULL);
-
 	// Call the function "tick" every delay milliseconds
 	SDL_AddTimer(delay, tick, NULL);
 
@@ -272,7 +220,7 @@ int main(int argc, char ** argv) {
 				break;
 			case SDL_USEREVENT:
 				Draw(window, game_world);
-				HandleInput(game_world);
+				game_world->HandleInput(_WINDOW, WINDOW_WIDTH, WINDOW_HEIGHT);
 				break;
 			default:
 			  break;

@@ -11,12 +11,14 @@
 #include <GL/gl.h>
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
+#include <SDL2/SDL.h>
 
 #include "common.h"
 #include "GameAssetManager.h"
 #include "CubeAsset.h"
 #include "GameAsset.h"
 #include "BlockColours.h"
+#include "GameCamera.h"
 
 /**
  * GameWorld allows us to separate the management of the game world from the
@@ -34,38 +36,25 @@ class GameWorld {
 
 		void Draw();
 		void DrawGrid();
-		void CameraController(int);
-		void MoveCamera(glm::vec2, glm::vec2);
 		void DoAction(int);
-		void UpdateFacingDirection();
 		void CreateShape(std::string, int);
 		void ChangeBlockDist(int);
 		void LoadMap(std::string);
+		void HandleInput(SDL_Window*, int, int);
 
 		bool CheckCollision(glm::vec3);
 
-		glm::vec3 GetOffset();
-		
 		BlockColours colour_manager;
+		std::shared_ptr<GameCamera> camera = std::make_shared<GameCamera>(glm::vec3(0,0,0));
 		
 	private:
 		std::shared_ptr<GameAssetManager> asset_manager;
 
-		int block_dist = 3;
-
-		GLfloat camera_speed = 0.1;
-		GLfloat camera_x = 0.0;
-		GLfloat camera_y = 0.0;
-
-		double point = 0.39375;
-
-		std::string f_pos = "N";
 
 		glm::vec3 offset_pos;
 		glm::vec3 position = glm::vec3(0, 0, -3);
-		glm::vec3 z_direction;
-		glm::vec3 x_direction;
-		glm::mat4 cam_view;
+
+		const unsigned char* KEYBOARD_INPUT;
 
 };
 
