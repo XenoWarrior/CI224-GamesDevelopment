@@ -18,6 +18,7 @@ void GameWorld::Draw()
 
 	// Calls draw from the asset manager
 	asset_manager->Draw();
+	camera->DrawCamera();
 
 	// Draws our grid
 	DrawGrid();
