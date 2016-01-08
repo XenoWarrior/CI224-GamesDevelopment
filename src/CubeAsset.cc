@@ -186,13 +186,3 @@ glm::vec3 CubeAsset::GetVec3()
 {
 	return position;
 }
-
-/**
- * Remove buffer data for the cube
- */
-void CubeAsset::FreeBuffer()
-{
-	glInvalidateBufferData(vertex_buffer_token);
-	glInvalidateBufferData(element_buffer_token);
-	glInvalidateBufferData(color_buffer_token);
-}

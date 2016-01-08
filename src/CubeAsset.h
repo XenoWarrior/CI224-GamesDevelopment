@@ -18,7 +18,6 @@ class CubeAsset : public GameAsset
 
 		float rf();
 		glm::vec3 GetVec3();
-		void FreeBuffer();
 
 	private:
 		glm::vec3 position;
