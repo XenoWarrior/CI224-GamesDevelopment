@@ -99,18 +99,16 @@ void GameWorld::DoAction(int a)
 */
 void GameWorld::CameraController(int k)
 {
-	/* Slow collision checker
-		std::vector<std::shared_ptr<CubeAsset>> asset_list = asset_manager->GetAssets();
-		for(int i = 0; i < asset_list.size(); i++)
+	std::vector<std::shared_ptr<CubeAsset>> asset_list = asset_manager->GetAssets();
+	for(int i = 0; i < asset_list.size(); i++)
+	{
+		CubeAsset c = *asset_list[i];
+		if(CheckCollision(c.GetVec3()))
 		{
-			CubeAsset c = *asset_list[i];
-			if(CheckCollision(c.GetVec3()))
-			{
-				std::cout << "[P]Detected collision with cube at: (X: " << position.x << ", Y: " << position.y << ", Z: " << position.z << ")" << std::endl;
-				std::cout << "[C]Detected collision with cube at: (X: " << c.GetVec3().x << ", Y: " << c.GetVec3().y << ", Z: " << c.GetVec3().z << ")" << std::endl;
-			}
+			std::cout << "[P]Detected collision with cube at: (X: " << position.x << ", Y: " << position.y << ", Z: " << position.z << ")" << std::endl;
+			std::cout << "[C]Detected collision with cube at: (X: " << c.GetVec3().x << ", Y: " << c.GetVec3().y << ", Z: " << c.GetVec3().z << ")" << std::endl;
 		}
-	*/
+	}
 
 	// For W A S D
 	if(k == 1)
@@ -453,7 +451,6 @@ void GameWorld::LoadMap(std::string filename)
 		// For the headers
 		std::string MAP_TYPE; 
 		int MAP_WIDTH, MAP_HEIGHT, MAP_COLOURS, TOTAL_BLOCKS;
-		double PERCENTAGE;
 
 		// Read in headers
 		infile >> MAP_TYPE >> MAP_WIDTH >> MAP_HEIGHT >> MAP_COLOURS;

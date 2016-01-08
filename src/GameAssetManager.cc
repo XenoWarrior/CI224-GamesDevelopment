@@ -102,7 +102,6 @@ void GameAssetManager::RemoveAll()
 	for(int i = 0; i < asset_list.size(); i++)
 	{
 		CubeAsset cc = *asset_list[i];
-		cc.FreeBuffer();
 	}
 
 	// Remove the assets from the list
@@ -134,9 +133,6 @@ void GameAssetManager::RemoveAsset(glm::vec3 position, glm::vec3 offset_pos)
 
 	if(flag)
 	{
-		// Free the buffer
-		cc.FreeBuffer();
-
 		// Remove the asset
 		asset_list.erase(asset_list.begin() + r);
 		draw_list.erase(draw_list.begin() + r);

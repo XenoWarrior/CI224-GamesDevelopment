@@ -50,7 +50,7 @@ struct SDLWindowDeleter
 /*
  * Handles input
  */
-void HandleInput(const std::shared_ptr<GameWorld> game_world)
+void HandleInput(const std::shared_ptr<GameWorld> &game_world)
 {
 	// Camera controller
 	int x, y;
@@ -100,7 +100,7 @@ void HandleInput(const std::shared_ptr<GameWorld> game_world)
 /*
  * Draws the game world and handles buffer switching.
  */
-void Draw(const std::shared_ptr<SDL_Window> window, const std::shared_ptr<GameWorld> game_world)
+void Draw(const std::shared_ptr<SDL_Window> &window, const std::shared_ptr<GameWorld> &game_world)
 {
 	// Background colour for the window
 	glClearColor(0.0f, 0.2f, 0.2f, 0.3f);
