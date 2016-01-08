@@ -1,3 +1,6 @@
+# Build Status #
+![Build](https://travis-ci.org/XenoWarrior/glex.svg)
+
 # Prerequisites #
 
 * GNU Autotools
