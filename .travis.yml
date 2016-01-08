@@ -1,17 +1,25 @@
 language: cpp
 compiler:
 - gcc
+- clang
+- g++
 before_install:
-  - sudo apt-get update -qq
-  - sudo apt-get update
-  - sudo apt-get install -y libsdl* libglew-dev libglm-dev libboost-all-dev libboost-program-options-dev autotools-dev
-  - autoreconf -i
-  - ./configure
+- sudo apt-add-repository ppa:zoogie/sdl2-snapshots -y
+- sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+- sudo apt-get update -qq
+- sudo apt-get install -y gcc-4.8 g++-4.8 libsdl-* libglm-dev libglew-dev libboost-all-dev libsdl2-dev 
+- sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 90
+
+
+script:
+- autoreconf -i
+- ./configure
+- make
+
 branches:
-  only:
-    - master
-notifications:
-  email: true
+only:
+- master
+
 os:
 - linux
 
