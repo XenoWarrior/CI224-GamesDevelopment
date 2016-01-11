@@ -12,8 +12,7 @@ before_install:
 
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew update; fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install glm sdl sdl2; fi
-- if [ "$TRAVIS_OS_NAME" == "osx" ]; then port install glew +universal; fi
-- if [ "$TRAVIS_OS_NAME" == "osx" ]; then port install libsdl +universal; fi
+- if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install glew +universal; fi
 
 script:
 - autoreconf -i
