@@ -11,7 +11,9 @@ before_install:
 - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 90; fi
 
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew update; fi
-- if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install glew glm sdl sdl2; fi
+- if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install glm sdl sdl2; fi
+- if [ "$TRAVIS_OS_NAME" == "osx" ]; then port install glew +universal; fi
+- if [ "$TRAVIS_OS_NAME" == "osx" ]; then port install libsdl +universal; fi
 
 script:
 - autoreconf -i
