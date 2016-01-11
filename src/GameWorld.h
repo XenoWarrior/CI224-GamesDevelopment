@@ -33,7 +33,6 @@ class GameWorld {
 		GameWorld(ApplicationMode);
 
 		void Draw();
-		void DrawGrid();
 		void CameraController(int);
 		void MoveCamera(glm::vec2, glm::vec2);
 		void DoAction(int);

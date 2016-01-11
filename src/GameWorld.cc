@@ -49,7 +49,7 @@ void GameWorld::Draw()
 
 	glm::vec3 vup = glm::cross(x_direction, direction);
 	
-	cam_proj = glm::perspective(75.0f, 4.0f / 3.0f, 0.1f, 100.0f);
+	cam_proj = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
 	cam_view = glm::lookAt(
 		position,
 		position + direction,
@@ -58,9 +58,6 @@ void GameWorld::Draw()
 
 	// Calls draw from the asset manager
 	asset_manager->Draw(cam_proj, cam_view);
-
-	// Draws our grid
-	DrawGrid();
 }
 
 /**
@@ -107,32 +104,20 @@ void GameWorld::CameraController(int k)
 	}
 
 	// For W A S D
-	if(k == 1)
+	if(k == 1) // W
 		position += z_direction * camera_speed;
-	if(k == 2)
-		position += x_direction * camera_speed;
-	if(k == 3)
-		position -= z_direction * camera_speed;
-	if(k == 4)
+	if(k == 2) // A
 		position -= x_direction * camera_speed;
+	if(k == 3) // S
+		position -= z_direction * camera_speed;
+	if(k == 4) // D
+		position += x_direction * camera_speed;
 
-	// I K 
-	if(k == 5)
-		camera_y += 0.5f * camera_speed;
-	if(k == 7)
-		camera_y -= 0.5f * camera_speed;
-
-	// J L
-	if(k == 6)
-		camera_x += 0.5f * camera_speed;
-	if(k == 8)
-		camera_x -= 0.5f * camera_speed;
-
-	// For R F
-	if(k == 9)
-		position.y -= 0.5f * camera_speed;
-	if(k == 10)
+	// For Space/Control
+	if(k == 9) // Space
 		position.y += 0.5f * camera_speed;
+	if(k == 10) // Control
+		position.y -= 0.5f * camera_speed;
 
 }
 
@@ -141,8 +126,8 @@ void GameWorld::CameraController(int k)
  */
 void GameWorld::MoveCamera(glm::vec2 motion, glm::vec2 display)
 {
-	camera_x -= ((display.x/2) - motion.x) * camera_speed / 100.0f;
-	camera_y -= ((display.y/2) - motion.y) * camera_speed / 100.0f;
+	camera_x += ((display.x/2) - motion.x) * camera_speed / 100.0f;
+	camera_y += ((display.y/2) - motion.y) * camera_speed / 100.0f;
 }
 
 /**
@@ -283,63 +268,6 @@ glm::vec3 GameWorld::GetOffset()
 		z = 0 - block_dist;
 
 	return glm::vec3(x, y, z);
-}
-
-/**
- * Draws a grid in 3D space
- */
-void GameWorld::DrawGrid()
-{
-	glm::vec3 offset_pos = GetOffset();
-
-	glBegin(GL_QUADS);
-	// Bottom
-	glVertex3f(int(round(position.x) + offset_pos.x) - 0.2f, int(round(position.y) + offset_pos.y) - 0.52f, int(round(position.z) + offset_pos.z) + 0.2f);
-	glVertex3f(int(round(position.x) + offset_pos.x) + 0.2f, int(round(position.y) + offset_pos.y) - 0.52f, int(round(position.z) + offset_pos.z) + 0.2f);
-	glVertex3f(int(round(position.x) + offset_pos.x) + 0.2f, int(round(position.y) + offset_pos.y) - 0.52f, int(round(position.z) + offset_pos.z) - 0.2f);
-	glVertex3f(int(round(position.x) + offset_pos.x) - 0.2f, int(round(position.y) + offset_pos.y) - 0.52f, int(round(position.z) + offset_pos.z) - 0.2f);
-	
-	// Top
-	glVertex3f(int(round(position.x) + offset_pos.x) - 0.2f, int(round(position.y) + offset_pos.y) + 0.52f, int(round(position.z) + offset_pos.z) + 0.2f);
-	glVertex3f(int(round(position.x) + offset_pos.x) + 0.2f, int(round(position.y) + offset_pos.y) + 0.52f, int(round(position.z) + offset_pos.z) + 0.2f);
-	glVertex3f(int(round(position.x) + offset_pos.x) + 0.2f, int(round(position.y) + offset_pos.y) + 0.52f, int(round(position.z) + offset_pos.z) - 0.2f);
-	glVertex3f(int(round(position.x) + offset_pos.x) - 0.2f, int(round(position.y) + offset_pos.y) + 0.52f, int(round(position.z) + offset_pos.z) - 0.2f);
-
-	// Front
-	glVertex3f(int(round(position.x) + offset_pos.x) - 0.125f, int(round(position.y) + offset_pos.y) - 0.125f, int(round(position.z) + offset_pos.z) - 0.52);
-	glVertex3f(int(round(position.x) + offset_pos.x) + 0.125f, int(round(position.y) + offset_pos.y) - 0.125f, int(round(position.z) + offset_pos.z) - 0.52);
-	glVertex3f(int(round(position.x) + offset_pos.x) + 0.125f, int(round(position.y) + offset_pos.y) + 0.125f, int(round(position.z) + offset_pos.z) - 0.52);
-	glVertex3f(int(round(position.x) + offset_pos.x) - 0.125f, int(round(position.y) + offset_pos.y) + 0.125f, int(round(position.z) + offset_pos.z) - 0.52);
-
-	// Back
-	glVertex3f(int(round(position.x) + offset_pos.x) - 0.125f, int(round(position.y) + offset_pos.y) - 0.125f, int(round(position.z) + offset_pos.z) + 0.52);
-	glVertex3f(int(round(position.x) + offset_pos.x) + 0.125f, int(round(position.y) + offset_pos.y) - 0.125f, int(round(position.z) + offset_pos.z) + 0.52);
-	glVertex3f(int(round(position.x) + offset_pos.x) + 0.125f, int(round(position.y) + offset_pos.y) + 0.125f, int(round(position.z) + offset_pos.z) + 0.52);
-	glVertex3f(int(round(position.x) + offset_pos.x) - 0.125f, int(round(position.y) + offset_pos.y) + 0.125f, int(round(position.z) + offset_pos.z) + 0.52);
-
-	// Left
-	glVertex3f(int(round(position.x) + offset_pos.x) + 0.52f, int(round(position.y) + offset_pos.y) - 0.125f, int(round(position.z) + offset_pos.z) + 0.125f);
-	glVertex3f(int(round(position.x) + offset_pos.x) + 0.52f, int(round(position.y) + offset_pos.y) - 0.125f, int(round(position.z) + offset_pos.z) - 0.125f);
-	glVertex3f(int(round(position.x) + offset_pos.x) + 0.52f, int(round(position.y) + offset_pos.y) + 0.125f, int(round(position.z) + offset_pos.z) - 0.125f);
-	glVertex3f(int(round(position.x) + offset_pos.x) + 0.52f, int(round(position.y) + offset_pos.y) + 0.125f, int(round(position.z) + offset_pos.z) + 0.125f);
-	
-	// Right
-	glVertex3f(int(round(position.x) + offset_pos.x) - 0.52f, int(round(position.y) + offset_pos.y) - 0.125f, int(round(position.z) + offset_pos.z) + 0.125f);
-	glVertex3f(int(round(position.x) + offset_pos.x) - 0.52f, int(round(position.y) + offset_pos.y) - 0.125f, int(round(position.z) + offset_pos.z) - 0.125f);
-	glVertex3f(int(round(position.x) + offset_pos.x) - 0.52f, int(round(position.y) + offset_pos.y) + 0.125f, int(round(position.z) + offset_pos.z) - 0.125f);
-	glVertex3f(int(round(position.x) + offset_pos.x) - 0.52f, int(round(position.y) + offset_pos.y) + 0.125f, int(round(position.z) + offset_pos.z) + 0.125f);
-
-	glEnd();
-
-	for(float i = -20; i <= 20; i += 0.5)
-	{
-		glBegin(GL_LINES);
-		glVertex3f(-20, -0.5, i);
-		glVertex3f(20, -0.5, i);
-		glVertex3f(i, -0.5, -20);
-		glVertex3f(i, -0.5, 20);
-		glEnd();
-	}
 }
 
 /**
