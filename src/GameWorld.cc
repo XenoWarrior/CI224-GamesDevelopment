@@ -48,20 +48,16 @@ void GameWorld::Draw()
 	);
 
 	glm::vec3 vup = glm::cross(x_direction, direction);
-	glm::mat4 cam_proj = glm::perspective(75.0f, 4.0f / 3.0f, 0.1f, 100.0f);
+	
+	cam_proj = glm::perspective(75.0f, 4.0f / 3.0f, 0.1f, 100.0f);
 	cam_view = glm::lookAt(
 		position,
 		position + direction,
 		vup
 	);
-	glm::mat4 cam_mod(1.0f);
-
-	glUniformMatrix4fv(0, 1, GL_FALSE, &cam_proj[0][0]);
-	glUniformMatrix4fv(1, 1, GL_FALSE, &cam_view[0][0]);
-	glUniformMatrix4fv(2, 1, GL_FALSE, &cam_mod[0][0]);
 
 	// Calls draw from the asset manager
-	asset_manager->Draw();
+	asset_manager->Draw(cam_proj, cam_view);
 
 	// Draws our grid
 	DrawGrid();
@@ -114,11 +110,11 @@ void GameWorld::CameraController(int k)
 	if(k == 1)
 		position += z_direction * camera_speed;
 	if(k == 2)
-		position -= x_direction * camera_speed;
+		position += x_direction * camera_speed;
 	if(k == 3)
 		position -= z_direction * camera_speed;
 	if(k == 4)
-		position += x_direction * camera_speed;
+		position -= x_direction * camera_speed;
 
 	// I K 
 	if(k == 5)
@@ -134,9 +130,9 @@ void GameWorld::CameraController(int k)
 
 	// For R F
 	if(k == 9)
-		position.y += 0.5f * camera_speed;
-	if(k == 10)
 		position.y -= 0.5f * camera_speed;
+	if(k == 10)
+		position.y += 0.5f * camera_speed;
 
 }
 
@@ -145,8 +141,8 @@ void GameWorld::CameraController(int k)
  */
 void GameWorld::MoveCamera(glm::vec2 motion, glm::vec2 display)
 {
-	camera_x += ((display.x/2) - motion.x) * camera_speed / 100.0f;
-	camera_y += ((display.y/2) - motion.y) * camera_speed / 100.0f;
+	camera_x -= ((display.x/2) - motion.x) * camera_speed / 100.0f;
+	camera_y -= ((display.y/2) - motion.y) * camera_speed / 100.0f;
 }
 
 /**

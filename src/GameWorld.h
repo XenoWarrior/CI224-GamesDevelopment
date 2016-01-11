@@ -65,6 +65,8 @@ class GameWorld {
 		glm::vec3 position = glm::vec3(0, 0, -3);
 		glm::vec3 z_direction;
 		glm::vec3 x_direction;
+		
+		glm::mat4 cam_proj;
 		glm::mat4 cam_view;
 
 };

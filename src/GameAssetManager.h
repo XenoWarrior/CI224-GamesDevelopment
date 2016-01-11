@@ -30,7 +30,7 @@ class GameAssetManager {
 		void AddAsset(std::shared_ptr<CubeAsset>);
 		void RemoveAsset(glm::vec3, glm::vec3);
 		void RemoveAll();
-		void Draw();
+		void Draw(glm::mat4, glm::mat4);
 
 		std::vector<std::shared_ptr<CubeAsset>> GetAssets();
 
