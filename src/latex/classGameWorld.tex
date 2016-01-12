@@ -1,0 +1,141 @@
+\hypertarget{classGameWorld}{\section{Game\-World Class Reference}
+\label{classGameWorld}\index{Game\-World@{Game\-World}}
+}
+
+
+{\ttfamily \#include $<$Game\-World.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classGameWorld_a17a84e57a80600961088afc753036f89}{Game\-World} (Application\-Mode)
+\item 
+void \hyperlink{classGameWorld_a275418607d8286979b276f165ad5876b}{Draw} ()
+\item 
+void \hyperlink{classGameWorld_a868f6c145f31f990974b324685f63448}{Camera\-Controller} (int)
+\item 
+void \hyperlink{classGameWorld_a46e48d65ed762acad6ad9ef40e6c9610}{Move\-Camera} (glm\-::vec2, glm\-::vec2)
+\item 
+void \hyperlink{classGameWorld_ae029ce82ab27a6bb1b2a1784ddaddaad}{Do\-Action} (int)
+\item 
+void \hyperlink{classGameWorld_a281a531082e7fcdfde3339445e0e4b22}{Update\-Facing\-Direction} ()
+\item 
+void \hyperlink{classGameWorld_ab408a83dde217403691c88f8bc498fc1}{Create\-Shape} (std\-::string, int)
+\item 
+void \hyperlink{classGameWorld_aaa1b24d4bba8b9a9a663b1a809552044}{Change\-Block\-Dist} (int)
+\item 
+void \hyperlink{classGameWorld_aaaf6174a524d23a4759b15d981304711}{Load\-Map} (std\-::string)
+\item 
+void \hyperlink{classGameWorld_a00e989074bc585786af91119b0996828}{Set\-Block\-Type} (int)
+\item 
+bool \hyperlink{classGameWorld_a800d763be7f2980d1eb7f2715616ab97}{Check\-Collision} (glm\-::vec3)
+\item 
+glm\-::vec3 \hyperlink{classGameWorld_a76ff889cffc8450d74e7ddedda2af7e9}{Get\-Offset} ()
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classGameWorld_a08474ddb5c961a526ca3a915665459f5}{\hyperlink{classBlockColours}{Block\-Colours} {\bfseries colour\-\_\-manager}}\label{classGameWorld_a08474ddb5c961a526ca3a915665459f5}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{classGameWorld}{Game\-World} allows us to separate the management of the game world from the nuts and bolts of game loop initialisation. The \hyperlink{classGameWorld}{Game\-World} currently has a very simplified scene graph consisiting of a single \hyperlink{classGameAssetManager}{Game\-Asset\-Manager}. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classGameWorld_a17a84e57a80600961088afc753036f89}{\index{Game\-World@{Game\-World}!Game\-World@{Game\-World}}
+\index{Game\-World@{Game\-World}!GameWorld@{Game\-World}}
+\subsubsection[{Game\-World}]{\setlength{\rightskip}{0pt plus 5cm}Game\-World\-::\-Game\-World (
+\begin{DoxyParamCaption}
+\item[{Application\-Mode}]{mode}
+\end{DoxyParamCaption}
+)}}\label{classGameWorld_a17a84e57a80600961088afc753036f89}
+We thread the Application\-Mode through the \hyperlink{classGameWorld}{Game\-World} ss we want to read it in from the user. Threading the state through the various function calls is preferable (in this case) to having some kind of global state. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classGameWorld_a868f6c145f31f990974b324685f63448}{\index{Game\-World@{Game\-World}!Camera\-Controller@{Camera\-Controller}}
+\index{Camera\-Controller@{Camera\-Controller}!GameWorld@{Game\-World}}
+\subsubsection[{Camera\-Controller}]{\setlength{\rightskip}{0pt plus 5cm}void Game\-World\-::\-Camera\-Controller (
+\begin{DoxyParamCaption}
+\item[{int}]{k}
+\end{DoxyParamCaption}
+)}}\label{classGameWorld_a868f6c145f31f990974b324685f63448}
+Handles the keyboard inputs passed from main. \hypertarget{classGameWorld_aaa1b24d4bba8b9a9a663b1a809552044}{\index{Game\-World@{Game\-World}!Change\-Block\-Dist@{Change\-Block\-Dist}}
+\index{Change\-Block\-Dist@{Change\-Block\-Dist}!GameWorld@{Game\-World}}
+\subsubsection[{Change\-Block\-Dist}]{\setlength{\rightskip}{0pt plus 5cm}void Game\-World\-::\-Change\-Block\-Dist (
+\begin{DoxyParamCaption}
+\item[{int}]{i}
+\end{DoxyParamCaption}
+)}}\label{classGameWorld_aaa1b24d4bba8b9a9a663b1a809552044}
+Changes block distance \hypertarget{classGameWorld_a800d763be7f2980d1eb7f2715616ab97}{\index{Game\-World@{Game\-World}!Check\-Collision@{Check\-Collision}}
+\index{Check\-Collision@{Check\-Collision}!GameWorld@{Game\-World}}
+\subsubsection[{Check\-Collision}]{\setlength{\rightskip}{0pt plus 5cm}bool Game\-World\-::\-Check\-Collision (
+\begin{DoxyParamCaption}
+\item[{glm\-::vec3}]{point}
+\end{DoxyParamCaption}
+)}}\label{classGameWorld_a800d763be7f2980d1eb7f2715616ab97}
+Returns true if the position passed is already filled with a block \hypertarget{classGameWorld_ab408a83dde217403691c88f8bc498fc1}{\index{Game\-World@{Game\-World}!Create\-Shape@{Create\-Shape}}
+\index{Create\-Shape@{Create\-Shape}!GameWorld@{Game\-World}}
+\subsubsection[{Create\-Shape}]{\setlength{\rightskip}{0pt plus 5cm}void Game\-World\-::\-Create\-Shape (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{shape, }
+\item[{int}]{size}
+\end{DoxyParamCaption}
+)}}\label{classGameWorld_ab408a83dde217403691c88f8bc498fc1}
+Generates a shape \hypertarget{classGameWorld_ae029ce82ab27a6bb1b2a1784ddaddaad}{\index{Game\-World@{Game\-World}!Do\-Action@{Do\-Action}}
+\index{Do\-Action@{Do\-Action}!GameWorld@{Game\-World}}
+\subsubsection[{Do\-Action}]{\setlength{\rightskip}{0pt plus 5cm}void Game\-World\-::\-Do\-Action (
+\begin{DoxyParamCaption}
+\item[{int}]{a}
+\end{DoxyParamCaption}
+)}}\label{classGameWorld_ae029ce82ab27a6bb1b2a1784ddaddaad}
+Handles action codes passed from main \hypertarget{classGameWorld_a275418607d8286979b276f165ad5876b}{\index{Game\-World@{Game\-World}!Draw@{Draw}}
+\index{Draw@{Draw}!GameWorld@{Game\-World}}
+\subsubsection[{Draw}]{\setlength{\rightskip}{0pt plus 5cm}void Game\-World\-::\-Draw (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classGameWorld_a275418607d8286979b276f165ad5876b}
+Handles drawing of the camera and game world assets \hypertarget{classGameWorld_a76ff889cffc8450d74e7ddedda2af7e9}{\index{Game\-World@{Game\-World}!Get\-Offset@{Get\-Offset}}
+\index{Get\-Offset@{Get\-Offset}!GameWorld@{Game\-World}}
+\subsubsection[{Get\-Offset}]{\setlength{\rightskip}{0pt plus 5cm}glm\-::vec3 Game\-World\-::\-Get\-Offset (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classGameWorld_a76ff889cffc8450d74e7ddedda2af7e9}
+Returns an offset for the space in front of the camera and also calculates block placement based on the camera angle \hypertarget{classGameWorld_aaaf6174a524d23a4759b15d981304711}{\index{Game\-World@{Game\-World}!Load\-Map@{Load\-Map}}
+\index{Load\-Map@{Load\-Map}!GameWorld@{Game\-World}}
+\subsubsection[{Load\-Map}]{\setlength{\rightskip}{0pt plus 5cm}void Game\-World\-::\-Load\-Map (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{filename}
+\end{DoxyParamCaption}
+)}}\label{classGameWorld_aaaf6174a524d23a4759b15d981304711}
+A very bad example of rendering heightmaps Takes in a P\-P\-M file, reads the headers and then the map data \hypertarget{classGameWorld_a46e48d65ed762acad6ad9ef40e6c9610}{\index{Game\-World@{Game\-World}!Move\-Camera@{Move\-Camera}}
+\index{Move\-Camera@{Move\-Camera}!GameWorld@{Game\-World}}
+\subsubsection[{Move\-Camera}]{\setlength{\rightskip}{0pt plus 5cm}void Game\-World\-::\-Move\-Camera (
+\begin{DoxyParamCaption}
+\item[{glm\-::vec2}]{motion, }
+\item[{glm\-::vec2}]{display}
+\end{DoxyParamCaption}
+)}}\label{classGameWorld_a46e48d65ed762acad6ad9ef40e6c9610}
+Handles the mouse input for the camera \hypertarget{classGameWorld_a00e989074bc585786af91119b0996828}{\index{Game\-World@{Game\-World}!Set\-Block\-Type@{Set\-Block\-Type}}
+\index{Set\-Block\-Type@{Set\-Block\-Type}!GameWorld@{Game\-World}}
+\subsubsection[{Set\-Block\-Type}]{\setlength{\rightskip}{0pt plus 5cm}void Game\-World\-::\-Set\-Block\-Type (
+\begin{DoxyParamCaption}
+\item[{int}]{b}
+\end{DoxyParamCaption}
+)}}\label{classGameWorld_a00e989074bc585786af91119b0996828}
+Sets the block type to place \hypertarget{classGameWorld_a281a531082e7fcdfde3339445e0e4b22}{\index{Game\-World@{Game\-World}!Update\-Facing\-Direction@{Update\-Facing\-Direction}}
+\index{Update\-Facing\-Direction@{Update\-Facing\-Direction}!GameWorld@{Game\-World}}
+\subsubsection[{Update\-Facing\-Direction}]{\setlength{\rightskip}{0pt plus 5cm}void Game\-World\-::\-Update\-Facing\-Direction (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classGameWorld_a281a531082e7fcdfde3339445e0e4b22}
+Calculates the camera facing direction 
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+Game\-World.\-h\item 
+Game\-World.\-cc\end{DoxyCompactItemize}
