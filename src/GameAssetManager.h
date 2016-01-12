@@ -11,7 +11,9 @@
 
 #include "common.h"
 #include "GameAsset.h"
+
 #include "CubeAsset.h"
+#include "DiamondAsset.h"
 
 /**
  * GameAssetManager is a container for GameAssets.  It also provides utility
@@ -28,6 +30,7 @@ class GameAssetManager {
 
 		void operator=(GameAssetManager const&); 		// assignment
 		void AddAsset(std::shared_ptr<CubeAsset>);
+		void AddAssetDiamond(std::shared_ptr<GameAsset>);
 		void RemoveAsset(glm::vec3, glm::vec3);
 		void RemoveAll();
 		void Draw(glm::mat4, glm::mat4);

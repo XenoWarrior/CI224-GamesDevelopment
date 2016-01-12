@@ -1,5 +1,5 @@
-#ifndef CUBEASSET_H
-#define CUBEASSET_H
+#ifndef DIAMONDASSET_H
+#define DIAMONDASSET_H
 
 #include <vector>
 #include <GL/gl.h>
@@ -8,11 +8,11 @@
 
 #include "GameAsset.h"
 
-class CubeAsset : public GameAsset
+class DiamondAsset : public GameAsset
 {
 	public:
-		CubeAsset(glm::vec3, glm::vec3);
-		~CubeAsset();
+		DiamondAsset(glm::vec3, glm::vec3);
+		~DiamondAsset();
 
 		virtual void Draw(GLuint);
 
@@ -24,5 +24,4 @@ class CubeAsset : public GameAsset
 		GLuint element_buffer_length, vertex_buffer_length, color_buffer_length;
 		GLuint vertex_buffer_token, element_buffer_token, color_buffer_token;
 };
-
-#endif // CUBEASSET_H
+#endif // DIAMONDASSET_H

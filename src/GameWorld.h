@@ -14,8 +14,11 @@
 
 #include "common.h"
 #include "GameAssetManager.h"
-#include "CubeAsset.h"
 #include "GameAsset.h"
+
+#include "CubeAsset.h"
+#include "DiamondAsset.h"
+
 #include "BlockColours.h"
 
 /**
@@ -40,6 +43,7 @@ class GameWorld {
 		void CreateShape(std::string, int);
 		void ChangeBlockDist(int);
 		void LoadMap(std::string);
+		void SetBlockType(int);
 
 		bool CheckCollision(glm::vec3);
 
@@ -68,6 +72,7 @@ class GameWorld {
 		glm::mat4 cam_proj;
 		glm::mat4 cam_view;
 
+		int block_type = 1;
 };
 
 #endif // GAMEWORLD_H
